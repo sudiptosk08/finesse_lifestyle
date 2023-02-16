@@ -27,7 +27,9 @@ class _ProductPreviewState extends State<ProductPreview> {
       builder: (context, ref, _) {
         final productDetailsState = ref.watch(productDetailsProvider);
         final List<AllImage> productImageList =
-            productDetailsState is ProductDetailsSuccessState ? productDetailsState.productDetailsModel!.product!.allImages! : [];
+            productDetailsState is ProductDetailsSuccessState
+                ? productDetailsState.productDetailsModel!.product!.allImages!
+                : [];
 
         return Column(
           children: [
@@ -59,19 +61,24 @@ class _ProductPreviewState extends State<ProductPreview> {
                               height: 54,
                               width: 54,
                               margin: const EdgeInsets.only(bottom: 5),
-                              padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 2),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 3, horizontal: 2),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(
-                                  color: index == selectIndex ? KColor.borderColor : Colors.transparent,
+                                  color: index == selectIndex
+                                      ? KColor.borderColor
+                                      : Colors.transparent,
                                   width: 1,
                                 ),
                               ),
                               child: Center(
                                 child: CachedNetworkImage(
-                                  imageUrl: productImageList[index].url.toString(),
+                                  imageUrl:
+                                      productImageList[index].url.toString(),
                                   height: 52,
-                                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
                                 ),
                               ),
                             ),
@@ -92,7 +99,10 @@ class _ProductPreviewState extends State<ProductPreview> {
                                 itemCount: productImageList.length,
                                 controller: _controller,
                                 itemBuilder: (ctx, position) {
-                                  return Image.network(productImageList[position].url.toString());
+                                  return Image.network(
+                                      productImageList[position]
+                                          .url
+                                          .toString());
                                 }),
                           ),
                         ),

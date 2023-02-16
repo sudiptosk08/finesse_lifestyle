@@ -48,6 +48,7 @@ class LoginController extends StateNotifier<BaseState> {
           setValue(isLoggedIn, true);
           setValue(token, responseBody['token']);
           setValue(rememberToken, responseBody['token']);
+          setValue(userId, userModel!.id);
           toast("Login Successful", bgColor: KColor.selectColor);
 
           NavigationService.navigateToReplacement(

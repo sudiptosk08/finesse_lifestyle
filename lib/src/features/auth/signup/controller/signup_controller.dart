@@ -1,11 +1,17 @@
+import 'dart:convert';
+
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/core/network/api.dart';
 import 'package:finesse/core/network/network_utils.dart';
 import 'package:finesse/service/navigation_service.dart';
 import 'package:finesse/src/features/auth/login/view/login_page.dart';
+import 'package:finesse/src/features/auth/login/view/otp_page.dart';
 import 'package:finesse/src/features/auth/signup/state/signup_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nb_utils/nb_utils.dart';
+
+import '../../../../../styles/b_style.dart';
 
 /// Providers
 final signupProvider = StateNotifierProvider<SignupController, BaseState>(
@@ -42,7 +48,8 @@ class SignupController extends StateNotifier<BaseState> {
       if (responseBody != null) {
         state = const SignupSuccessState();
         print("Registration Successful");
-        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) => const LoginPage()));
+        NavigationService.navigateToReplacement(
+            CupertinoPageRoute(builder: (context) =>  OtpPage(phoneNumber: phone,localName: name,)));
       } else {
         state = const ErrorState();
       }
@@ -50,6 +57,7 @@ class SignupController extends StateNotifier<BaseState> {
       print(error);
       print(stackTrace);
       state = const ErrorState();
+      print("Error ResponseBody = $responseBody");
     }
   }
 }

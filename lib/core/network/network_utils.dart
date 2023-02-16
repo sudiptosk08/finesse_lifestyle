@@ -96,19 +96,19 @@ class Network {
       } else if (response.statusCode == 422) {
         /// Custom validation message
         toast(
-          '${jsonDecode(response.body)['messages'][0]}',
+          '${jsonDecode(response.body)[0]['message']}',
           bgColor: KColor.red,
         );
       } else if (response.statusCode == 429) {
         /// Too many attempts message
         toast(
-          '${jsonDecode(response.body)['message']}',
+          '${jsonDecode(response.body)[0]['message']}',
           bgColor: KColor.red,
         );
       } else if (response.statusCode == 402) {
         /// Custom validation message
         toast(
-          '${jsonDecode(response.body)['messages']}',
+          '${jsonDecode(response.body)[0]['messages']}',
           bgColor: KColor.red,
         );
       } else if (response.statusCode == 401 || response.statusCode == 404) {

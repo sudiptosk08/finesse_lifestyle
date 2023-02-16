@@ -4,6 +4,7 @@ import 'package:finesse/core/network/network_utils.dart';
 import 'package:finesse/service/navigation_service.dart';
 import 'package:finesse/src/features/auth/login/view/login_page.dart';
 import 'package:finesse/src/features/auth/resetpassword/view/reset_password_page.dart';
+import 'package:finesse/src/features/auth/resetpassword/view/send_code.dart';
 import 'package:finesse/src/features/auth/signup/state/signup_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,7 +36,7 @@ class ResetPasswordController extends StateNotifier<BaseState> {
       if (responseBody != null) {
         state = const SignupSuccessState();
         print("Send phone number Successful");
-        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) => const LoginPage()));
+        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) =>  SendCode(phoneNumber: phone,)));
       } else {
         state = const ErrorState();
       }
@@ -62,7 +63,7 @@ class ResetPasswordController extends StateNotifier<BaseState> {
       if (responseBody != null) {
         state = const SignupSuccessState();
         print("Send phone number again Successful");
-        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) => const LoginPage()));
+//NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) => const LoginPage()));
       } else {
         state = const ErrorState();
       }
@@ -95,7 +96,7 @@ class ResetPasswordController extends StateNotifier<BaseState> {
       if (responseBody != null) {
         state = const SignupSuccessState();
         print("Password reset Successful");
-        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) => const ResetPasswordPage()));
+        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) => const LoginPage()));
       } else {
         state = const ErrorState();
       }

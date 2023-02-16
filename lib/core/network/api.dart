@@ -37,6 +37,7 @@ class API {
   static productRecommendation(productId) => 'app/relatedProduct/$productId';
 
   static productReviews({productId}) => 'app/reviews/$productId';
+  static const addProductReviews = 'app/reviews';
 
   //wishlist
   static const addWishlist = 'app/wishlist';

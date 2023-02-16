@@ -49,7 +49,8 @@ class _ProductDetailsState extends ConsumerState<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     final cartState = ref.watch(cartProvider);
-    final cartItemsLength = cartState is CartSuccessState ? cartState.cartList.length : 0;
+    final cartItemsLength =
+        cartState is CartSuccessState ? cartState.cartList.length : 0;
 
     return Scaffold(
       backgroundColor: KColor.whiteBackground,
@@ -80,9 +81,19 @@ class _ProductDetailsState extends ConsumerState<ProductDetails> {
                           ? Text(
                               cartItemsLength > 10 ? '9+' : '$cartItemsLength',
                               textAlign: TextAlign.center,
-                              style: KTextStyle.caption2.copyWith(color: KColor.white, fontWeight: FontWeight.bold),
+                              style: KTextStyle.caption2.copyWith(
+                                  color: KColor.white,
+                                  fontWeight: FontWeight.bold),
                             )
-                          : const CupertinoActivityIndicator(radius: 6),
+                          : getBoolAsync(isLoggedIn) == false
+                              ? Text(
+                                  "0",
+                                  textAlign: TextAlign.center,
+                                  style: KTextStyle.caption2.copyWith(
+                                      color: KColor.white,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              : const CupertinoActivityIndicator(radius: 6),
                     ),
                   ),
                 ],
@@ -95,12 +106,12 @@ class _ProductDetailsState extends ConsumerState<ProductDetails> {
         children: [
           ProductPreview(id: widget.id.toString()),
           ProductInfo(
-            productName: widget.productName,
-            productGroup: widget.productGroup,
-            price: widget.price,
-            description: widget.description,
-            id: widget.id.toString(),
-          ),
+              productName: widget.productName,
+              productGroup: widget.productGroup,
+              price: widget.price,
+              description: widget.description,
+              id: widget.id.toString(),
+              userId: userId),
           AddToCart(
             quantity: quantity,
             add: () {

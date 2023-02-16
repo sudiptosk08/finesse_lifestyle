@@ -49,7 +49,7 @@ class RouteGenerator {
         return CupertinoPageRoute(
           builder: (_) => OtpPage(
             phoneNumber: arguments!['phoneNumber'],
-            password: arguments['password'],
+          
           ),
         );
       case '/signup':
@@ -101,7 +101,7 @@ class RouteGenerator {
         return CupertinoPageRoute(
           builder: (_) => const MenSection(),
         );
-      case '/productDetails':
+     case '/productDetails':
         return CupertinoPageRoute(
           builder: (_) => ProductDetails(
             productName: arguments!['productName'],

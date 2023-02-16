@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/button/k_button.dart';
 import 'package:finesse/core/base/base_state.dart';
@@ -14,13 +13,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class SendCode extends StatefulWidget {
-  final String? phoneNumber;
-  final String? password;
+  final String phoneNumber;
+  
 
   const SendCode({
     Key? key,
+    required 
     this.phoneNumber,
-    this.password,
   }) : super(key: key);
   
   @override
@@ -184,13 +183,6 @@ class _SendCodeState extends State<SendCode> {
                 return KButton(
                   title: authState is LoadingState ? 'Please wait...' : 'Send Otp',
                   onTap: () {
-                    if (authState is! LoadingState) {
-                      if (_formKey.currentState!.validate()) {
-                        ref.read(resetPasswordProvider.notifier).sendPhone(
-                              phone: otp.text,
-                            );
-                      }
-                    }
                     Navigator.pushNamed(
                       context,
                       '/confirmPassword',

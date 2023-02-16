@@ -22,6 +22,8 @@ class ProductInfo extends ConsumerStatefulWidget {
   final String? price;
   final String? description;
   final String? id;
+  final String? userId;
+  
 
   const ProductInfo({
     this.productName,
@@ -29,6 +31,7 @@ class ProductInfo extends ConsumerStatefulWidget {
     this.price,
     this.description,
     this.id,
+    this.userId,
     Key? key,
   }) : super(key: key);
 
@@ -39,12 +42,14 @@ class ProductInfo extends ConsumerStatefulWidget {
 class _ProductInfoState extends ConsumerState<ProductInfo> {
   List<String> items = ["Variations", "Descriptions", "Reviews"];
   int currentIndex = 0;
-
+  
   @override
   Widget build(BuildContext context) {
     final wishlistState = ref.watch(wishlistProvider);
     final productDetailsState = ref.watch(productDetailsProvider);
-    final productDetails = productDetailsState is ProductDetailsSuccessState ? productDetailsState.productDetailsModel : null;
+    final productDetails = productDetailsState is ProductDetailsSuccessState
+        ? productDetailsState.productDetailsModel
+        : null;
 
     return Expanded(
       child: productDetailsState is ProductDetailsSuccessState
@@ -60,13 +65,15 @@ class _ProductInfoState extends ConsumerState<ProductInfo> {
                         Expanded(
                           child: Text(
                             widget.productName.toString(),
-                            style: KTextStyle.headline2.copyWith(color: KColor.blackbg),
+                            style: KTextStyle.headline2
+                                .copyWith(color: KColor.blackbg),
                           ),
                         ),
                         const SizedBox(width: 5),
                         Text(
                           '৳${widget.price}',
-                          style: KTextStyle.headline2.copyWith(color: KColor.blackbg),
+                          style: KTextStyle.headline2
+                              .copyWith(color: KColor.blackbg),
                         ),
                       ],
                     ),
@@ -76,21 +83,29 @@ class _ProductInfoState extends ConsumerState<ProductInfo> {
                       children: [
                         Text(
                           widget.productGroup.toString(),
-                          style: KTextStyle.subtitle7.copyWith(color: KColor.blackbg.withOpacity(0.3)),
+                          style: KTextStyle.subtitle7
+                              .copyWith(color: KColor.blackbg.withOpacity(0.3)),
                         ),
                         InkWell(
                           onTap: () async {
                             if (!getBoolAsync(isLoggedIn)) {
-                              toast('Please login to continue...', bgColor: KColor.red);
+                              toast('Please login to continue...',
+                                  bgColor: KColor.red);
                               Navigator.pushNamed(context, '/login');
                             }
 
                             if (wishlistState is! LoadingState) {
                               productDetails!.product!.isWishlist
-                                  ? await ref.read(wishlistProvider.notifier).deleteWishlist(id: widget.id.toString())
-                                  : await ref.read(wishlistProvider.notifier).addWishlist(id: widget.id.toString());
+                                  ? await ref
+                                      .read(wishlistProvider.notifier)
+                                      .deleteWishlist(id: widget.id.toString())
+                                  : await ref
+                                      .read(wishlistProvider.notifier)
+                                      .addWishlist(id: widget.id.toString());
                             }
-                            ref.read(wishlistProvider.notifier).fetchWishlistProducts();
+                            ref
+                                .read(wishlistProvider.notifier)
+                                .fetchWishlistProducts();
                           },
                           child: Material(
                             borderRadius: BorderRadius.circular(32),
@@ -99,7 +114,9 @@ class _ProductInfoState extends ConsumerState<ProductInfo> {
                               backgroundColor: KColor.appBackground,
                               radius: 16,
                               child: Icon(
-                                productDetails!.product!.isWishlist ? Icons.favorite : Icons.favorite_outline,
+                                productDetails!.product!.isWishlist
+                                    ? Icons.favorite
+                                    : Icons.favorite_outline,
                                 color: KColor.baseBlack,
                                 size: 13,
                               ),
@@ -138,25 +155,43 @@ class _ProductInfoState extends ConsumerState<ProductInfo> {
                                             currentIndex = index;
                                           });
                                           if (index == 1) {
-                                            ref.read(productRecommendationProvider.notifier).fetchProductsRecommendation(widget.id.toString());
+                                            ref
+                                                .read(
+                                                    productRecommendationProvider
+                                                        .notifier)
+                                                .fetchProductsRecommendation(
+                                                    widget.id.toString());
                                           } else if (index == 2) {
-                                            ref.read(reviewsProvider.notifier).fetchProductReviews(widget.id);
+                                            ref
+                                                .read(reviewsProvider.notifier)
+                                                .fetchProductReviews(widget.id);
                                           }
                                         },
                                         child: AnimatedContainer(
-                                          duration: const Duration(milliseconds: 300),
-                                          margin: const EdgeInsets.only(right: 16),
+                                          duration:
+                                              const Duration(milliseconds: 300),
+                                          margin:
+                                              const EdgeInsets.only(right: 16),
                                           width: 111,
                                           height: 40,
                                           decoration: BoxDecoration(
-                                            color: index == currentIndex ? KColor.blackbg.withOpacity(0.8) : KColor.searchColor.withOpacity(0.8),
-                                            borderRadius: BorderRadius.circular(15),
+                                            color: index == currentIndex
+                                                ? KColor.blackbg
+                                                    .withOpacity(0.8)
+                                                : KColor.searchColor
+                                                    .withOpacity(0.8),
+                                            borderRadius:
+                                                BorderRadius.circular(15),
                                           ),
                                           child: Center(
                                             child: Text(
                                               items[index],
-                                              style: KTextStyle.bodyText1.copyWith(
-                                                color: index == currentIndex ? KColor.whiteBackground : KColor.blackbg.withOpacity(0.4),
+                                              style:
+                                                  KTextStyle.bodyText1.copyWith(
+                                                color: index == currentIndex
+                                                    ? KColor.whiteBackground
+                                                    : KColor.blackbg
+                                                        .withOpacity(0.4),
                                               ),
                                             ),
                                           ),
@@ -172,8 +207,13 @@ class _ProductInfoState extends ConsumerState<ProductInfo> {
 
                         /// MAIN BODY
                         if (currentIndex == 0) const ProductVariation(),
-                        if (currentIndex == 1) ProductDescription(id: widget.id.toString()),
-                        if (currentIndex == 2) const ProductReview(),
+                        if (currentIndex == 1)
+                          ProductDescription(id: widget.id.toString()),
+                        if (currentIndex == 2)
+                          ProductReview(
+                            userId: getIntAsync(userId).toString(),
+                            productId: widget.id.toString(),
+                          )
                       ],
                     ),
                   ],

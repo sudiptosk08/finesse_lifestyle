@@ -22,3 +22,7 @@ class ReviewsSuccessState extends SuccessState {
 
   const ReviewsSuccessState(this.reviewModel);
 }
+
+class AddReviewSuccessState extends SuccessState {
+  const AddReviewSuccessState();
+}

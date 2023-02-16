@@ -6,6 +6,9 @@ import 'package:finesse/utils/extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nb_utils/nb_utils.dart';
+
+import '../../../../constants/shared_preference_constant.dart';
 
 // ignore: must_be_immutable
 class AddToCart extends ConsumerStatefulWidget {
@@ -93,14 +96,23 @@ class _AddToCartState extends ConsumerState<AddToCart> {
             child: Container(
               height: 54,
               width: context.screenWidth * 0.45,
-              decoration: BoxDecoration(color: KColor.blackbg, borderRadius: BorderRadius.circular(15)),
+              decoration: BoxDecoration(
+                  color: KColor.blackbg,
+                  borderRadius: BorderRadius.circular(15)),
               child: Center(
                 child: cartState is CartSuccessState
                     ? Text(
                         'Add to cart',
-                        style: KTextStyle.subtitle1.copyWith(color: KColor.whiteBackground),
+                        style: KTextStyle.subtitle1
+                            .copyWith(color: KColor.whiteBackground),
                       )
-                    : const CupertinoActivityIndicator(),
+                    : getBoolAsync(isLoggedIn) == false
+                        ? Text(
+                            'Add to cart',
+                            style: KTextStyle.subtitle1
+                                .copyWith(color: KColor.whiteBackground),
+                          )
+                        : const CupertinoActivityIndicator(),
               ),
             ),
           ),

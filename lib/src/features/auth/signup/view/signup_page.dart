@@ -37,7 +37,15 @@ class _SignupPageState extends State<SignupPage> {
   bool isSelected = false;
   var selectedColor = KColor.blackbg;
   String _verticalGroupValue = "English(United States)";
-  final List<String> _status = ["English (UK)", "Portuguese", "Espinosa", "Francais", "Turkce", "Italiano", "Hindi"];
+  final List<String> _status = [
+    "English (UK)",
+    "Portuguese",
+    "Espinosa",
+    "Francais",
+    "Turkce",
+    "Italiano",
+    "Hindi"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -123,48 +131,45 @@ class _SignupPageState extends State<SignupPage> {
                           builder: (context, ref, _) {
                             final authState = ref.watch(signupProvider);
                             return KButton(
-                              title: authState is LoadingState ? 'Please wait...' : 'Create Account',
-                              onTap: () {
-                                if (authState is! LoadingState) {
-                                  if (_formKey.currentState!.validate()) {
-                                    if (password.text != confirmPassword.text) {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                          content: Text("Password does not match"),
-                                          duration: Duration(milliseconds: 3000),
-                                        ),
-                                      );
-                                    }
-                                    ref.read(signupProvider.notifier).register(
-                                          name: "${firstName.text} ${lastName.text}",
-                                          email: email.text,
-                                          phone: phone.text,
-                                          password: password.text,
-                                          username: phone.text,
+                                title: authState is! LoadingState
+                                    ? 'Please wait...'
+                                    : 'Create Account',
+                                onTap: () {
+                                  if (password.text == confirmPassword.text) {
+                                    if (authState is! LoadingState) {
+                                      if (_formKey.currentState!.validate()) {
+                                        ref
+                                            .read(signupProvider.notifier)
+                                            .register(
+                                              name:
+                                                  "${firstName.text} ${lastName.text}",
+                                              email: email.text,
+                                              phone: phone.text,
+                                              password: password.text,
+                                              username: phone.text,
+                                            );
+                                        _helper.name(
+                                          "${firstName.text} ${lastName.text}",
                                         );
-                                    _helper.name(
-                                      "${firstName.text} ${lastName.text}",
-                                    );
-                                    _helper.email(
-                                      email.text,
-                                    );
-                                    _helper.contact(
-                                      phone.text,
-                                    );
-
-                                    Navigator.pushNamed(
-                                      context,
-                                      '/otp',
-                                      arguments: {
-                                        'phoneNumber': phone.text,
-                                        'password': password.text,
-                                      },
+                                        _helper.email(
+                                          email.text,
+                                        );
+                                        _helper.contact(
+                                          phone.text,
+                                        );
+                                      }
+                                    }
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content:
+                                            Text("Password does not match"),
+                                        duration: Duration(milliseconds: 3000),
+                                      ),
                                     );
                                   }
-                                }
-                                //Navigator.pushNamed(context, '/login');
-                              },
-                            );
+                                  //Navigator.pushNamed(context, '/login');
+                                });
                           },
                         ),
                         const SizedBox(height: 24),
@@ -219,7 +224,8 @@ class _SignupPageState extends State<SignupPage> {
             height: 512,
             width: double.infinity,
             child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,

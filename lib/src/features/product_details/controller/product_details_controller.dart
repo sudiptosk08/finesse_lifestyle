@@ -24,6 +24,7 @@ class ProductDetailsController extends StateNotifier<BaseState> {
   ProductDetailsModel? productDetailsModel;
   ColorModel? colorModel;
 
+  
   updateSuccessState() {
     state = ProductDetailsSuccessState(productDetailsModel);
   }

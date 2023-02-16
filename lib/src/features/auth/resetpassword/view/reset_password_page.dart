@@ -66,13 +66,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           ref.read(resetPasswordProvider.notifier).sendPhone(
                                 phone: phone.text,
                               );
-                          Navigator.pushNamed(
-                            context,
-                            '/setOtp',
-                            arguments: {
-                              'phoneNumber': phone.text,
-                            },
-                          );
+                     
+                         
                         }
                       }
                     },
