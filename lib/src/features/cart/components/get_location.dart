@@ -1,4 +1,5 @@
 import 'package:finesse/src/features/cart/controller/zone_controller.dart';
+import 'package:finesse/src/features/cart/model/area_model.dart';
 import 'package:finesse/src/features/cart/model/city_model.dart';
 import 'package:finesse/src/features/cart/model/zone_model.dart';
 import 'package:finesse/src/features/cart/state/zone_state.dart';
@@ -12,9 +13,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class DeliveryAddress extends StatefulWidget {
   String? cities;
   String? zones;
+  String? areas;
   final bool? checkCities;
+  final bool? checkZones;
 
-  DeliveryAddress({Key? key, this.cities, this.zones, this.checkCities}) : super(key: key);
+  DeliveryAddress(
+      {Key? key,
+      this.cities,
+      this.zones,
+      this.areas,
+      this.checkCities,
+      this.checkZones})
+      : super(key: key);
 
   @override
   State<DeliveryAddress> createState() => _DeliveryAddressState();
@@ -27,13 +37,20 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
       builder: (context, ref, _) {
         final zoneState = ref.watch(zoneProvider);
         final cityState = ref.watch(cityProvider);
-        final List<Zone>? zoneData = zoneState is ZoneSuccessState ? zoneState.zoneModel?.zones : [];
-        final List<City>? cityData = cityState is CitySuccessState ? cityState.cityModel?.cities : [];
+        final areaState = ref.watch(areaProvider);
+        final List<Zone>? zoneData =
+            zoneState is ZoneSuccessState ? zoneState.zoneModel?.zones : [];
+        final List<City>? cityData =
+            cityState is CitySuccessState ? cityState.cityModel?.cities : [];
+        final List<Area>? areaData =
+            areaState is AreaSuccessState ? areaState.areaModel?.areas : [];
 
         return Container(
           height: 48,
           width: context.screenWidth,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: KColor.searchColor.withOpacity(0.8)),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: KColor.searchColor.withOpacity(0.8)),
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: DropdownButtonHideUnderline(
             child: Padding(
@@ -41,22 +58,42 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
               child: DropdownButton<String>(
                 isExpanded: true,
                 hint: Text(
-                  widget.checkCities == true ? 'City' : 'Zone',
-                  style: KTextStyle.bodyText1.copyWith(color: KColor.blackbg.withOpacity(0.4)),
+                  widget.checkCities == true
+                      ? 'City'
+                      : widget.checkZones == true
+                          ? 'Zone'
+                          : 'Area',
+                  style: KTextStyle.bodyText1
+                      .copyWith(color: KColor.blackbg.withOpacity(0.4)),
                 ),
                 dropdownColor: KColor.appBackground,
                 menuMaxHeight: context.screenHeight * 0.5,
                 alignment: AlignmentDirectional.centerStart,
-                value: widget.checkCities == true ? widget.cities : widget.zones,
-                icon: const Icon(Icons.keyboard_arrow_down, color: KColor.blackbg),
+                value: widget.checkCities == true
+                    ? widget.cities
+                    : widget.checkZones == true
+                        ? widget.zones
+                        : widget.areas,
+                icon: const Icon(Icons.keyboard_arrow_down,
+                    color: KColor.blackbg),
                 iconSize: 16,
                 onChanged: (newValue) {
                   setState(() {
-                    widget.checkCities == true ? widget.cities = newValue : widget.zones = newValue;
+                    widget.checkCities == true
+                        ? widget.cities = newValue
+                        : widget.checkZones == true ? 
+                             widget.zones = newValue 
+                            :widget.areas = newValue;
                     if (widget.checkCities == true) widget.zones = null;
+                    if (widget.checkZones == true) widget.areas = null;
                   });
                   if (widget.checkCities == true) {
                     ref.read(zoneProvider.notifier).allZone(id: widget.cities);
+                  }
+                  if (widget.checkZones == true) {
+                    ref
+                        .read(areaProvider.notifier)
+                        .allArea(zoneId: widget.zones);
                   }
                 },
                 items: widget.checkCities == true
@@ -73,19 +110,33 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                           );
                         },
                       ).toList()
-                    : zoneData?.map(
-                        (position) {
-                          return DropdownMenuItem(
-                            value: position.id.toString(),
-                            child: Text(
-                              position.zoneName.toString(),
-                              style: KTextStyle.bodyText1.copyWith(
-                                color: KColor.blackbg.withOpacity(0.4),
-                              ),
-                            ),
-                          );
-                        },
-                      ).toList(),
+                    : widget.checkZones == true && widget.checkCities == false
+                        ? zoneData?.map(
+                            (position) {
+                              return DropdownMenuItem(
+                                value: position.id.toString(),
+                                child: Text(
+                                  position.zoneName.toString(),
+                                  style: KTextStyle.bodyText1.copyWith(
+                                    color: KColor.blackbg.withOpacity(0.4),
+                                  ),
+                                ),
+                              );
+                            },
+                          ).toList()
+                        : areaData?.map(
+                            (position) {
+                              return DropdownMenuItem(
+                                value: position.id.toString(),
+                                child: Text(
+                                  position.name.toString(),
+                                  style: KTextStyle.bodyText1.copyWith(
+                                    color: KColor.blackbg.withOpacity(0.4),
+                                  ),
+                                ),
+                              );
+                            },
+                          ).toList(),
               ),
             ),
           ),

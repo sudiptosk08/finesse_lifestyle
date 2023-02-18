@@ -1,10 +1,14 @@
 import 'package:finesse/service/app_mode.dart';
 
 class API {
-  static const liveImage = 'http://mobileapi.scorebee.com/'; // Live Production API URL
-  static const testImage = 'http://staginapi.duare.net/'; // Live Staging API URL
-  static const live = 'http://mobileapi.scorebee.com/api/'; // Live Production API URL
-  static const test = 'https://finesseapi.dreamsgallerybd.com/'; // Live Staging API URL
+  static const liveImage =
+      'http://mobileapi.scorebee.com/'; // Live Production API URL
+  static const testImage =
+      'http://staginapi.duare.net/'; // Live Staging API URL
+  static const live =
+      'http://mobileapi.scorebee.com/api/'; // Live Production API URL
+  static const test =
+      'https://finesseapi.dreamsgallerybd.com/'; // Live Staging API URL
   static const base = AppMode.PRODUCTION_MODE ? live : test;
   static const baseImage = AppMode.PRODUCTION_MODE ? liveImage : testImage;
 
@@ -32,7 +36,8 @@ class API {
       'app/shopPageData?order=id,desc&page=1&groupId=$groupId&categoryId=$categoryId&str=$str&price=&brandId=&colour=&size';
   // 'app/shopPageData?order=id,desc&page=1&groupId=&categoryId=29&str=&price=&brandId=&colour=&size='
 
-  static productDetails(productId) => 'app/getProductDetails/$productId?isApp=1';
+  static productDetails(productId) =>
+      'app/getProductDetails/$productId?isApp=1';
 
   static productRecommendation(productId) => 'app/relatedProduct/$productId';
 
@@ -51,6 +56,7 @@ class API {
   static const deleteCart = 'app/cart_delete';
   static const allCity = 'app/cities';
   static allZone({id = ""}) => 'app/zones?city=$id';
+  static allArea({zoneId = ""}) => 'app/areas/$zoneId';
   static const getPromoCode = 'app/checkCoupon';
   static const getReferralCode = 'app/checkReferralCode';
   static const getGiftVoucher = 'app/checkGiftVoucherCode';

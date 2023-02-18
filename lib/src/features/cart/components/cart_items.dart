@@ -50,7 +50,9 @@ class _CartItemsState extends State<CartItems> {
                           },
                           delete: () {
                             if (cartState is! LoadingState) {
-                              ref.read(cartProvider.notifier).deleteCart(id: cartData[index].id.toString());
+                              ref.read(cartProvider.notifier).deleteCart(id: cartData[index].id.toString(),
+                              
+                              );
                             }
                             Navigator.pop(context);
                           },

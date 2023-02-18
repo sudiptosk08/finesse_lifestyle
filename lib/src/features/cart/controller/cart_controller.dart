@@ -28,7 +28,8 @@ class CartController extends StateNotifier<BaseState> {
     print('productVariationDetails = $productVariationDetails');
     if (productVariationDetails == null) {
       return toast('Please select variation first!', bgColor: KColor.red);
-    } else if (productVariationDetails != null && quantity > productVariationDetails!.stock) {
+    } else if (productVariationDetails != null &&
+        quantity > productVariationDetails!.stock) {
       return toast('Stock limit exceeded!', bgColor: KColor.red);
     }
 
@@ -46,7 +47,9 @@ class CartController extends StateNotifier<BaseState> {
         await Network.postRequest(API.addCart, requestBody),
       );
       if (responseBody != null) {
-        cartList = (responseBody['allCarts'] as List<dynamic>).map((x) => CartModel.fromJson(x)).toList();
+        cartList = (responseBody['allCarts'] as List<dynamic>)
+            .map((x) => CartModel.fromJson(x))
+            .toList();
         toast("Product added to cart", bgColor: KColor.selectColor);
         state = CartSuccessState(cartList);
         totalCart();
@@ -64,9 +67,12 @@ class CartController extends StateNotifier<BaseState> {
     state = const LoadingState();
     dynamic responseBody;
     try {
-      responseBody = await Network.handleResponse(await Network.getRequest(API.getCart));
+      responseBody =
+          await Network.handleResponse(await Network.getRequest(API.getCart));
       if (responseBody != null) {
-        cartList = (responseBody['allCarts'] as List<dynamic>).map((x) => CartModel.fromJson(x)).toList();
+        cartList = (responseBody['allCarts'] as List<dynamic>)
+            .map((x) => CartModel.fromJson(x))
+            .toList();
         state = CartSuccessState(cartList);
         totalCart();
       } else {
@@ -95,8 +101,11 @@ class CartController extends StateNotifier<BaseState> {
         await Network.postRequest(API.updateCart, requestBody),
       );
       if (responseBody != null) {
-        cartList = (responseBody['allCarts'] as List<dynamic>).map((x) => CartModel.fromJson(x)).toList();
-        toast("Product quantity updated in cart successfully!", bgColor: KColor.selectColor);
+        cartList = (responseBody['allCarts'] as List<dynamic>)
+            .map((x) => CartModel.fromJson(x))
+            .toList();
+        toast("Product quantity updated in cart successfully!",
+            bgColor: KColor.selectColor);
         state = CartSuccessState(cartList);
         totalCart();
       } else {
@@ -120,9 +129,10 @@ class CartController extends StateNotifier<BaseState> {
         await Network.postRequest(API.deleteCart, requestBody),
       );
       if (responseBody != null) {
-        cartList = (responseBody['allCarts'] as List<dynamic>).map((x) => CartModel.fromJson(x)).toList();
-        toast("Product removed from cart successfully!", bgColor: KColor.selectColor);
+        toast("Product removed from cart successfully!",
+            bgColor: KColor.selectColor);
         state = CartSuccessState(cartList);
+        ref!.read(cartProvider.notifier).cartDetails();
         totalCart();
       } else {
         state = CartSuccessState(cartList);
