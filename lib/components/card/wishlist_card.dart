@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:finesse/components/dialog/k_confirm_dialog.dart';
 import 'package:finesse/src/features/cart/controller/cart_controller.dart';
+import 'package:finesse/src/features/cart/controller/zone_controller.dart';
 import 'package:finesse/styles/b_style.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/gestures.dart';
@@ -70,12 +71,15 @@ class _WishlistCardState extends ConsumerState<WishlistCard> {
         margin: const EdgeInsets.only(bottom: 16),
         decoration: const BoxDecoration(
           color: KColor.deleteColor,
-          borderRadius: BorderRadius.only(topRight: Radius.circular(15.0), bottomRight: Radius.circular(15.0)),
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(15.0),
+              bottomRight: Radius.circular(15.0)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Image.asset('assets/images/Delete.png', height: 23, fit: BoxFit.fill),
+            Image.asset('assets/images/Delete.png',
+                height: 23, fit: BoxFit.fill),
           ],
         ),
       ),
@@ -109,11 +113,14 @@ class _WishlistCardState extends ConsumerState<WishlistCard> {
                 SizedBox(
                   height: 123,
                   child: ClipRRect(
-                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        bottomLeft: Radius.circular(15)),
                     child: CachedNetworkImage(
                       imageUrl: '${widget.img}',
                       fit: BoxFit.fill,
-                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                   ),
                 ),
@@ -130,7 +137,8 @@ class _WishlistCardState extends ConsumerState<WishlistCard> {
                             Flexible(
                               child: Text(
                                 '${widget.productName}',
-                                style: KTextStyle.bodyText1.copyWith(color: KColor.blackbg),
+                                style: KTextStyle.bodyText1
+                                    .copyWith(color: KColor.blackbg),
                               ),
                             ),
                             // const SizedBox(height: 8),
@@ -149,16 +157,22 @@ class _WishlistCardState extends ConsumerState<WishlistCard> {
                           children: [
                             Text(
                               "\$${widget.price.toString()}",
-                              style: KTextStyle.subtitle1.copyWith(color: KColor.blackbg),
+                              style: KTextStyle.subtitle1
+                                  .copyWith(color: KColor.blackbg),
                             ),
-                            widget.isChecked == true ? SizedBox(width: context.screenWidth * 0.32) : SizedBox(width: context.screenWidth * 0.14),
+                            widget.isChecked == true
+                                ? SizedBox(width: context.screenWidth * 0.32)
+                                : SizedBox(width: context.screenWidth * 0.14),
                             widget.isChecked == true
                                 ? InkWell(
                                     onTap: widget.add,
                                     child: CircleAvatar(
                                       radius: 18,
                                       backgroundColor: KColor.baseBlack,
-                                      child: SvgPicture.asset('assets/images/trolly.svg', color: Colors.white, height: 19),
+                                      child: SvgPicture.asset(
+                                          'assets/images/trolly.svg',
+                                          color: Colors.white,
+                                          height: 19),
                                     ),
                                   )
                                 : Row(
@@ -167,25 +181,37 @@ class _WishlistCardState extends ConsumerState<WishlistCard> {
                                         borderRadius: BorderRadius.circular(10),
                                         onTap: () {
                                           setState(() {
-                                            widget.quantity = (widget.quantity! + 1);
+                                            widget.quantity =
+                                                (widget.quantity! + 1);
                                           });
 
-                                          ref.read(cartProvider.notifier).updateCart(quantity: widget.quantity, id: widget.productId);
+                                          ref
+                                              .read(cartProvider.notifier)
+                                              .updateCart(
+                                                  quantity: widget.quantity,
+                                                  id: widget.productId);
+                                          ref.read(zoneProvider.notifier);
                                         },
                                         child: Container(
                                           height: 32,
                                           width: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(color: KColor.blackbg, width: 1),
-                                            borderRadius: BorderRadius.circular(10),
+                                            border: Border.all(
+                                                color: KColor.blackbg,
+                                                width: 1),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
                                           child: const Center(
-                                            child: Icon(Icons.add, size: 10, color: KColor.blackbg),
+                                            child: Icon(Icons.add,
+                                                size: 10,
+                                                color: KColor.blackbg),
                                           ),
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12.0),
                                         child: Text(
                                           widget.quantity.toString(),
                                           style: KTextStyle.headline4.copyWith(
@@ -198,20 +224,32 @@ class _WishlistCardState extends ConsumerState<WishlistCard> {
                                         onTap: () {
                                           if (widget.quantity! > 1) {
                                             setState(() {
-                                              widget.quantity = (widget.quantity! - 1);
+                                              widget.quantity =
+                                                  (widget.quantity! - 1);
                                             });
 
-                                            ref.read(cartProvider.notifier).updateCart(quantity: widget.quantity, id: widget.productId);
+                                            ref
+                                                .read(cartProvider.notifier)
+                                                .updateCart(
+                                                    quantity: widget.quantity,
+                                                    id: widget.productId);
+                                            ref.read(zoneProvider.notifier);
                                           }
                                         },
                                         child: Container(
                                           height: 32,
                                           width: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(color: KColor.blackbg, width: 1),
-                                            borderRadius: BorderRadius.circular(10),
+                                            border: Border.all(
+                                                color: KColor.blackbg,
+                                                width: 1),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
-                                          child: const Center(child: Icon(Icons.remove, size: 10, color: KColor.blackbg)),
+                                          child: const Center(
+                                              child: Icon(Icons.remove,
+                                                  size: 10,
+                                                  color: KColor.blackbg)),
                                         ),
                                       ),
                                     ],

@@ -1,6 +1,4 @@
 import 'package:finesse/components/button/k_button.dart';
-import 'package:finesse/components/textfield/k_password_field.dart';
-import 'package:finesse/components/textfield/k_phone_field.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/src/features/auth/login/controller/login_controller.dart';
@@ -12,6 +10,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../../components/textfield/k_text_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -57,17 +57,17 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       SizedBox(height: context.screenHeight * 0.05),
-                      PhoneTextField(
+                      KTextField(
                         controller: phone,
-                        readOnly: false,
+                        isReadOnly: false,
                         hintText: 'Enter your phone number here...',
-                        label: 'Phone',
+                        labelText: 'Phone',
                       ),
                       const SizedBox(height: 33),
-                      PasswordTextField(
+                      KTextField(
                         controller: password,
                         hintText: 'Enter your password here...',
-                        label: 'password',
+                        labelText: 'password',
                       ),
                       const SizedBox(height: 24),
                       Row(

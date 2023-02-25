@@ -38,7 +38,7 @@ class _CartItemsState extends State<CartItems> {
                       itemBuilder: (ctx, index) {
                         return WishlistCard(
                           img: cartData[index].mproduct?.productImage,
-                          productId: cartData[index].mproduct?.id,
+                          productId: cartData[index].id,
                           isChecked: false,
                           productName: '${cartData[index].vproduct!.productName!}${cartData[index].vproduct?.variationformat?.values}',
                           price: cartData[index].vproduct?.sellingPrice,

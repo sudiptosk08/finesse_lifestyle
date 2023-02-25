@@ -1,8 +1,5 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/button/k_button.dart';
-import 'package:finesse/components/textfield/k_description_field.dart';
-import 'package:finesse/components/textfield/k_email_field.dart';
-import 'package:finesse/components/textfield/k_phone_field.dart';
 import 'package:finesse/components/textfield/k_text_field.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/styles/k_colors.dart';
@@ -182,33 +179,33 @@ class _ContactPageState extends State<ContactPage> {
                 ),
               ),
               SizedBox(height: context.screenHeight * 0.06),
-              NameTextField(
+             KTextField(
                 controller: name,
-                readOnly: false,
+                isReadOnly: false,
                 hintText: 'Marwa Saad',
-                label: 'Name',
+                labelText: 'Name',
               ),
               const SizedBox(height: 24),
-              EmailTextField(
+              KTextField(
                 controller: email,
-                readOnly: false,
+                isReadOnly: false,
                 hintText: 'Enter your email here...',
-                label: 'Email',
+                labelText: 'Email',
               ),
               const SizedBox(height: 24),
-              PhoneTextField(
+              KTextField(
                 controller: phone,
-                readOnly: false,
+                isReadOnly: false,
                 hintText: 'Enter your phone number here...',
-                label: 'Contact',
+                labelText: 'Contact',
               ),
               const SizedBox(height: 24),
-              DescriptionTextField(
+              KTextField(
                 controller: message,
-                readOnly: false,
-                checkColor: true,
+                isReadOnly: false,
+                textColor: KColor.grey350,
                 hintText: 'Type your message here',
-                label: '',
+                labelText: '',
               ),
               SizedBox(height: context.screenHeight * 0.05),
               KButton(

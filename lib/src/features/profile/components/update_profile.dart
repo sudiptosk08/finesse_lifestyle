@@ -1,6 +1,5 @@
 import 'package:finesse/components/button/k_button.dart';
-import 'package:finesse/components/textfield/k_fill_name.dart';
-import 'package:finesse/components/textfield/k_fill_phone.dart';
+import 'package:finesse/components/textfield/k_text_field.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/src/features/auth/login/controller/login_controller.dart';
 import 'package:finesse/src/features/auth/login/model/user_model.dart';
@@ -45,38 +44,42 @@ class _UpdateProfileState extends State<UpdateProfile> {
               children: [
                 _editInformation(
                   'Name',
-                  KFillNormal(
+                  KTextField(
                     controller: name,
+                   
                     hintText: 'Enter your name here...',
-                    label: '',
-                    readOnly: false,
+                    labelText: '',
+                    isReadOnly: false,
                   ),
                 ),
                 _editInformation(
                   'Email',
-                  KFillNormal(
+                  KTextField(
                     controller: email,
+                   
                     hintText: 'Enter your email here...',
-                    label: '',
-                    readOnly: false,
+                    labelText: '',
+                    isReadOnly: false,
                   ),
                 ),
                 _editInformation(
                   'Address',
-                  KFillNormal(
+                  KTextField(
                     controller: address,
+                    
                     hintText: 'Enter your address here...',
-                    label: '',
-                    readOnly: false,
+                    labelText: '',
+                    isReadOnly: false,
                   ),
                 ),
                 _editInformation(
                   'Phone Number',
-                  KFillPhone(
+                  KTextField(
                     controller: phone,
+                    
                     hintText: 'Enter your phone number here...',
-                    label: '',
-                    readOnly: false,
+                    labelText: '',
+                    isReadOnly: false,
                   ),
                 ),
                 _editInformation(

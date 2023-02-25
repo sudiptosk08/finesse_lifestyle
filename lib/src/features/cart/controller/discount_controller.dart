@@ -1,14 +1,12 @@
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/core/network/api.dart';
 import 'package:finesse/core/network/network_utils.dart';
-import 'package:finesse/service/navigation_service.dart';
-import 'package:finesse/src/features/auth/signup/state/signup_state.dart';
+import 'package:finesse/src/features/cart/controller/cart_controller.dart';
+import 'package:finesse/src/features/cart/controller/zone_controller.dart';
 import 'package:finesse/src/features/cart/model/promocode_model.dart';
 import 'package:finesse/src/features/cart/model/refferralcode_model.dart';
 import 'package:finesse/src/features/cart/model/vouchercode_model.dart';
 import 'package:finesse/src/features/cart/state/code_state.dart';
-import 'package:finesse/src/features/cart/view/cart_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Providers
@@ -24,9 +22,16 @@ class DiscountController extends StateNotifier<BaseState> {
   PromoCodeModel? promoCodeModel;
   ReferralCodeModel? referralCodeModel;
   VoucherCodeModel? voucherCodeModel;
+  int deliveryFee = 0;
+  int roundingFee = 0;
+  int subtotal = 0;
+  int discount = 0;
+  var countTotalFee;
+  var totalFee;
 
   Future sendPromoCode({
     required String code,
+    required bool clear,
   }) async {
     state = const LoadingState();
     dynamic responseBody;
@@ -42,8 +47,11 @@ class DiscountController extends StateNotifier<BaseState> {
         promoCodeModel = PromoCodeModel.fromJson(responseBody);
         state = PromoCodeSuccessState(promoCodeModel);
         print("Send promo code Successful");
+
+        totalAmount(state, clear);
         // NavigationService.navigateToReplacement(
         //     CupertinoPageRoute(builder: (context) => const CartPage()));
+
       } else {
         state = const ErrorState();
       }
@@ -56,6 +64,7 @@ class DiscountController extends StateNotifier<BaseState> {
 
   Future sendCReferralCode({
     required String barCode,
+    required bool clear,
   }) async {
     state = const LoadingState();
     dynamic responseBody;
@@ -73,6 +82,7 @@ class DiscountController extends StateNotifier<BaseState> {
         print("Send referral code  Successful");
         // NavigationService.navigateToReplacement(
         //     CupertinoPageRoute(builder: (context) => const CartPage()));
+
       } else {
         state = const ErrorState();
       }
@@ -85,6 +95,7 @@ class DiscountController extends StateNotifier<BaseState> {
 
   Future sendGiftVoucher({
     required String code,
+    required bool clear,
   }) async {
     state = const LoadingState();
     dynamic responseBody;
@@ -97,9 +108,9 @@ class DiscountController extends StateNotifier<BaseState> {
       );
       print(requestBody);
       if (responseBody != null) {
-        state = const SignupSuccessState();
+        voucherCodeModel = VoucherCodeModel.fromJson(responseBody);
+        state = VoucherCodeSuccessState(voucherCodeModel);
         print("Gift voucher code Successful");
-        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) => const CartPage()));
       } else {
         state = const ErrorState();
       }
@@ -108,5 +119,34 @@ class DiscountController extends StateNotifier<BaseState> {
       print(stackTrace);
       state = const ErrorState();
     }
+  }
+
+  void totalAmount(codeState, clear) {
+    final PromoCodeModel? promoCodeData =
+        codeState is PromoCodeSuccessState ? codeState.promoCodeModel : null;
+    final ReferralCodeModel? referralCodeData =
+        codeState is ReferralCodeSuccessState
+            ? codeState.referralCodeModel
+            : null;
+    deliveryFee = ref?.read(zoneProvider.notifier).deliveryFee as int;
+    subtotal = ref?.read(cartProvider.notifier).subtotal as int;
+    int promoCodeDis = promoCodeData?.coupon.discount as int;
+    print(promoCodeDis);
+    int referralCodeDis = referralCodeData?.discount as int;
+    print(referralCodeDis);
+    countTotalFee = promoCodeData?.success == true
+        ? '${deliveryFee + (subtotal - (subtotal * promoCodeDis) / 100).round()}' //promoCodeData?.coupon.discount.toString()
+        : referralCodeData?.success == true
+            ? '${deliveryFee + (subtotal - (subtotal * referralCodeDis) / 100).round()}'
+            : 0;
+
+    roundingFee = clear == true ? 0 : int.parse(countTotalFee) % 10;
+    totalFee =
+        clear == true ? subtotal : int.parse(countTotalFee) - roundingFee;
+    discount = clear == false && promoCodeModel != null ? 
+    promoCodeDis : clear == false && referralCodeModel != null ? referralCodeDis:0 ;
+    print(clear);
+    print(countTotalFee);
+    print(totalFee);
   }
 }

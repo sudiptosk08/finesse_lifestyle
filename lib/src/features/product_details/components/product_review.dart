@@ -1,6 +1,5 @@
 
 import 'package:finesse/components/button/k_button.dart';
-import 'package:finesse/components/textfield/k_description_field.dart';
 import 'package:finesse/src/features/filter/components/rating.dart';
 import 'package:finesse/src/features/product_details/controller/product_details_controller.dart';
 import 'package:finesse/src/features/product_details/controller/reviews_controller.dart';
@@ -16,6 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../components/textfield/k_text_field.dart';
 import '../../../../constants/asset_path.dart';
 import '../../../../core/base/base_state.dart';
 
@@ -98,12 +98,13 @@ class _ProductReviewState extends State<ProductReview> {
               const SizedBox(
                 height: 10,
               ),
-              DescriptionTextField(
-                  label: "",
+              KTextField(
+                  labelText: "",
                   controller: comment,
                   hintText: "Write your review here",
-                  checkColor: false,
-                  readOnly: false),
+                 
+                  isReadOnly: false,
+                  callBackFunction: (e) {  },),
               const SizedBox(
                 height: 10,
               ),

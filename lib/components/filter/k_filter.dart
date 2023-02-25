@@ -1,7 +1,8 @@
-import 'package:finesse/components/textfield/k_search_field.dart';
 import 'package:finesse/service/navigation_service.dart';
 import 'package:finesse/src/features/home/components/shop_page.dart';
 import 'package:flutter/material.dart';
+
+import '../textfield/k_text_field.dart';
 
 class KFilter extends StatefulWidget {
   final bool? check;
@@ -24,10 +25,10 @@ class _KFilterState extends State<KFilter> {
         Expanded(
           child: SizedBox(
             height: 40,
-            child: SearchTextField(
+            child: KTextField(
               onTap: () => Navigator.push(context, FadeRoute(page: const ShopPage())),
               controller: controller,
-              readOnly: true,
+              isReadOnly: true,
               hintText: 'Search...',
             ),
           ),

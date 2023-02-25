@@ -1,5 +1,4 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
-import 'package:finesse/components/textfield/k_search_field.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
@@ -7,6 +6,8 @@ import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+
+import '../../../../components/textfield/k_text_field.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
@@ -34,10 +35,10 @@ class _SettingPageState extends State<SettingPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SearchTextField(
-                callbackFunction: (e) {},
+              KTextField(
+                callBackFunction: (e) {},
                 controller: search,
-                readOnly: false,
+                isReadOnly: false,
                 hintText: 'Search',
               ),
               const SizedBox(height: 20),

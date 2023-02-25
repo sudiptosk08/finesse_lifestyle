@@ -1,6 +1,5 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/card/product_card.dart';
-import 'package:finesse/components/textfield/k_search_field.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/src/features/home/controllers/shop_controller.dart';
@@ -11,6 +10,8 @@ import 'package:finesse/src/features/wishlist/controller/wishlist_controller.dar
 import 'package:finesse/styles/k_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../../components/textfield/k_text_field.dart';
 
 class ShopPage extends StatefulWidget {
   const ShopPage({Key? key}) : super(key: key);
@@ -51,10 +52,10 @@ class _ShopPageState extends State<ShopPage> {
                     children: [
                       Expanded(
                         flex: 8,
-                        child: SearchTextField(
-                          callbackFunction: (query) => ref.read(shopProvider.notifier).fetchShopProductList(str: query),
+                        child: KTextField(
+                          callBackFunction: (query) => ref.read(shopProvider.notifier).fetchShopProductList(str: query),
                           controller: controller,
-                          readOnly: false,
+                          isReadOnly: false,
                           hintText: 'Search here...',
                         ),
                       ),

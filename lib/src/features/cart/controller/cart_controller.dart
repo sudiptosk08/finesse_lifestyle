@@ -101,12 +101,11 @@ class CartController extends StateNotifier<BaseState> {
         await Network.postRequest(API.updateCart, requestBody),
       );
       if (responseBody != null) {
-        cartList = (responseBody['allCarts'] as List<dynamic>)
-            .map((x) => CartModel.fromJson(x))
-            .toList();
         toast("Product quantity updated in cart successfully!",
             bgColor: KColor.selectColor);
         state = CartSuccessState(cartList);
+        totalCart();
+        ref!.read(cartProvider.notifier).cartDetails();
         totalCart();
       } else {
         state = CartSuccessState(cartList);
@@ -132,8 +131,8 @@ class CartController extends StateNotifier<BaseState> {
         toast("Product removed from cart successfully!",
             bgColor: KColor.selectColor);
         state = CartSuccessState(cartList);
-        ref!.read(cartProvider.notifier).cartDetails();
         totalCart();
+        ref!.read(cartProvider.notifier).cartDetails();
       } else {
         state = CartSuccessState(cartList);
       }

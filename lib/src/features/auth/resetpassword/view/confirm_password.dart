@@ -1,13 +1,14 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/button/k_button.dart';
 import 'package:finesse/components/dialog/k_dialog.dart';
-import 'package:finesse/components/textfield/k_fill_password_field.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/src/features/auth/resetpassword/controller/password_reset_controller.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../../../components/textfield/k_text_field.dart';
 
 class ConfirmPasswordPage extends StatefulWidget {
   final String? token;
@@ -43,10 +44,10 @@ class _ConfirmPasswordPageState extends State<ConfirmPasswordPage> {
                   style: KTextStyle.subtitle7.copyWith(color: KColor.blackbg),
                 ),
                 const SizedBox(height: 16),
-                FillTextFieldPassword(
+                KTextField(
                   controller: password,
                   hintText: '*************',
-                  label: '',
+                  labelText: '',
                 ),
                 const SizedBox(height: 24),
                 Text(
@@ -54,10 +55,10 @@ class _ConfirmPasswordPageState extends State<ConfirmPasswordPage> {
                   style: KTextStyle.subtitle7.copyWith(color: KColor.blackbg),
                 ),
                 const SizedBox(height: 16),
-                FillTextFieldPassword(
+                KTextField(
                   controller: confirmPassword,
                   hintText: '*************',
-                  label: '',
+                  labelText: '',
                 ),
               ],
             ),

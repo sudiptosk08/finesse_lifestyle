@@ -30,6 +30,7 @@ class ZoneController extends StateNotifier<BaseState> {
   int roundingFee = 0;
   int subtotal = 0;
   int totalAmount = 0;
+  int countTotalFee = 0;
 
   Future allZone({id = ""}) async {
     state = const LoadingState();
@@ -50,23 +51,17 @@ class ZoneController extends StateNotifier<BaseState> {
       state = const ErrorState();
     }
   }
-  void totalDelivery() {
-    int delivery = 0;
-    int rounding = 0;
-    int countTotal = 0;
-    int total = 0;
-    for (int i = 0; i < zoneModel!.zones.length; i++) {
-      delivery = zoneModel!.zones[i].delivery!;
-      rounding = (delivery / 100).round();
-    }
 
-    countTotal = ref?.read(cartProvider.notifier).subtotal as int;
-    total = countTotal + delivery - rounding;
-    deliveryFee = delivery;
-    roundingFee = rounding;
-    totalAmount = total;
+  void totalDelivery() {
+    for (int i = 0; i < zoneModel!.zones.length; i++) {
+      deliveryFee = zoneModel!.zones[i].delivery!;
+      print(deliveryFee);
+     
+    }
+    subtotal = ref?.read(cartProvider.notifier).subtotal as int;
+    countTotalFee = subtotal + deliveryFee;
+    print(countTotalFee);
   }
- 
 }
 
 class CityController extends StateNotifier<BaseState> {
@@ -100,10 +95,6 @@ class AreaController extends StateNotifier<BaseState> {
 
   AreaController({this.ref}) : super(const InitialState());
   AreaModel? areaModel;
-  int deliveryFee = 0;
-  int roundingFee = 0;
-  int subtotal = 0;
-  int totalAmount = 0;
 
   Future allArea({zoneId = ""}) async {
     state = const LoadingState();
@@ -114,7 +105,6 @@ class AreaController extends StateNotifier<BaseState> {
       if (responseBody != null) {
         areaModel = AreaModel.fromJson(responseBody);
         state = AreaSuccessState(areaModel);
-      
       } else {
         state = const ErrorState();
       }
@@ -124,5 +114,4 @@ class AreaController extends StateNotifier<BaseState> {
       state = const ErrorState();
     }
   }
- 
 }

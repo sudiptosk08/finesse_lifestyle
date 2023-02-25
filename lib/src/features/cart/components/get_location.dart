@@ -35,13 +35,13 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, _) {
-        final zoneState = ref.watch(zoneProvider);
         final cityState = ref.watch(cityProvider);
+        final zoneState = ref.watch(zoneProvider);
         final areaState = ref.watch(areaProvider);
-        final List<Zone>? zoneData =
-            zoneState is ZoneSuccessState ? zoneState.zoneModel?.zones : [];
         final List<City>? cityData =
             cityState is CitySuccessState ? cityState.cityModel?.cities : [];
+        final List<Zone>? zoneData =
+            zoneState is ZoneSuccessState ? zoneState.zoneModel?.zones : [];
         final List<Area>? areaData =
             areaState is AreaSuccessState ? areaState.areaModel?.areas : [];
 
@@ -81,9 +81,9 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                   setState(() {
                     widget.checkCities == true
                         ? widget.cities = newValue
-                        : widget.checkZones == true ? 
-                             widget.zones = newValue 
-                            :widget.areas = newValue;
+                        : widget.checkZones == true
+                            ? widget.zones = newValue
+                            : widget.areas = newValue;
                     if (widget.checkCities == true) widget.zones = null;
                     if (widget.checkZones == true) widget.areas = null;
                   });

@@ -5,7 +5,6 @@ import 'package:finesse/components/button/k_button.dart';
 import 'package:finesse/components/card/review_card.dart';
 import 'package:finesse/components/dialog/k_dialog.dart';
 import 'package:finesse/components/dropdown/k_dropdown.dart';
-import 'package:finesse/components/textfield/k_description_field.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
@@ -15,6 +14,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:text_divider/text_divider.dart';
+
+import '../../../../components/textfield/k_text_field.dart';
 
 class WriteReview extends StatefulWidget {
   const WriteReview({Key? key}) : super(key: key);
@@ -157,12 +158,12 @@ class _WriteReviewState extends State<WriteReview> {
                 ],
               ),
               const SizedBox(height: 16),
-              DescriptionTextField(
+              KTextField(
                 controller: message,
-                readOnly: false,
-                checkColor: false,
+                isReadOnly: false,
+                
                 hintText: 'Write here...',
-                label: '',
+                labelText: '',
               ),
               const SizedBox(height: 16),
               Row(

@@ -7,8 +7,7 @@ import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../../../components/textfield/k_phone_field.dart';
+import '../../../../../components/textfield/k_text_field.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({Key? key}) : super(key: key);
@@ -46,11 +45,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       style: KTextStyle.headline3.copyWith(color: KColor.blackbg),
                     ),
                     const SizedBox(height: 24),
-                    PhoneTextField(
+                    KTextField(
                       controller: phone,
-                      readOnly: false,
+                      isReadOnly: false,
                       hintText: 'Enter phone',
-                      label: '',
+                      labelText: '',
                     ),
                   ],
                 ),

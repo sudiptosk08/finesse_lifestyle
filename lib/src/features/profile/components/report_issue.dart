@@ -3,8 +3,7 @@ import 'dart:io';
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/button/k_border_btn.dart';
 import 'package:finesse/components/button/k_button.dart';
-import 'package:finesse/components/textfield/k_fill_name.dart';
-import 'package:finesse/components/textfield/k_fill_phone.dart';
+import 'package:finesse/components/textfield/k_text_field.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/src/features/auth/login/controller/login_controller.dart';
 import 'package:finesse/src/features/auth/login/model/user_model.dart';
@@ -71,10 +70,11 @@ class _ReportIssueState extends State<ReportIssue> {
                   ),
                   const SizedBox(height: 16),
                   //const KDropdown(hint: 'Select a reason'),
-                  KFillNormal(
+                  KTextField(
                     controller: reason,
-                    readOnly: false,
-                    label: '',
+                   
+                    isReadOnly: false,
+                    labelText: '',
                     hintText: 'Reason',
                   ),
                   const SizedBox(height: 24),
@@ -85,10 +85,11 @@ class _ReportIssueState extends State<ReportIssue> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  KFillPhone(
+                  KTextField(
                     controller: id,
-                    readOnly: false,
-                    label: '',
+                   
+                    isReadOnly: false,
+                    labelText: '',
                     hintText: 'Order ID',
                   ),
                   const SizedBox(height: 24),
@@ -99,10 +100,10 @@ class _ReportIssueState extends State<ReportIssue> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  KFillNormal(
+                  KTextField(
                     controller: description,
-                    readOnly: false,
-                    label: '',
+                    isReadOnly: false,
+                    labelText: '',
                     hintText: 'Description',
                   ),
                   const SizedBox(height: 16),

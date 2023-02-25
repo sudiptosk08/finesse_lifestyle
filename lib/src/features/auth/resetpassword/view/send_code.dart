@@ -82,7 +82,7 @@ class _SendCodeState extends State<SendCode> {
                   text: "Enter the code sent to ",
                   children: [
                     TextSpan(
-                      text: "${widget.phoneNumber}",
+                      text: widget.phoneNumber,
                       style: KTextStyle.subtitle1,
                     ),
                   ],

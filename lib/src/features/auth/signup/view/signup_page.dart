@@ -1,8 +1,4 @@
 import 'package:finesse/components/button/k_button.dart';
-import 'package:finesse/components/textfield/k_email_field.dart';
-import 'package:finesse/components/textfield/k_password_field.dart';
-import 'package:finesse/components/textfield/k_phone_field.dart';
-import 'package:finesse/components/textfield/k_search_field.dart';
 import 'package:finesse/components/textfield/k_text_field.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/constants/shared_preference_data.dart';
@@ -81,50 +77,50 @@ class _SignupPageState extends State<SignupPage> {
                           children: [
                             Expanded(
                               flex: 2,
-                              child: NameTextField(
+                              child: KTextField(
                                 controller: firstName,
-                                readOnly: false,
+                                isReadOnly: false,
                                 hintText: 'First name',
-                                label: 'First name',
+                                labelText: 'First name',
                               ),
                             ),
                             const SizedBox(width: 16),
                             Expanded(
                               flex: 2,
-                              child: NameTextField(
+                              child: KTextField(
                                 controller: lastName,
-                                readOnly: false,
+                                isReadOnly: false,
                                 hintText: 'Last name',
-                                label: 'Last name',
+                                labelText: 'Last name',
                               ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 24),
-                        EmailTextField(
+                        KTextField(
                           controller: email,
-                          readOnly: false,
+                          isReadOnly: false,
                           hintText: 'Enter your email here...',
-                          label: 'Email',
+                          labelText: 'Email',
                         ),
                         const SizedBox(height: 24),
-                        PhoneTextField(
+                        KTextField(
                           controller: phone,
-                          readOnly: false,
+                          isReadOnly: false,
                           hintText: 'Enter your phone number here...',
-                          label: 'Phone Number',
+                          labelText: 'Phone Number',
                         ),
                         const SizedBox(height: 24),
-                        PasswordTextField(
+                        KTextField(
                           controller: password,
                           hintText: 'Enter your password here...',
-                          label: 'Password',
+                          labelText: 'Password',
                         ),
                         const SizedBox(height: 24),
-                        PasswordTextField(
+                        KTextField(
                           controller: confirmPassword,
                           hintText: 'Re-enter your password here...',
-                          label: 'Confirm Password',
+                          labelText: 'Confirm Password',
                         ),
                         const SizedBox(height: 24),
                         Consumer(
@@ -236,10 +232,10 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 19),
-                    child: SearchTextField(
-                      callbackFunction: (e) {},
+                    child: KTextField(
+                      callBackFunction: (e) {},
                       controller: search,
-                      readOnly: false,
+                      isReadOnly: false,
                       hintText: 'Search...',
                     ),
                   ),

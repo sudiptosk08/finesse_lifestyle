@@ -1,7 +1,6 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/card/notification_card.dart';
 import 'package:finesse/components/shimmer/k_shimmer.dart';
-import 'package:finesse/components/textfield/k_search_field.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/src/features/notification/controller/notification_controller.dart';
 import 'package:finesse/src/features/notification/model/notification_model.dart';
@@ -10,6 +9,8 @@ import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../../components/textfield/k_text_field.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({Key? key}) : super(key: key);
@@ -43,12 +44,12 @@ class _NotificationPageState extends State<NotificationPage> {
             margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
             child: Column(
               children: [
-                SearchTextField(
-                  callbackFunction: (e) {
+                KTextField(
+                  callBackFunction: (e) {
                     ref.read(notificationProvider.notifier).fetchNotification();
                   },
                   controller: search,
-                  readOnly: false,
+                  isReadOnly: false,
                   hintText: 'Search',
                 ),
                 const SizedBox(height: 24),

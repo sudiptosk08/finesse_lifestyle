@@ -2,11 +2,6 @@ import 'package:finesse/src/features/cart/components/cart_items.dart';
 import 'package:finesse/src/features/cart/components/cart_total.dart';
 import 'package:finesse/src/features/cart/components/get_discount.dart';
 import 'package:finesse/src/features/cart/components/get_location.dart';
-import 'package:finesse/src/features/cart/controller/discount_controller.dart';
-import 'package:finesse/src/features/cart/controller/zone_controller.dart';
-import 'package:finesse/src/features/cart/model/promocode_model.dart';
-import 'package:finesse/src/features/cart/model/refferralcode_model.dart';
-import 'package:finesse/src/features/cart/state/code_state.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,25 +18,36 @@ class _ProductsAmountState extends State<ProductsAmount> {
   String? _cities;
   String? _zones;
   String? _areas;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, _) {
-        final codeState = ref.watch(discountProvider);
-        final PromoCodeModel? promoCodeData = codeState is PromoCodeSuccessState
-            ? codeState.promoCodeModel
-            : null;
-        final ReferralCodeModel? referralCodeData =
-            codeState is ReferralCodeSuccessState
-                ? codeState.referralCodeModel
-                : null;
-
+        //final discountState = ref.watch(discountProvider);
+        final cartState = ref.watch(cartProvider);
+        //final zoneState = ref.watch(zoneProvider);
+        // final PromoCodeModel? promoCodeData = discountState is PromoCodeSuccessState
+        //     ? discountState.promoCodeModel
+        //     : null;
+        // final ReferralCodeModel? referralCodeData =
+        //     discountState is ReferralCodeSuccessState
+        //         ? discountState.referralCodeModel
+        //         : null;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CartItems(),
-            DeliveryAddress(cities: _cities, zones: _zones,areas: _areas, checkCities: true,checkZones: true,),
+            DeliveryAddress(
+              cities: _cities,
+              zones: _zones,
+              areas: _areas,
+              checkCities: true,
+              checkZones: true,
+            ),
             const SizedBox(height: 20),
             DeliveryAddress(
               cities: _cities,
@@ -61,15 +67,7 @@ class _ProductsAmountState extends State<ProductsAmount> {
             const GetDiscount(),
             SizedBox(height: context.screenHeight * 0.05),
             CardTotal(
-              subTotal: ref.read(cartProvider.notifier).subtotal,
-              deliveryFee: ref.read(zoneProvider.notifier).deliveryFee,
-              rounding: ref.read(zoneProvider.notifier).roundingFee,
-              discount: promoCodeData?.success == true
-                  ? '${promoCodeData?.coupon.discount.toString()}%'
-                  : referralCodeData?.success == true
-                      ? '${referralCodeData?.discount.toString()}%'
-                      : '0',
-              total: ref.read(zoneProvider.notifier).totalAmount,
+             
             ),
             SizedBox(height: context.screenHeight * 0.05),
           ],

@@ -2,11 +2,12 @@ import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/button/k_border_btn.dart';
 import 'package:finesse/components/button/k_button.dart';
 import 'package:finesse/components/dialog/k_dialog.dart';
-import 'package:finesse/components/textfield/k_fill_password_field.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../components/textfield/k_text_field.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({Key? key}) : super(key: key);
@@ -43,10 +44,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                     style: KTextStyle.subtitle1.copyWith(color: KColor.blackbg),
                   ),
                   const SizedBox(height: 16),
-                  FillTextFieldPassword(
+                  KTextField(
                     controller: prePassword,
                     hintText: '*************',
-                    label: '',
+                    labelText: '',
                   ),
                   const SizedBox(height: 24),
                   Text(
@@ -54,10 +55,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                     style: KTextStyle.subtitle1.copyWith(color: KColor.blackbg),
                   ),
                   const SizedBox(height: 16),
-                  FillTextFieldPassword(
+                  KTextField(
                     controller: newPassword,
                     hintText: '*************',
-                    label: '',
+                    labelText: '',
                   ),
                   const SizedBox(height: 24),
                   Text(
@@ -65,10 +66,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                     style: KTextStyle.subtitle1.copyWith(color: KColor.blackbg),
                   ),
                   const SizedBox(height: 16),
-                  FillTextFieldPassword(
+                  KTextField(
                     controller: confirmPassword,
                     hintText: '*************',
-                    label: '',
+                    labelText: '',
                   ),
                 ],
               ),
