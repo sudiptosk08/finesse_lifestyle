@@ -11,6 +11,7 @@ import 'package:finesse/styles/k_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../components/textfield/k_search_field.dart';
 import '../../../../components/textfield/k_text_field.dart';
 
 class ShopPage extends StatefulWidget {
@@ -52,10 +53,12 @@ class _ShopPageState extends State<ShopPage> {
                     children: [
                       Expanded(
                         flex: 8,
-                        child: KTextField(
-                          callBackFunction: (query) => ref.read(shopProvider.notifier).fetchShopProductList(str: query),
+                        child: SearchTextField(
+                          callbackFunction: (query) => ref
+                              .read(shopProvider.notifier)
+                              .fetchShopProductList(str: query),
                           controller: controller,
-                          isReadOnly: false,
+                          readOnly: false,
                           hintText: 'Search here...',
                         ),
                       ),

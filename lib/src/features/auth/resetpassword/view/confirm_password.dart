@@ -8,6 +8,7 @@ import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../components/textfield/k_fill_password_field.dart';
 import '../../../../../components/textfield/k_text_field.dart';
 
 class ConfirmPasswordPage extends StatefulWidget {
@@ -44,10 +45,11 @@ class _ConfirmPasswordPageState extends State<ConfirmPasswordPage> {
                   style: KTextStyle.subtitle7.copyWith(color: KColor.blackbg),
                 ),
                 const SizedBox(height: 16),
-                KTextField(
+               const SizedBox(height: 16),
+                FillTextFieldPassword(
                   controller: password,
                   hintText: '*************',
-                  labelText: '',
+                  label: '',
                 ),
                 const SizedBox(height: 24),
                 Text(
@@ -55,10 +57,10 @@ class _ConfirmPasswordPageState extends State<ConfirmPasswordPage> {
                   style: KTextStyle.subtitle7.copyWith(color: KColor.blackbg),
                 ),
                 const SizedBox(height: 16),
-                KTextField(
+                FillTextFieldPassword(
                   controller: confirmPassword,
                   hintText: '*************',
-                  labelText: '',
+                  label: '',
                 ),
               ],
             ),

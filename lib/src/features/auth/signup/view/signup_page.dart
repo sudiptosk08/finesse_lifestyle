@@ -12,6 +12,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 
+import '../../../../../components/textfield/k_email_field.dart';
+import '../../../../../components/textfield/k_password_field.dart';
+import '../../../../../components/textfield/k_phone_field.dart';
+import '../../../../../components/textfield/k_search_field.dart';
+
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
 
@@ -73,55 +78,56 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                         ),
                         SizedBox(height: context.screenHeight * 0.04),
-                        Row(
+                         Row(
                           children: [
                             Expanded(
                               flex: 2,
-                              child: KTextField(
+                              child: NameTextField(
                                 controller: firstName,
-                                isReadOnly: false,
+                                readOnly: false,
                                 hintText: 'First name',
-                                labelText: 'First name',
+                                label: 'First name',
                               ),
                             ),
                             const SizedBox(width: 16),
                             Expanded(
                               flex: 2,
-                              child: KTextField(
+                              child: NameTextField(
                                 controller: lastName,
-                                isReadOnly: false,
+                                readOnly: false,
                                 hintText: 'Last name',
-                                labelText: 'Last name',
+                                label: 'Last name',
                               ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 24),
-                        KTextField(
+                        EmailTextField(
                           controller: email,
-                          isReadOnly: false,
+                          readOnly: false,
                           hintText: 'Enter your email here...',
-                          labelText: 'Email',
+                          label: 'Email',
                         ),
                         const SizedBox(height: 24),
-                        KTextField(
+                        PhoneTextField(
                           controller: phone,
-                          isReadOnly: false,
+                          readOnly: false,
                           hintText: 'Enter your phone number here...',
-                          labelText: 'Phone Number',
+                          label: 'Phone Number',
                         ),
                         const SizedBox(height: 24),
-                        KTextField(
+                        PasswordTextField(
                           controller: password,
                           hintText: 'Enter your password here...',
-                          labelText: 'Password',
+                          label: 'Password',
                         ),
                         const SizedBox(height: 24),
-                        KTextField(
+                        PasswordTextField(
                           controller: confirmPassword,
                           hintText: 'Re-enter your password here...',
-                          labelText: 'Confirm Password',
+                          label: 'Confirm Password',
                         ),
+                        
                         const SizedBox(height: 24),
                         Consumer(
                           builder: (context, ref, _) {
@@ -232,10 +238,10 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 19),
-                    child: KTextField(
-                      callBackFunction: (e) {},
+                    child: SearchTextField(
+                      callbackFunction: (e) {},
                       controller: search,
-                      isReadOnly: false,
+                      readOnly: false,
                       hintText: 'Search...',
                     ),
                   ),
@@ -247,7 +253,7 @@ class _SignupPageState extends State<SignupPage> {
                       _verticalGroupValue = value!;
                       isSelected = !isSelected;
                     }),
-                    spacebetween: 50,
+                   
                     activeColor: isSelected ? Colors.lightBlue : Colors.orange,
                     items: _status,
                     textStyle: KTextStyle.dialog.copyWith(

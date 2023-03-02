@@ -1,5 +1,6 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/button/k_button.dart';
+import 'package:finesse/components/textfield/k_email_field.dart';
 import 'package:finesse/components/textfield/k_text_field.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/styles/k_colors.dart';
@@ -7,6 +8,9 @@ import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../../components/textfield/k_description_field.dart';
+import '../../../../components/textfield/k_phone_field.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({Key? key}) : super(key: key);
@@ -179,33 +183,33 @@ class _ContactPageState extends State<ContactPage> {
                 ),
               ),
               SizedBox(height: context.screenHeight * 0.06),
-             KTextField(
+             NameTextField(
                 controller: name,
-                isReadOnly: false,
+                readOnly: false,
                 hintText: 'Marwa Saad',
-                labelText: 'Name',
+                label: 'Name',
               ),
               const SizedBox(height: 24),
-              KTextField(
+              EmailTextField(
                 controller: email,
-                isReadOnly: false,
+                readOnly: false,
                 hintText: 'Enter your email here...',
-                labelText: 'Email',
+                label: 'Email',
               ),
               const SizedBox(height: 24),
-              KTextField(
+              PhoneTextField(
                 controller: phone,
-                isReadOnly: false,
+                readOnly: false,
                 hintText: 'Enter your phone number here...',
-                labelText: 'Contact',
+                label: 'Contact',
               ),
               const SizedBox(height: 24),
-              KTextField(
+              DescriptionTextField(
                 controller: message,
-                isReadOnly: false,
-                textColor: KColor.grey350,
+                readOnly: false,
+                checkColor: true,
                 hintText: 'Type your message here',
-                labelText: '',
+                label: '',
               ),
               SizedBox(height: context.screenHeight * 0.05),
               KButton(

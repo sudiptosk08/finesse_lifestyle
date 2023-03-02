@@ -1,6 +1,7 @@
 import 'package:find_dropdown/find_dropdown.dart';
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/button/k_button.dart';
+import 'package:finesse/components/textfield/k_phone_field.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/src/features/auth/resetpassword/controller/password_reset_controller.dart';
 import 'package:finesse/styles/k_colors.dart';
@@ -45,11 +46,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       style: KTextStyle.headline3.copyWith(color: KColor.blackbg),
                     ),
                     const SizedBox(height: 24),
-                    KTextField(
+                      PhoneTextField(
                       controller: phone,
-                      isReadOnly: false,
+                      readOnly: false,
                       hintText: 'Enter phone',
-                      labelText: '',
+                      label: '',
                     ),
                   ],
                 ),

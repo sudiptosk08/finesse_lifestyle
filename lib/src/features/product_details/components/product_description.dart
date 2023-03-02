@@ -47,7 +47,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                         fontSize: FontSize.medium,
                         fontWeight: FontWeight.w400,
                         fontFamily: GoogleFonts.inter().fontFamily,
-                        whiteSpace: WhiteSpace.NORMAL,
+                        whiteSpace: WhiteSpace.normal,
                       ),
                     },
                   )

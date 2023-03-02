@@ -1,40 +1,44 @@
+import 'package:finesse/constants/asset_path.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../styles/k_colors.dart';
 import '../../styles/k_text_style.dart';
 
 // ignore: must_be_immutable
-class NameTextField extends StatefulWidget {
+class EmailTextField extends StatefulWidget {
   final String label;
   final String hintText;
   final bool readOnly;
 
-  NameTextField({Key? key, required this.label, required this.controller, required this.hintText, required this.readOnly}) : super(key: key);
+  EmailTextField({Key? key, required this.label, required this.controller, required this.hintText, required this.readOnly}) : super(key: key);
   TextEditingController controller = TextEditingController();
 
   @override
-  State<NameTextField> createState() => _NameTextFieldState();
+  State<EmailTextField> createState() => _EmailTextFieldState();
 }
 
-class _NameTextFieldState extends State<NameTextField> {
+class _EmailTextFieldState extends State<EmailTextField> {
   final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       validator: (value) {
-        String pattern = r'^[a-z A-Z]';
-        RegExp regExp = RegExp(pattern);
         if (value == null || value.isEmpty) {
           return 'Please FillUp';
-        } else if (!regExp.hasMatch(value)) {
-          return 'Please enter valid name';
+        } else if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
+          return 'Please enter a valid Email';
         }
         return null;
       },
       readOnly: widget.readOnly,
       controller: widget.controller,
       decoration: InputDecoration(
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: SvgPicture.asset(AssetPath.emailIcon),
+        ),
         hintText: widget.hintText,
         hintStyle: _focusNode.hasFocus
             ? KTextStyle.bodyText1.copyWith(color: KColor.blackbg)
@@ -62,7 +66,9 @@ class _NameTextFieldState extends State<NameTextField> {
         ),
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: KColor.blackbg, width: 1.0),
-          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+          borderRadius: BorderRadius.all(
+            Radius.circular(15.0),
+          ),
         ),
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),

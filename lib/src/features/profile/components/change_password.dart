@@ -7,6 +7,7 @@ import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../components/textfield/k_fill_password_field.dart';
 import '../../../../components/textfield/k_text_field.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -44,10 +45,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                     style: KTextStyle.subtitle1.copyWith(color: KColor.blackbg),
                   ),
                   const SizedBox(height: 16),
-                  KTextField(
+                    FillTextFieldPassword(
                     controller: prePassword,
                     hintText: '*************',
-                    labelText: '',
+                    label: '',
                   ),
                   const SizedBox(height: 24),
                   Text(
@@ -55,10 +56,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                     style: KTextStyle.subtitle1.copyWith(color: KColor.blackbg),
                   ),
                   const SizedBox(height: 16),
-                  KTextField(
+                  FillTextFieldPassword(
                     controller: newPassword,
                     hintText: '*************',
-                    labelText: '',
+                    label: '',
                   ),
                   const SizedBox(height: 24),
                   Text(
@@ -66,10 +67,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                     style: KTextStyle.subtitle1.copyWith(color: KColor.blackbg),
                   ),
                   const SizedBox(height: 16),
-                  KTextField(
+                  FillTextFieldPassword(
                     controller: confirmPassword,
                     hintText: '*************',
-                    labelText: '',
+                    label: '',
                   ),
                 ],
               ),

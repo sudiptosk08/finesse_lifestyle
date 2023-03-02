@@ -10,6 +10,7 @@ import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../components/textfield/k_search_field.dart';
 import '../../../../components/textfield/k_text_field.dart';
 
 class NotificationPage extends StatefulWidget {
@@ -44,12 +45,12 @@ class _NotificationPageState extends State<NotificationPage> {
             margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
             child: Column(
               children: [
-                KTextField(
-                  callBackFunction: (e) {
+                 SearchTextField(
+                  callbackFunction: (e) {
                     ref.read(notificationProvider.notifier).fetchNotification();
                   },
                   controller: search,
-                  isReadOnly: false,
+                  readOnly: false,
                   hintText: 'Search',
                 ),
                 const SizedBox(height: 24),

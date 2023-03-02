@@ -3,6 +3,7 @@ import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
 
+import '../textfield/k_field.dart';
 import '../textfield/k_text_field.dart';
 
 class CouponCodeCard extends StatelessWidget {
@@ -32,7 +33,6 @@ class CouponCodeCard extends StatelessWidget {
           title!,
           style: KTextStyle.subtitle1.copyWith(
             color: KColor.blackbg,
-            
           ),
         ),
         const SizedBox(height: 8),
@@ -40,10 +40,8 @@ class CouponCodeCard extends StatelessWidget {
           children: [
             Flexible(
               flex: 2,
-              child: KTextField(
-                isReadOnly: readOnly!,
+              child:  KTextField(
                 controller: controller!,
-                
                 hintText: hintText!,
               ),
             ),

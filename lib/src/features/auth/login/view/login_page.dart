@@ -1,4 +1,5 @@
 import 'package:finesse/components/button/k_button.dart';
+import 'package:finesse/components/textfield/k_password_field.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/src/features/auth/login/controller/login_controller.dart';
@@ -11,7 +12,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../../components/textfield/k_text_field.dart';
+import '../../../../../components/textfield/k_phone_field.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -57,24 +59,25 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       SizedBox(height: context.screenHeight * 0.05),
-                      KTextField(
+                      PhoneTextField(
                         controller: phone,
-                        isReadOnly: false,
+                        readOnly: false,
                         hintText: 'Enter your phone number here...',
-                        labelText: 'Phone',
+                        label: 'Phone',
                       ),
                       const SizedBox(height: 33),
-                      KTextField(
+                      PasswordTextField(
                         controller: password,
                         hintText: 'Enter your password here...',
-                        labelText: 'password',
+                        label: 'password',
                       ),
                       const SizedBox(height: 24),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Row(
                               children: [
                                 SizedBox(
@@ -134,7 +137,9 @@ class _LoginPageState extends State<LoginPage> {
                         builder: (context, ref, _) {
                           final authState = ref.watch(loginProvider);
                           return KButton(
-                            title: authState is LoadingState ? 'Please wait...' : 'Sign In',
+                            title: authState is LoadingState
+                                ? 'Please wait...'
+                                : 'Sign In',
                             onTap: () {
                               if (authState is! LoadingState) {
                                 if (_formKey.currentState!.validate()) {

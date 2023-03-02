@@ -1,5 +1,5 @@
-
 import 'package:finesse/components/button/k_button.dart';
+import 'package:finesse/components/textfield/k_description_field.dart';
 import 'package:finesse/src/features/filter/components/rating.dart';
 import 'package:finesse/src/features/product_details/controller/product_details_controller.dart';
 import 'package:finesse/src/features/product_details/controller/reviews_controller.dart';
@@ -98,28 +98,28 @@ class _ProductReviewState extends State<ProductReview> {
               const SizedBox(
                 height: 10,
               ),
-              KTextField(
-                  labelText: "",
-                  controller: comment,
-                  hintText: "Write your review here",
-                 
-                  isReadOnly: false,
-                  callBackFunction: (e) {  },),
+              DescriptionTextField(
+                controller: comment,
+                hintText: "Write your review here",
+                checkColor: true,
+                label: '',
+                readOnly: false,
+              ),
               const SizedBox(
                 height: 10,
               ),
               SizedBox(
                 width: KSize.getWidth(context, 100),
                 child: KButton(
-                    title:"Submit"  ,
-                    onTap: ()  {
+                    title: "Submit",
+                    onTap: () {
                       if (reviewsState is! LoadingState) {
                         ref.read(reviewsProvider.notifier).addProductReviews(
-                          rating: userRating.toString(),
-                          comment:comment.text,
-                          productId: widget.productId,
-                          userId: widget.userId,
-                          );
+                              rating: userRating.toString(),
+                              comment: comment.text,
+                              productId: widget.productId,
+                              userId: widget.userId,
+                            );
                       }
                     }),
               )

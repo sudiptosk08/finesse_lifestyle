@@ -15,6 +15,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:text_divider/text_divider.dart';
 
+import '../../../../components/textfield/k_description_field.dart';
 import '../../../../components/textfield/k_text_field.dart';
 
 class WriteReview extends StatefulWidget {
@@ -158,12 +159,12 @@ class _WriteReviewState extends State<WriteReview> {
                 ],
               ),
               const SizedBox(height: 16),
-              KTextField(
+             DescriptionTextField(
                 controller: message,
-                isReadOnly: false,
-                
+                readOnly: false,
+                checkColor: false,
                 hintText: 'Write here...',
-                labelText: '',
+                label: '',
               ),
               const SizedBox(height: 16),
               Row(

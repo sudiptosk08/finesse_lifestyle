@@ -16,6 +16,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../components/textfield/k_fill_name.dart';
+import '../../../../components/textfield/k_fill_phone.dart';
+
 class ReportIssue extends StatefulWidget {
   const ReportIssue({Key? key}) : super(key: key);
 
@@ -70,11 +73,10 @@ class _ReportIssueState extends State<ReportIssue> {
                   ),
                   const SizedBox(height: 16),
                   //const KDropdown(hint: 'Select a reason'),
-                  KTextField(
+                  KFillNormal(
                     controller: reason,
-                   
-                    isReadOnly: false,
-                    labelText: '',
+                    readOnly: false,
+                    label: '',
                     hintText: 'Reason',
                   ),
                   const SizedBox(height: 24),
@@ -85,11 +87,10 @@ class _ReportIssueState extends State<ReportIssue> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  KTextField(
+                  KFillPhone(
                     controller: id,
-                   
-                    isReadOnly: false,
-                    labelText: '',
+                    readOnly: false,
+                    label: '',
                     hintText: 'Order ID',
                   ),
                   const SizedBox(height: 24),
@@ -100,10 +101,10 @@ class _ReportIssueState extends State<ReportIssue> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  KTextField(
+                  KFillNormal(
                     controller: description,
-                    isReadOnly: false,
-                    labelText: '',
+                    readOnly: false,
+                    label: '',
                     hintText: 'Description',
                   ),
                   const SizedBox(height: 16),

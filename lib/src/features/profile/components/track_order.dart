@@ -7,6 +7,7 @@ import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../components/textfield/k_search_field.dart';
 import '../../../../components/textfield/k_text_field.dart';
 
 class TrackOrder extends StatefulWidget {
@@ -35,12 +36,12 @@ class _TrackOrderState extends State<TrackOrder> {
             children: [
               Row(
                 children: [
-                  Expanded(
+                   Expanded(
                     flex: 8,
-                    child: KTextField(
-                      callBackFunction: (e) {},
+                    child: SearchTextField(
+                      callbackFunction: (e) {},
                       controller: controller,
-                      isReadOnly: false,
+                      readOnly: false,
                       hintText: 'Search...',
                     ),
                   ),

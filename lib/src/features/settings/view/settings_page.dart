@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
+import '../../../../components/textfield/k_search_field.dart';
 import '../../../../components/textfield/k_text_field.dart';
 
 class SettingPage extends StatefulWidget {
@@ -35,10 +36,10 @@ class _SettingPageState extends State<SettingPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              KTextField(
-                callBackFunction: (e) {},
+              SearchTextField(
+                callbackFunction: (e) {},
                 controller: search,
-                isReadOnly: false,
+                readOnly: false,
                 hintText: 'Search',
               ),
               const SizedBox(height: 20),

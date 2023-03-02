@@ -2,11 +2,13 @@ import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/button/k_border_btn.dart';
 import 'package:finesse/components/button/k_button.dart';
 import 'package:finesse/constants/shared_preference_constant.dart';
+import 'package:finesse/src/features/auth/login/controller/login_controller.dart';
 import 'package:finesse/src/features/auth/login/view/login_page.dart';
 import 'package:finesse/src/features/cart/components/products_amount.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class CartPage extends StatefulWidget {
@@ -27,12 +29,14 @@ class _CartPageState extends State<CartPage> {
             backgroundColor: KColor.appBackground,
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(widget.isFromBottomNav ? 0 : 56),
-              child: const KAppBar(checkTitle: true, dotCheck: false, title: 'Cart'),
+              child: const KAppBar(
+                  checkTitle: true, dotCheck: false, title: 'Cart'),
             ),
             body: SingleChildScrollView(
               child: Container(
                 alignment: Alignment.center,
-                margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -48,9 +52,20 @@ class _CartPageState extends State<CartPage> {
                         ),
                         const SizedBox(width: 16),
                         Flexible(
-                          child: KButton(
-                            title: 'Checkout',
-                            onTap: () => Navigator.pushNamed(context, '/addAddress'),
+                          child: Consumer(
+                            builder: ((context, ref, child) {
+                              return KButton(
+                                title: 'Checkout',
+                                onTap: () {
+                                  Navigator.pushNamed(context, '/addAddress');
+                                  ref.read(loginProvider.notifier).userModel;
+                                  var model = ref
+                                      .read(loginProvider.notifier)
+                                      .userModel;
+                                  print(model);
+                                },
+                              );
+                            }),
                           ),
                         ),
                       ],

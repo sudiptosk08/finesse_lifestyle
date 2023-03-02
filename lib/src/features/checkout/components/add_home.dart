@@ -1,51 +1,52 @@
-import 'package:finesse/components/button/k_button.dart';
-import 'package:finesse/components/textfield/k_text_field.dart';
-import 'package:finesse/core/base/base_state.dart';
-import 'package:finesse/src/features/auth/login/controller/login_controller.dart';
-import 'package:finesse/src/features/auth/login/model/user_model.dart';
+import 'package:finesse/components/button/k_border_btn.dart';
 import 'package:finesse/src/features/auth/login/state/login_state.dart';
-import 'package:finesse/src/features/cart/components/get_location.dart';
-import 'package:finesse/src/features/profile/controller/profile_controller.dart';
-import 'package:finesse/styles/k_colors.dart';
-import 'package:finesse/styles/k_text_style.dart';
+import 'package:finesse/src/features/profile/components/update_profile.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../components/button/k_button.dart';
 import '../../../../components/textfield/k_fill_name.dart';
 import '../../../../components/textfield/k_fill_phone.dart';
+import '../../../../components/textfield/k_text_field.dart';
+import '../../../../core/base/base_state.dart';
+import '../../../../styles/k_colors.dart';
+import '../../../../styles/k_text_style.dart';
+import '../../auth/login/controller/login_controller.dart';
+import '../../auth/login/model/user_model.dart';
+import '../../cart/components/get_location.dart';
+import '../../profile/controller/profile_controller.dart';
 
-class UpdateProfile extends StatefulWidget {
-  final bool? checkPage;
-  const UpdateProfile({Key? key, this.checkPage}) : super(key: key);
+class AddHome extends StatefulWidget {
+  const AddHome({Key? key}) : super(key: key);
 
   @override
-  State<UpdateProfile> createState() => _UpdateProfileState();
+  State<AddHome> createState() => _AddHomeState();
 }
 
-class _UpdateProfileState extends State<UpdateProfile> {
+class _AddHomeState extends State<AddHome> {
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
   TextEditingController address = TextEditingController();
   String? _cities;
   String? _zones;
-
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, _) {
-        final editProfileState = ref.watch(profileProvider);
+        
         final userState = ref.watch(loginProvider);
         final User? userData =
             userState is LoginSuccessState ? userState.userModel : null;
+
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _editInformation(
+               _editInformation(
                   'Name',
                   KFillNormal(
                     controller: name,
@@ -81,7 +82,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     readOnly: false,
                   ),
                 ),
-                
                 _editInformation(
                   'City',
                   DeliveryAddress(
@@ -101,23 +101,22 @@ class _UpdateProfileState extends State<UpdateProfile> {
               ],
             ),
             SizedBox(height: context.screenHeight * 0.05),
-            KButton(
-              title: editProfileState is LoadingState
-                  ? 'Please wait...'
-                  : 'Edit Profile',
-              onTap: () {
-                if (editProfileState is! LoadingState) {
-                  ref.read(profileProvider.notifier).editProfile(
-                        id: userData!.id!,
-                        name: name.text,
-                        email: email.text,
-                        user: userData,
-                      );
-                }
-                Navigator.pushNamed(context, '/accountDetails');
-
-              },
-            ),
+            // KButton(
+            //   title: editProfileState is LoadingState
+            //       ? 'Please wait...'
+            //       : 'Edit Profile',
+            //   onTap: () {
+            //     if (editProfileState is! LoadingState) {
+            //       ref.read(profileProvider.notifier).editProfile(
+            //             id: userData!.id!,
+            //             name: name.text,
+            //             email: email.text,
+            //             user: userData,
+            //           );
+            //     }
+            //     Navigator.pushNamed(context, '/accountDetails');
+            //   },
+            // ),
             const SizedBox(height: 16),
           ],
         );
