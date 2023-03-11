@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../checkout/components/take_address.dart';
+
 class CartPage extends StatefulWidget {
   final bool isFromBottomNav;
   const CartPage({Key? key, this.isFromBottomNav = false}) : super(key: key);
@@ -57,12 +59,9 @@ class _CartPageState extends State<CartPage> {
                               return KButton(
                                 title: 'Checkout',
                                 onTap: () {
-                                  Navigator.pushNamed(context, '/addAddress');
-                                  ref.read(loginProvider.notifier).userModel;
-                                  var model = ref
-                                      .read(loginProvider.notifier)
-                                      .userModel;
-                                  print(model);
+                                  // Navigator.push(context, AddressPage(
+                                  //   area: ,
+                                  // ));
                                 },
                               );
                             }),

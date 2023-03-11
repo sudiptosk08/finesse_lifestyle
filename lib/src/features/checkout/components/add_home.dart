@@ -4,11 +4,13 @@ import 'package:finesse/src/features/profile/components/update_profile.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../../../../components/button/k_button.dart';
 import '../../../../components/textfield/k_fill_name.dart';
 import '../../../../components/textfield/k_fill_phone.dart';
 import '../../../../components/textfield/k_text_field.dart';
+import '../../../../constants/shared_preference_constant.dart';
 import '../../../../core/base/base_state.dart';
 import '../../../../styles/k_colors.dart';
 import '../../../../styles/k_text_style.dart';
@@ -31,25 +33,24 @@ class _AddHomeState extends State<AddHome> {
   TextEditingController address = TextEditingController();
   String? _cities;
   String? _zones;
+  var username = getStringAsync(userName);
+  var useremail = getStringAsync(userEmail);
+  var contact = getStringAsync(userContact);
+
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, _) {
-        
-        final userState = ref.watch(loginProvider);
-        final User? userData =
-            userState is LoginSuccessState ? userState.userModel : null;
-
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-               _editInformation(
+                _editInformation(
                   'Name',
                   KFillNormal(
-                    controller: name,
+                    controller: name..text = username,
                     hintText: 'Enter your name here...',
                     label: '',
                     readOnly: false,
@@ -58,7 +59,7 @@ class _AddHomeState extends State<AddHome> {
                 _editInformation(
                   'Email',
                   KFillNormal(
-                    controller: email,
+                    controller: email..text = useremail,
                     hintText: 'Enter your email here...',
                     label: '',
                     readOnly: false,
@@ -76,10 +77,10 @@ class _AddHomeState extends State<AddHome> {
                 _editInformation(
                   'Phone Number',
                   KFillPhone(
-                    controller: phone,
+                    controller: phone..text = contact,
                     hintText: 'Enter your phone number here...',
                     label: '',
-                    readOnly: false,
+                    readOnly: true,
                   ),
                 ),
                 _editInformation(
@@ -101,22 +102,12 @@ class _AddHomeState extends State<AddHome> {
               ],
             ),
             SizedBox(height: context.screenHeight * 0.05),
-            // KButton(
-            //   title: editProfileState is LoadingState
-            //       ? 'Please wait...'
-            //       : 'Edit Profile',
-            //   onTap: () {
-            //     if (editProfileState is! LoadingState) {
-            //       ref.read(profileProvider.notifier).editProfile(
-            //             id: userData!.id!,
-            //             name: name.text,
-            //             email: email.text,
-            //             user: userData,
-            //           );
-            //     }
-            //     Navigator.pushNamed(context, '/accountDetails');
-            //   },
-            // ),
+            KButton(
+              title: 'Add Address',
+              onTap: () {
+                Navigator.pushNamed(context, '/accountDetails');
+              },
+            ),
             const SizedBox(height: 16),
           ],
         );

@@ -14,7 +14,10 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../components/appbar/k_app_bar.dart';
 
 class AddressPage extends StatefulWidget {
-  const AddressPage({Key? key}) : super(key: key);
+  String cites;
+  String zone;
+  String area;
+   AddressPage({required this.area,required this.zone,required this.cites,Key? key}) : super(key: key);
 
   @override
   State<AddressPage> createState() => _AddressPageState();
@@ -28,7 +31,8 @@ class _AddressPageState extends State<AddressPage> {
     return Consumer(
       builder: (context, ref, _) {
         final userState = ref.watch(loginProvider);
-        final User? userData = userState is LoginSuccessState ? userState.userModel : null;
+        final User? userData =
+            userState is LoginSuccessState ? userState.userModel : null;
 
         return Scaffold(
           backgroundColor: KColor.appBackground,
@@ -47,10 +51,12 @@ class _AddressPageState extends State<AddressPage> {
                   children: [
                     Text(
                       'Select Delivery Address',
-                      style: KTextStyle.subtitle1.copyWith(color: KColor.blackbg),
+                      style:
+                          KTextStyle.subtitle1.copyWith(color: KColor.blackbg),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 16),
                       margin: const EdgeInsets.symmetric(vertical: 16),
                       decoration: BoxDecoration(
                         color: KColor.filterDividerColor,
@@ -65,7 +71,8 @@ class _AddressPageState extends State<AddressPage> {
                             children: [
                               Text(
                                 'Home',
-                                style: KTextStyle.bodyText2.copyWith(color: KColor.blackbg),
+                                style: KTextStyle.bodyText2
+                                    .copyWith(color: KColor.blackbg),
                               ),
                               const SizedBox(width: 16),
                               Container(
@@ -86,6 +93,9 @@ class _AddressPageState extends State<AddressPage> {
                             ],
                           ),
                           const SizedBox(height: 12),
+                          Text(widget.area),
+                          Text(widget.cites),
+                          Text(widget.zone),
                           Text(
                             userData?.customer.address ?? "Not set yet",
                             style: KTextStyle.bodyText1.copyWith(

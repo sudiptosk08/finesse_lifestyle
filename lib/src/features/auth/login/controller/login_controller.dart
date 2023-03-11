@@ -1,3 +1,4 @@
+
 import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/core/network/api.dart';
@@ -49,6 +50,9 @@ class LoginController extends StateNotifier<BaseState> {
           setValue(token, responseBody['token']);
           setValue(rememberToken, responseBody['token']);
           setValue(userId, userModel!.id);
+          setValue(userName, userModel!.name);
+          setValue(userEmail, userModel!.email);
+          setValue(userContact, userModel!.contact);
           toast("Login Successful", bgColor: KColor.selectColor);
 
           NavigationService.navigateToReplacement(

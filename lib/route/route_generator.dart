@@ -217,10 +217,7 @@ class RouteGenerator {
         return CupertinoPageRoute(
           builder: (_) => const SettingPage(),
         );
-      case '/addAddress':
-        return CupertinoPageRoute(
-          builder: (_) => const AddressPage(),
-        );
+      
       default:
         return CupertinoPageRoute(
           builder: (_) => const HomePage(),

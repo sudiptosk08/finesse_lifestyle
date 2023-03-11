@@ -3,4 +3,7 @@ const String rememberToken = 'REMEMBER_ACCESS';
 const String isLoggedIn = 'LOGGED_IN';
 const String isNewInstalled = '';
 const String userId = 'USER_ID';
-
+const String userName = 'USER_Name';
+const String userEmail = 'USER_Email';
+const String userContact = 'USER_Contact';
+const List userData = [];
