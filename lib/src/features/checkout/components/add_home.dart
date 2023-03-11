@@ -1,23 +1,15 @@
-import 'package:finesse/components/button/k_border_btn.dart';
-import 'package:finesse/src/features/auth/login/state/login_state.dart';
-import 'package:finesse/src/features/profile/components/update_profile.dart';
+
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
-
 import '../../../../components/button/k_button.dart';
 import '../../../../components/textfield/k_fill_name.dart';
 import '../../../../components/textfield/k_fill_phone.dart';
-import '../../../../components/textfield/k_text_field.dart';
 import '../../../../constants/shared_preference_constant.dart';
-import '../../../../core/base/base_state.dart';
 import '../../../../styles/k_colors.dart';
 import '../../../../styles/k_text_style.dart';
-import '../../auth/login/controller/login_controller.dart';
-import '../../auth/login/model/user_model.dart';
 import '../../cart/components/get_location.dart';
-import '../../profile/controller/profile_controller.dart';
 
 class AddHome extends StatefulWidget {
   const AddHome({Key? key}) : super(key: key);

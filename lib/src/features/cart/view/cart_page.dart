@@ -59,9 +59,14 @@ class _CartPageState extends State<CartPage> {
                               return KButton(
                                 title: 'Checkout',
                                 onTap: () {
-                                  // Navigator.push(context, AddressPage(
-                                  //   area: ,
-                                  // ));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => AddressPage(
+                                                area: "bogasr",
+                                                cites: "alkjd",
+                                                zone: "lkjsljfs",
+                                              )));
                                 },
                               );
                             }),

@@ -134,8 +134,8 @@ class _SignupPageState extends State<SignupPage> {
                             final authState = ref.watch(signupProvider);
                             return KButton(
                                 title: authState is! LoadingState
-                                    ? 'Please wait...'
-                                    : 'Create Account',
+                                    ?'Create Account' : 'Please wait...'
+                                    ,
                                 onTap: () {
                                   if (password.text == confirmPassword.text) {
                                     if (authState is! LoadingState) {
