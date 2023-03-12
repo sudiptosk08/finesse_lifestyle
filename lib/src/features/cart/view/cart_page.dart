@@ -36,6 +36,7 @@ class _CartPageState extends State<CartPage> {
             ),
             body: SingleChildScrollView(
               child: Container(
+                color: Colors.transparent, 
                 alignment: Alignment.center,
                 margin:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
