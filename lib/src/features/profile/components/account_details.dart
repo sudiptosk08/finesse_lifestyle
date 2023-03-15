@@ -33,9 +33,9 @@ class AccountDetails extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _editProfile('Name', userData?.name ?? "", () {}),
-                  _editProfile('Email', userData!.email.toString(), () {}),
-                  _editProfile('Address', userData.customer.address ?? "Not set yet", () {}),
-                  _editProfile('Phone Number', userData.contact.toString(), () {}),
+                  _editProfile('Email', userData?.email.toString() ?? "", () {}),
+                  _editProfile('Address', userData?.customer.address ?? "Not set yet", () {}),
+                  _editProfile('Phone Number', userData?.contact.toString() ?? "", () {}),
                   SizedBox(height: context.screenHeight * 0.22),
                   KButton(
                     title: 'Change Password',

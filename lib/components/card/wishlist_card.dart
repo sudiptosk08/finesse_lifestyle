@@ -150,7 +150,7 @@ class _WishlistCardState extends ConsumerState<WishlistCard> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.only(left:8.0,top:8.0,bottom:8.0,right:4.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -161,8 +161,8 @@ class _WishlistCardState extends ConsumerState<WishlistCard> {
                                   .copyWith(color: KColor.blackbg),
                             ),
                             widget.isChecked == true
-                                ? SizedBox(width: context.screenWidth * 0.32)
-                                : SizedBox(width: context.screenWidth * 0.14),
+                                ? SizedBox(width: context.screenWidth * 0.28)
+                                : SizedBox(width: context.screenWidth * 0.10),
                             widget.isChecked == true
                                 ? InkWell(
                                     onTap: widget.add,

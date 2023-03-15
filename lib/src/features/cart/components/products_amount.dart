@@ -37,6 +37,7 @@ class _ProductsAmountState extends State<ProductsAmount> {
         //     discountState is ReferralCodeSuccessState
         //         ? discountState.referralCodeModel
         //         : null;
+       
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

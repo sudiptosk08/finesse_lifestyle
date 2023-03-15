@@ -1,6 +1,4 @@
-import 'package:finesse/src/features/checkout/components/add_new_address.dart';
-import 'package:finesse/src/features/checkout/controller/address_controller.dart';
-import 'package:finesse/src/features/checkout/state/add_address.dart';
+
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,14 +11,15 @@ import '../../../../styles/k_colors.dart';
 import '../../../../styles/k_text_style.dart';
 import '../../cart/components/get_location.dart';
 
-class AddHome extends StatefulWidget {
-  const AddHome({Key? key}) : super(key: key);
+class AddAddress extends StatefulWidget {
+  String addressLabel; 
+   AddAddress({Key? key  , required this.addressLabel}) : super(key: key);
 
   @override
-  State<AddHome> createState() => _AddHomeState();
+  State<AddAddress> createState() => _AddAddressState();
 }
 
-class _AddHomeState extends State<AddHome> {
+class _AddAddressState extends State<AddAddress> {
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
@@ -34,7 +33,6 @@ class _AddHomeState extends State<AddHome> {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, _) {
-       
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -96,19 +94,10 @@ class _AddHomeState extends State<AddHome> {
               ],
             ),
             SizedBox(height: context.screenHeight * 0.05),
-            Consumer(
-              builder: (context,ref,child){
-                 final addressState  = ref.watch(addressProvider);
-                 return KButton(
-                    title:addressState is AddressLoadingState ?'please wait...':   'Add Address',
-                    onTap: () {
-                      if(addressState is! AddressLoadingState){
-                          ref.read(addressProvider.notifier).AddAddress(nameis: name.text, emailis: email.text, phoneis: phone.text, addressLabel: homeAddress, addressis: address.text);
-                      }
-                      // Navigator.pushNamed(context, '/accountDetails');
-                    }
-                  
-               );
+            KButton(
+              title: 'Add Address',
+              onTap: () {
+                Navigator.pushNamed(context, '/accountDetails');
               },
             ),
             const SizedBox(height: 16),

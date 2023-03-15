@@ -5,10 +5,11 @@ import 'package:finesse/src/features/cart/model/zone_model.dart';
 
 
 class ZoneSuccessState extends SuccessState {
-  final ZoneModel? zoneModel;
+   final ZoneModel? zoneModel;
 
   const ZoneSuccessState(this.zoneModel);
 }
+
 
 class CitySuccessState extends SuccessState {
   final CityModel? cityModel;

@@ -1,4 +1,6 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
+import 'package:finesse/constants/shared_preference_constant.dart';
+import 'package:finesse/src/features/checkout/components/add_address.dart';
 import 'package:finesse/src/features/checkout/components/add_office.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
@@ -83,6 +85,9 @@ class _AddNewAddressState extends State<AddNewAddress> {
                     ),
                   ),
 
+                   /// MAIN BODY
+                  // if (currentIndex == 0)  AddAddress(addressLabel: homeAddress),
+                  // if (currentIndex == 1)  AddAddress(addressLabel: officeAddress),
                   /// MAIN BODY
                   if (currentIndex == 0) const AddHome(),
                   //if (currentIndex == 1) const AddOffice(),

@@ -5,6 +5,7 @@ import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:finesse/src/features/auth/login/controller/login_controller.dart';
 import 'package:finesse/src/features/auth/login/view/login_page.dart';
 import 'package:finesse/src/features/cart/components/products_amount.dart';
+import 'package:finesse/src/features/cart/controller/zone_controller.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,6 @@ import '../../checkout/components/take_address.dart';
 class CartPage extends StatefulWidget {
   final bool isFromBottomNav;
   const CartPage({Key? key, this.isFromBottomNav = false}) : super(key: key);
-
   @override
   State<CartPage> createState() => _CartPageState();
 }
@@ -36,7 +36,7 @@ class _CartPageState extends State<CartPage> {
             ),
             body: SingleChildScrollView(
               child: Container(
-                color: Colors.transparent, 
+                color: Colors.transparent,
                 alignment: Alignment.center,
                 margin:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
@@ -59,15 +59,14 @@ class _CartPageState extends State<CartPage> {
                             builder: ((context, ref, child) {
                               return KButton(
                                 title: 'Checkout',
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => AddressPage(
-                                                area: "bogasr",
-                                                cites: "alkjd",
-                                                zone: "lkjsljfs",
-                                              )));
+                                onTap: () async {
+                                 if( await ref.read(zoneProvider.notifier).isLocationSet(addressName)){
+                                   Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => AddressPage(
+                                                )));
+                                 }
                                 },
                               );
                             }),

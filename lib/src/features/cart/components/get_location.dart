@@ -1,3 +1,4 @@
+import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:finesse/src/features/cart/controller/zone_controller.dart';
 import 'package:finesse/src/features/cart/model/area_model.dart';
 import 'package:finesse/src/features/cart/model/city_model.dart';
@@ -8,6 +9,7 @@ import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 // ignore: must_be_immutable
 class DeliveryAddress extends StatefulWidget {
@@ -31,6 +33,8 @@ class DeliveryAddress extends StatefulWidget {
 }
 
 class _DeliveryAddressState extends State<DeliveryAddress> {
+  City? city;
+  String selectedCity = "";
   @override
   Widget build(BuildContext context) {
     return Consumer(
@@ -38,13 +42,29 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
         final cityState = ref.watch(cityProvider);
         final zoneState = ref.watch(zoneProvider);
         final areaState = ref.watch(areaProvider);
-        final List<City>? cityData =
+        // changet final to non final
+        List<City>? cityData =
             cityState is CitySuccessState ? cityState.cityModel?.cities : [];
-        final List<Zone>? zoneData =
+        List<Zone>? zoneData =
             zoneState is ZoneSuccessState ? zoneState.zoneModel?.zones : [];
-        final List<Area>? areaData =
+        List<Area>? areaData =
             areaState is AreaSuccessState ? areaState.areaModel?.areas : [];
 
+
+        print("----start city ----------");
+        print(cityData);
+        print("----start city ----------");
+        print("----start zone ----------");
+        print(zoneData);
+        print("----start zone ----------");
+        print("----start area ----------");
+        print(areaData);
+        print("----start area ----------");
+        if(widget.checkCities == true){
+          zoneData = []; 
+          areaData = [];
+        }
+        
         return Container(
           height: 48,
           width: context.screenWidth,
@@ -79,22 +99,46 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                 iconSize: 16,
                 onChanged: (newValue) {
                   setState(() {
-                    widget.checkCities == true
-                        ? widget.cities = newValue
-                        : widget.checkZones == true
-                            ? widget.zones = newValue
-                            : widget.areas = newValue;
+                    if (widget.checkCities == true) {
+                      widget.cities = newValue;
+                      
+                      ref
+                          .read(cityProvider.notifier)
+                          .cityNameSet(cityData!, widget.cities!);
+                    } else if (widget.checkZones == true) {
+                      widget.zones = newValue;
+
+                      ref
+                          .read(zoneProvider.notifier)
+                          .zoneNameSet(zoneData!, widget.zones!);
+                    } else {
+                      widget.areas = newValue;
+
+                      ref
+                          .read(areaProvider.notifier)
+                          .areaNameSet(areaData!, widget.areas!);
+                    }
                     if (widget.checkCities == true) widget.zones = null;
+
                     if (widget.checkZones == true) widget.areas = null;
                   });
                   if (widget.checkCities == true) {
-                    ref.read(zoneProvider.notifier).allZone(id: widget.cities);
+                    setState(() {
+                  
+                      zoneData = [];
+                      areaData = [];
+                    });
+                    ref.read(zoneProvider.notifier).allZone(id: widget.cities );
                   }
                   if (widget.checkZones == true) {
                     ref
                         .read(areaProvider.notifier)
                         .allArea(zoneId: widget.zones);
                   }
+
+                  print("city : ${widget.cities}");
+                  print("zones : ${widget.zones}");
+                  print("area : ${widget.areas}");
                 },
                 items: widget.checkCities == true
                     ? cityData?.map(
@@ -102,7 +146,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                           return DropdownMenuItem(
                             value: location.id.toString(),
                             child: Text(
-                              location.name.toString(),
+                              location.name.toString() ?? '',
                               style: KTextStyle.bodyText1.copyWith(
                                 color: KColor.blackbg.withOpacity(0.4),
                               ),

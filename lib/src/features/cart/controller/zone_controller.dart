@@ -1,11 +1,20 @@
+import 'dart:convert';
+import 'dart:core';
+
+import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/core/network/api.dart';
 import 'package:finesse/core/network/network_utils.dart';
+import 'package:finesse/src/features/auth/login/model/user_model.dart';
+import 'package:finesse/src/features/auth/login/state/login_state.dart';
 import 'package:finesse/src/features/cart/model/area_model.dart';
 import 'package:finesse/src/features/cart/model/city_model.dart';
 import 'package:finesse/src/features/cart/model/zone_model.dart';
 import 'package:finesse/src/features/cart/state/zone_state.dart';
+import 'package:finesse/styles/k_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import 'cart_controller.dart';
 
@@ -31,6 +40,18 @@ class ZoneController extends StateNotifier<BaseState> {
   int subtotal = 0;
   int totalAmount = 0;
   int countTotalFee = 0;
+  String? zoneName;
+
+  zoneNameSet(List<Zone> zoneList, String id) async {
+    if (zoneList != null) {
+      zoneList.forEach((e) {
+        if (e.id.toString() == id.toString()) {
+          zoneName = e.zoneName; 
+          // setValue('${zone}', e.zoneName.toString());
+        }
+      });
+    }
+  }
 
   Future allZone({id = ""}) async {
     state = const LoadingState();
@@ -52,11 +73,38 @@ class ZoneController extends StateNotifier<BaseState> {
     }
   }
 
+  Future<bool> isLocationSet( String addressN) async{
+    String? zoneN = ref!.read(zoneProvider.notifier).zoneName;
+    String? cityN = ref!.read(cityProvider.notifier).cityName;
+    String? areaN = ref!.read(areaProvider.notifier).areaName;
+    if (cityN == null) {
+      toast("City not set!" , textColor:KColor.red12);
+      return false;
+    }
+    if (zoneN == null) {
+      toast("Zone not set!" , textColor:KColor.red12);
+      return false;
+    }
+    if (areaN == null) {
+      toast("area not set!" , textColor:KColor.red12);
+      return false;
+    }
+     
+    await setValue(addressName, addressN);
+    await setValue(city, cityN);
+    await setValue(zone, zoneN);
+    await setValue(area, areaN);
+    await setValue(userNameToOrder,getStringAsync(userName));
+    await setValue(userContractToOrder,getStringAsync(userContact));
+
+    totalDelivery();
+    return true;
+  }
+
   void totalDelivery() {
     for (int i = 0; i < zoneModel!.zones.length; i++) {
       deliveryFee = zoneModel!.zones[i].delivery!;
-      print(deliveryFee);
-     
+      print("the kking deliverfee:  ${deliveryFee}");
     }
     subtotal = ref?.read(cartProvider.notifier).subtotal as int;
     countTotalFee = subtotal + deliveryFee;
@@ -69,6 +117,17 @@ class CityController extends StateNotifier<BaseState> {
 
   CityController({this.ref}) : super(const InitialState());
   CityModel? cityModel;
+  String? cityName;
+  cityNameSet(List<City> cityList, String id) async {
+    if (cityList != null) {
+      cityList.forEach((e) {
+        if (e.id.toString() == id.toString()) {
+          cityName = e.name;
+          // setValue('${city}', e.name);
+        }
+      });
+    }
+  }
 
   Future allCity() async {
     state = const LoadingState();
@@ -95,6 +154,17 @@ class AreaController extends StateNotifier<BaseState> {
 
   AreaController({this.ref}) : super(const InitialState());
   AreaModel? areaModel;
+  String? areaName;
+  areaNameSet(List<Area> areaList, String id) async {
+    if (areaList != null) {
+      areaList.forEach((e) {
+        if (e.id.toString() == id.toString()) {
+          areaName = e.name;
+          // setValue('${area}', e.name);
+        }
+      });
+    }
+  }
 
   Future allArea({zoneId = ""}) async {
     state = const LoadingState();

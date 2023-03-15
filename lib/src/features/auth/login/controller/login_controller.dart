@@ -53,7 +53,7 @@ class LoginController extends StateNotifier<BaseState> {
           setValue(userName, userModel!.name);
           setValue(userEmail, userModel!.email);
           setValue(userContact, userModel!.contact);
-          toast("Login Successful", bgColor: KColor.selectColor);
+          toast("Login Successful", bgColor: KColor.selectColor );
 
           NavigationService.navigateToReplacement(
             CupertinoPageRoute(
