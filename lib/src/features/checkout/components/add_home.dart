@@ -80,19 +80,10 @@ class _AddHomeState extends State<AddHome> {
                 _editInformation(
                   'City',
                   DeliveryAddress(
-                    cities: _cities,
-                    zones: _zones,
-                    checkCities: true,
+                  
                   ),
                 ),
-                _editInformation(
-                  'Zone',
-                  DeliveryAddress(
-                    cities: _cities,
-                    zones: _zones,
-                    checkCities: false,
-                  ),
-                ),
+               
               ],
             ),
             SizedBox(height: context.screenHeight * 0.05),

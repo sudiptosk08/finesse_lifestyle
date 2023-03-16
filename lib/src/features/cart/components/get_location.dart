@@ -13,20 +13,9 @@ import 'package:nb_utils/nb_utils.dart';
 
 // ignore: must_be_immutable
 class DeliveryAddress extends StatefulWidget {
-  String? cities;
-  String? zones;
-  String? areas;
-  final bool? checkCities;
-  final bool? checkZones;
-
-  DeliveryAddress(
-      {Key? key,
-      this.cities,
-      this.zones,
-      this.areas,
-      this.checkCities,
-      this.checkZones})
-      : super(key: key);
+  const DeliveryAddress({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<DeliveryAddress> createState() => _DeliveryAddressState();
@@ -34,6 +23,9 @@ class DeliveryAddress extends StatefulWidget {
 
 class _DeliveryAddressState extends State<DeliveryAddress> {
   City? city;
+  String? cities = "City";
+  String? zones = "Zone";
+  String? areas = "Area";
   String selectedCity = "";
   @override
   Widget build(BuildContext context) {
@@ -50,140 +42,189 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
         List<Area>? areaData =
             areaState is AreaSuccessState ? areaState.areaModel?.areas : [];
 
-
-        print("----start city ----------");
-        print(cityData);
-        print("----start city ----------");
-        print("----start zone ----------");
-        print(zoneData);
-        print("----start zone ----------");
-        print("----start area ----------");
-        print(areaData);
-        print("----start area ----------");
-        if(widget.checkCities == true){
-          zoneData = []; 
-          areaData = [];
-        }
-        
-        return Container(
-          height: 48,
-          width: context.screenWidth,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: KColor.searchColor.withOpacity(0.8)),
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: DropdownButtonHideUnderline(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 18.0, left: 9),
-              child: DropdownButton<String>(
-                isExpanded: true,
-                hint: Text(
-                  widget.checkCities == true
-                      ? 'City'
-                      : widget.checkZones == true
-                          ? 'Zone'
-                          : 'Area',
-                  style: KTextStyle.bodyText1
-                      .copyWith(color: KColor.blackbg.withOpacity(0.4)),
-                ),
-                dropdownColor: KColor.appBackground,
-                menuMaxHeight: context.screenHeight * 0.5,
-                alignment: AlignmentDirectional.centerStart,
-                value: widget.checkCities == true
-                    ? widget.cities
-                    : widget.checkZones == true
-                        ? widget.zones
-                        : widget.areas,
-                icon: const Icon(Icons.keyboard_arrow_down,
-                    color: KColor.blackbg),
-                iconSize: 16,
-                onChanged: (newValue) {
-                  setState(() {
-                    if (widget.checkCities == true) {
-                      widget.cities = newValue;
-                      
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 45,
+              child: Material(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                        color: KColor.searchColor.withOpacity(0.8), width: 1.0),
+                    borderRadius: BorderRadius.circular(6.0)),
+                child: PopupMenuButton<City>(
+                  itemBuilder: (context) {
+                    return cityData!.map((str) {
+                      return PopupMenuItem(
+                        value: str,
+                        child: Text(str.name!),
+                      );
+                    }).toList();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            cities.toString(),
+                            softWrap: false,
+                            //textScaleFactor: textScaleFactor,
+                            // style: bodyRobotoTextStyle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: KTextStyle.bodyText1.copyWith(
+                              color: KColor.blackbg.withOpacity(0.4),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        const Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.grey,
+                        ),
+                      ],
+                    ),
+                  ),
+                  onSelected: (v) {
+                    // Tools.hideKeyboard(context);
+                    setState(() {
+                      cities = v.name!;
+                      ref.read(zoneProvider.notifier).allZone(id: v.id);
                       ref
                           .read(cityProvider.notifier)
-                          .cityNameSet(cityData!, widget.cities!);
-                    } else if (widget.checkZones == true) {
-                      widget.zones = newValue;
-
-                      ref
-                          .read(zoneProvider.notifier)
-                          .zoneNameSet(zoneData!, widget.zones!);
-                    } else {
-                      widget.areas = newValue;
-
-                      ref
-                          .read(areaProvider.notifier)
-                          .areaNameSet(areaData!, widget.areas!);
-                    }
-                    if (widget.checkCities == true) widget.zones = null;
-
-                    if (widget.checkZones == true) widget.areas = null;
-                  });
-                  if (widget.checkCities == true) {
-                    setState(() {
-                  
-                      zoneData = [];
-                      areaData = [];
+                          .cityNameSet(cityData!, cities.toString());
                     });
-                    ref.read(zoneProvider.notifier).allZone(id: widget.cities );
-                  }
-                  if (widget.checkZones == true) {
-                    ref
-                        .read(areaProvider.notifier)
-                        .allArea(zoneId: widget.zones);
-                  }
-
-                  print("city : ${widget.cities}");
-                  print("zones : ${widget.zones}");
-                  print("area : ${widget.areas}");
-                },
-                items: widget.checkCities == true
-                    ? cityData?.map(
-                        (location) {
-                          return DropdownMenuItem(
-                            value: location.id.toString(),
-                            child: Text(
-                              location.name.toString() ?? '',
-                              style: KTextStyle.bodyText1.copyWith(
-                                color: KColor.blackbg.withOpacity(0.4),
-                              ),
-                            ),
-                          );
-                        },
-                      ).toList()
-                    : widget.checkZones == true && widget.checkCities == false
-                        ? zoneData?.map(
-                            (position) {
-                              return DropdownMenuItem(
-                                value: position.id.toString(),
-                                child: Text(
-                                  position.zoneName.toString(),
-                                  style: KTextStyle.bodyText1.copyWith(
-                                    color: KColor.blackbg.withOpacity(0.4),
-                                  ),
-                                ),
-                              );
-                            },
-                          ).toList()
-                        : areaData?.map(
-                            (position) {
-                              return DropdownMenuItem(
-                                value: position.id.toString(),
-                                child: Text(
-                                  position.name.toString(),
-                                  style: KTextStyle.bodyText1.copyWith(
-                                    color: KColor.blackbg.withOpacity(0.4),
-                                  ),
-                                ),
-                              );
-                            },
-                          ).toList(),
+                  },
+                ),
               ),
             ),
-          ),
+            const SizedBox(
+              height: 12.84,
+            ),
+            SizedBox(
+              height: 45,
+              child: Material(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                        color: KColor.searchColor.withOpacity(0.8), width: 1.0),
+                    borderRadius: BorderRadius.circular(6.0)),
+                child: PopupMenuButton<Zone>(
+                  itemBuilder: (context) {
+                    return zoneData!.map((str) {
+                      return PopupMenuItem(
+                        value: str,
+                        child: Text(str.zoneName.toString()),
+                      );
+                    }).toList();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            zones.toString(),
+                            softWrap: false,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: KTextStyle.bodyText1.copyWith(
+                              color: KColor.blackbg.withOpacity(0.4),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        const Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.grey,
+                        ),
+                      ],
+                    ),
+                  ),
+                  onSelected: (v) {
+                    setState(() {
+                      zones = v.zoneName;
+                      ref.read(areaProvider.notifier).allArea(zoneId: v.id);
+                      ref
+                          .read(zoneProvider.notifier)
+                          .zoneNameSet(zoneData!, zones.toString());
+                    });
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 12.84,
+            ),
+            SizedBox(
+              height: 45,
+              child: Material(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                        color: KColor.searchColor.withOpacity(0.8), width: 1.0),
+                    borderRadius: BorderRadius.circular(6.0)),
+                child: PopupMenuButton<Area>(
+                  itemBuilder: (context) {
+                    return areaData!.map((str) {
+                      return PopupMenuItem(
+                        value: str,
+                        child: Text(str.name),
+                      );
+                    }).toList();
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            areas.toString(),
+                            softWrap: false,
+                            //textScaleFactor: textScaleFactor,
+                            // style: bodyRobotoTextStyle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: KTextStyle.bodyText1.copyWith(
+                              color: KColor.blackbg.withOpacity(0.4),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 15),
+                        const Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.grey,
+                        ),
+                      ],
+                    ),
+                  ),
+                  onSelected: (v) {
+                    setState(() {
+                      areas = v.name.toString();
+                      ref
+                          .read(areaProvider.notifier)
+                          .areaNameSet(areaData!, areas.toString());
+                    });
+                  },
+                ),
+              ),
+            ),
+          ],
         );
       },
     );
