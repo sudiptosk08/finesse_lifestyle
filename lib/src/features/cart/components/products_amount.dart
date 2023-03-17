@@ -27,49 +27,18 @@ class _ProductsAmountState extends State<ProductsAmount> {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, _) {
-        //final discountState = ref.watch(discountProvider);
         final cartState = ref.watch(cartProvider);
-        //final zoneState = ref.watch(zoneProvider);
-        // final PromoCodeModel? promoCodeData = discountState is PromoCodeSuccessState
-        //     ? discountState.promoCodeModel
-        //     : null;
-        // final ReferralCodeModel? referralCodeData =
-        //     discountState is ReferralCodeSuccessState
-        //         ? discountState.referralCodeModel
-        //         : null;
        
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CartItems(),
-            DeliveryAddress(
-              cities: _cities,
-              zones: _zones,
-              areas: _areas,
-              checkCities: true,
-              checkZones: true,
-            ),
-            const SizedBox(height: 20),
-            DeliveryAddress(
-              cities: _cities,
-              zones: _zones,
-              checkCities: false,
-              checkZones: true,
-              areas: _areas,
-            ),
-            const SizedBox(height: 20),
-            DeliveryAddress(
-                cities: _cities,
-                zones: _zones,
-                checkCities: false,
-                checkZones: false,
-                areas: _areas),
+            DeliveryAddress(),
             const SizedBox(height: 20),
             const GetDiscount(),
             SizedBox(height: context.screenHeight * 0.05),
-            CardTotal(
-             
-            ),
+            CardTotal(),
             SizedBox(height: context.screenHeight * 0.05),
           ],
         );

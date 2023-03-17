@@ -18,7 +18,8 @@ class KDrawer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final menuState = ref.watch(menuDataProvider);
-    final List<MenuDataModel>? menuData = menuState is MenuDataSuccessState ? menuState.menuList : [];
+    final MenuDataModel? menuData =
+        menuState is MenuDataSuccessState ? menuState.menuList : null;
 
     return Container(
       color: KColor.blackbg,
@@ -34,7 +35,8 @@ class KDrawer extends ConsumerWidget {
                 Center(
                   child: Text(
                     'FINESSE',
-                    style: KTextStyle.headline1.copyWith(color: KColor.whiteBackground),
+                    style: KTextStyle.headline1
+                        .copyWith(color: KColor.whiteBackground),
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -44,12 +46,13 @@ class KDrawer extends ConsumerWidget {
                   },
                   child: Text(
                     'Home',
-                    style: KTextStyle.subtitle1.copyWith(color: KColor.whiteBackground),
+                    style: KTextStyle.subtitle1
+                        .copyWith(color: KColor.whiteBackground),
                   ),
                 ),
                 const SizedBox(height: 16),
                 ListView.builder(
-                  itemCount: menuData!.length,
+                  itemCount: menuData!.menus.length,
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   padding: EdgeInsets.zero,
@@ -59,8 +62,11 @@ class KDrawer extends ConsumerWidget {
                       children: [
                         InkWell(
                           onTap: () {
-                            if (menuData[index].isActive == 1) {
-                              ref.read(shopProvider.notifier).fetchShopProductList(categoryId: menuData[index].id);
+                            if (menuData.user.isActive == 1) {
+                              ref
+                                  .read(shopProvider.notifier)
+                                  .fetchShopProductList(
+                                      categoryId: menuData.menus[index].id);
 
                               Navigator.pushNamed(context, '/shop');
                             } else {
@@ -68,8 +74,9 @@ class KDrawer extends ConsumerWidget {
                             }
                           },
                           child: Text(
-                            menuData[index].name ?? '',
-                            style: KTextStyle.subtitle1.copyWith(color: KColor.whiteBackground),
+                            menuData.menus[index].name ?? '',
+                            style: KTextStyle.subtitle1
+                                .copyWith(color: KColor.whiteBackground),
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -83,7 +90,8 @@ class KDrawer extends ConsumerWidget {
                   },
                   child: Text(
                     'Contact Us',
-                    style: KTextStyle.subtitle1.copyWith(color: KColor.whiteBackground),
+                    style: KTextStyle.subtitle1
+                        .copyWith(color: KColor.whiteBackground),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -93,7 +101,8 @@ class KDrawer extends ConsumerWidget {
                   },
                   child: Text(
                     'About Us',
-                    style: KTextStyle.subtitle1.copyWith(color: KColor.whiteBackground),
+                    style: KTextStyle.subtitle1
+                        .copyWith(color: KColor.whiteBackground),
                   ),
                 ),
                 SizedBox(height: context.screenHeight * 0.1),
@@ -107,7 +116,8 @@ class KDrawer extends ConsumerWidget {
                         },
                         child: Text(
                           'Log In',
-                          style: KTextStyle.subtitle1.copyWith(color: KColor.whiteBackground),
+                          style: KTextStyle.subtitle1
+                              .copyWith(color: KColor.whiteBackground),
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -117,7 +127,8 @@ class KDrawer extends ConsumerWidget {
                         },
                         child: Text(
                           'Register',
-                          style: KTextStyle.subtitle1.copyWith(color: KColor.whiteBackground),
+                          style: KTextStyle.subtitle1
+                              .copyWith(color: KColor.whiteBackground),
                         ),
                       ),
                     ],
@@ -128,7 +139,9 @@ class KDrawer extends ConsumerWidget {
             Center(
               child: Column(
                 children: [
-                  Divider(color: KColor.whiteBackground.withOpacity(0.2), thickness: 1),
+                  Divider(
+                      color: KColor.whiteBackground.withOpacity(0.2),
+                      thickness: 1),
                   const SizedBox(height: 40),
                   InkWell(
                     onTap: () {
@@ -141,7 +154,8 @@ class KDrawer extends ConsumerWidget {
                         const SizedBox(width: 10),
                         Text(
                           '01998-685230',
-                          style: KTextStyle.subtitle1.copyWith(color: KColor.whiteBackground.withOpacity(0.8)),
+                          style: KTextStyle.subtitle1.copyWith(
+                              color: KColor.whiteBackground.withOpacity(0.8)),
                         )
                       ],
                     ),
@@ -149,7 +163,9 @@ class KDrawer extends ConsumerWidget {
                   const SizedBox(height: 12),
                   InkWell(
                     onTap: () {
-                      launchUrl(Uri(scheme: 'mailto', path: 'finessebangladesh@gmail.com'));
+                      launchUrl(Uri(
+                          scheme: 'mailto',
+                          path: 'finessebangladesh@gmail.com'));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -172,25 +188,30 @@ class KDrawer extends ConsumerWidget {
                     children: [
                       IconButton(
                         onPressed: () {
-                          launchUrlString('https://www.facebook.com/finesselifestyleofficial');
+                          launchUrlString(
+                              'https://www.facebook.com/finesselifestyleofficial');
                         },
-                        icon: SvgPicture.asset('assets/images/facebookIcon.svg'),
+                        icon:
+                            SvgPicture.asset('assets/images/facebookIcon.svg'),
                       ),
                       IconButton(
                         onPressed: () {
-                          launchUrlString('https://www.instagram.com/finesse_lifestyle_bd/');
+                          launchUrlString(
+                              'https://www.instagram.com/finesse_lifestyle_bd/');
                         },
                         icon: SvgPicture.asset('assets/images/instaIcon.svg'),
                       ),
                       IconButton(
                         onPressed: () {
-                          launchUrlString('https://www.youtube.com/channel/UCSUcQ8_MuhFzNh4E5BlTR-g');
+                          launchUrlString(
+                              'https://www.youtube.com/channel/UCSUcQ8_MuhFzNh4E5BlTR-g');
                         },
                         icon: SvgPicture.asset('assets/images/youtubeIcon.svg'),
                       ),
                       IconButton(
                         onPressed: () {
-                          launchUrlString('https://www.tiktok.com/@finesselifestyle');
+                          launchUrlString(
+                              'https://www.tiktok.com/@finesselifestyle');
                         },
                         icon: SvgPicture.asset('assets/images/tiktokIcon.svg'),
                       ),

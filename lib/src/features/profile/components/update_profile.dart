@@ -85,19 +85,17 @@ class _UpdateProfileState extends State<UpdateProfile> {
                 _editInformation(
                   'City',
                   DeliveryAddress(
-                    cities: _cities,
-                    zones: _zones,
-                    checkCities: true,
+                 
                   ),
                 ),
-                _editInformation(
-                  'Zone',
-                  DeliveryAddress(
-                    cities: _cities,
-                    zones: _zones,
-                    checkCities: false,
-                  ),
-                ),
+                // _editInformation(
+                //   'Zone',
+                //   DeliveryAddress(
+                //     cities: _cities,
+                //     zones: _zones,
+                //     checkCities: false,
+                //   ),
+                // ),
               ],
             ),
             SizedBox(height: context.screenHeight * 0.05),
