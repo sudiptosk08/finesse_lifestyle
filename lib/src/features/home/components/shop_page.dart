@@ -63,14 +63,17 @@ class _ShopPageState extends State<ShopPage> {
                         ),
                       ),
                       const SizedBox(width: 14),
-                      Container(
-                        height: 48,
-                        width: 48,
-                        decoration: BoxDecoration(
-                          color: KColor.searchColor.withOpacity(0.8),
-                          borderRadius: BorderRadius.circular(15),
+                      GestureDetector(
+                        
+                        child: Container(
+                          height: 48,
+                          width: 48,
+                          decoration: BoxDecoration(
+                            color: KColor.searchColor.withOpacity(0.8),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Center(child: Image.asset(AssetPath.filterIcon, height: 24)),
                         ),
-                        child: Center(child: Image.asset(AssetPath.filterIcon, height: 24)),
                       ),
                     ],
                   ),
