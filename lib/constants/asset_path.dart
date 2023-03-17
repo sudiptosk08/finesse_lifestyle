@@ -38,4 +38,7 @@ class AssetPath {
   static const cartBottomIcon = 'assets/images/trolly.svg';
   static const wishlistBottomIcon = 'assets/images/wishlist.svg';
   static const profileBottomIcon = 'assets/images/profile.svg';
+  static const notiDeleteIcon = 'assets/images/Delete.png';
+  static const NoticheckIcon = 'assets/images/check.png';
+
 }

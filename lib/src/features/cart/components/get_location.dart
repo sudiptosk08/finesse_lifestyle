@@ -51,15 +51,15 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
             areaState is AreaSuccessState ? areaState.areaModel?.areas : [];
 
 
-        print("----start city ----------");
-        print(cityData);
-        print("----start city ----------");
-        print("----start zone ----------");
-        print(zoneData);
-        print("----start zone ----------");
-        print("----start area ----------");
-        print(areaData);
-        print("----start area ----------");
+        // print("----start city ----------");
+        // print(cityData);
+        // print("----start city ----------");
+        // print("----start zone ----------");
+        // print(zoneData);
+        // print("----start zone ----------");
+        // print("----start area ----------");
+        // print(areaData);
+        // print("----start area ----------");
         if(widget.checkCities == true){
           zoneData = []; 
           areaData = [];
@@ -122,7 +122,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
 
                     if (widget.checkZones == true) widget.areas = null;
                   });
-                  if (widget.checkCities == true) {
+                  if (widget.checkCities == true){
                     setState(() {
                   
                       zoneData = [];

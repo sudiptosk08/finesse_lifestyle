@@ -44,7 +44,6 @@ class LoginController extends StateNotifier<BaseState> {
           userModel = User.fromJson(responseBody['user']);
           print("response body usermodel  = ${responseBody['user']}\n");
           print("usermodel = $userModel\n");
-
           state = LoginSuccessState(userModel);
           setValue(isLoggedIn, true);
           setValue(token, responseBody['token']);

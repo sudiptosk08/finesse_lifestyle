@@ -63,10 +63,15 @@ String cityN = "";
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, _) {
+
         final userState = ref.watch(loginProvider);
+    
+      
         final adressState = ref.watch(addressProvider); 
-        final User? userData =
-            userState is LoginSuccessState ? userState.userModel : null;
+        final User? userData = userState is LoginSuccessState ? userState.userModel : null;
+            print("user state is :------- "); 
+  print("${userData}");
+              print("user state is :------- "); 
 
         return Scaffold(
           backgroundColor: KColor.appBackground,
