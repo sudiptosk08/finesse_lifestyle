@@ -99,7 +99,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                       ref.read(zoneProvider.notifier).allZone(id: v.id);
                       ref
                           .read(cityProvider.notifier)
-                          .cityNameSet(cityData!, cities.toString());
+                          .cityNameSet(cityData!, v.id.toString());
                     });
                   },
                 ),
@@ -158,7 +158,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                       ref.read(areaProvider.notifier).allArea(zoneId: v.id);
                       ref
                           .read(zoneProvider.notifier)
-                          .zoneNameSet(zoneData!, zones.toString());
+                          .zoneNameSet(zoneData!, v.id.toString());
                     });
                   },
                 ),
@@ -218,7 +218,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                       areas = v.name.toString();
                       ref
                           .read(areaProvider.notifier)
-                          .areaNameSet(areaData!, areas.toString());
+                          .areaNameSet(areaData!, v.id.toString());
                     });
                   },
                 ),
