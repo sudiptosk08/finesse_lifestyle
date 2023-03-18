@@ -37,7 +37,8 @@ class _PopularCategoryState extends State<PopularCategory> {
                     children: [
                       InkWell(
                         onTap: () {
-                          ref.read(shopProvider.notifier).fetchShopProductList(categoryId: popularCategory[index].id);
+                          ref.read(shopProvider.notifier).fetchShopProductList(categoryId: popularCategory[index].id,
+                              groupId: "",str:"");
 
                           Navigator.pushNamed(context, '/shop');
                         },

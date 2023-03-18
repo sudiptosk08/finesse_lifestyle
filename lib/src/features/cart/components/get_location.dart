@@ -4,6 +4,9 @@ import 'package:finesse/src/features/cart/model/area_model.dart';
 import 'package:finesse/src/features/cart/model/city_model.dart';
 import 'package:finesse/src/features/cart/model/zone_model.dart';
 import 'package:finesse/src/features/cart/state/zone_state.dart';
+import 'package:finesse/src/features/home/controllers/menu_data_controller.dart';
+import 'package:finesse/src/features/home/models/menu_data_model.dart';
+import 'package:finesse/src/features/home/state/menu_data_state.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
@@ -22,18 +25,32 @@ class DeliveryAddress extends StatefulWidget {
 }
 
 class _DeliveryAddressState extends State<DeliveryAddress> {
-  City? city;
+  // City? city;
   String? cities = "City";
   String? zones = "Zone";
   String? areas = "Area";
   String selectedCity = "";
+
+  @override
+  void initState() {
+    cities = getStringAsync(city);
+    zones = getStringAsync(zone);
+    areas = getStringAsync(area);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, _) {
+        final userState = ref.watch(menuDataProvider);
+        final MenuDataModel? userData =
+            userState is MenuDataSuccessState ? userState.menuList : null;
+
         final cityState = ref.watch(cityProvider);
         final zoneState = ref.watch(zoneProvider);
         final areaState = ref.watch(areaProvider);
+
         // changet final to non final
         List<City>? cityData =
             cityState is CitySuccessState ? cityState.cityModel?.cities : [];
@@ -46,6 +63,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            text("City"),
             SizedBox(
               height: 45,
               child: Material(
@@ -96,10 +114,11 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                     // Tools.hideKeyboard(context);
                     setState(() {
                       cities = v.name!;
+
                       ref.read(zoneProvider.notifier).allZone(id: v.id);
                       ref
                           .read(cityProvider.notifier)
-                          .cityNameSet(cityData!, v.id.toString());
+                          .cityNameSet(cities.toString(), v.id.toString());
                     });
                   },
                 ),
@@ -108,6 +127,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
             const SizedBox(
               height: 12.84,
             ),
+            text("Zone"),
             SizedBox(
               height: 45,
               child: Material(
@@ -158,7 +178,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                       ref.read(areaProvider.notifier).allArea(zoneId: v.id);
                       ref
                           .read(zoneProvider.notifier)
-                          .zoneNameSet(zoneData!, v.id.toString());
+                          .zoneNameSet(zones.toString(), v.id.toString());
                     });
                   },
                 ),
@@ -167,6 +187,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
             const SizedBox(
               height: 12.84,
             ),
+            text("Area"),
             SizedBox(
               height: 45,
               child: Material(
@@ -218,7 +239,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                       areas = v.name.toString();
                       ref
                           .read(areaProvider.notifier)
-                          .areaNameSet(areaData!, v.id.toString());
+                          .areaNameSet(areas.toString(), v.id.toString());
                     });
                   },
                 ),
@@ -228,5 +249,11 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
         );
       },
     );
+  }
+  text(String title){
+  return Text(
+          title,
+          style: KTextStyle.subtitle7.copyWith(color: KColor.blackbg),
+        );
   }
 }

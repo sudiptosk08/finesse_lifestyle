@@ -56,7 +56,10 @@ class _ShopPageState extends State<ShopPage> {
                         child: SearchTextField(
                           callbackFunction: (query) => ref
                               .read(shopProvider.notifier)
-                              .fetchShopProductList(str: query),
+                              .fetchShopProductList(str: query,
+                                  categoryId: "",
+                                  groupId: "",
+                                ),
                           controller: controller,
                           readOnly: false,
                           hintText: 'Search here...',

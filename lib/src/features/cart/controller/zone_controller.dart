@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:core';
-
 import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/core/network/api.dart';
@@ -41,15 +40,12 @@ class ZoneController extends StateNotifier<BaseState> {
   int totalAmount = 0;
   int countTotalFee = 0;
   String? zoneName;
+  
 
-  zoneNameSet(List<Zone> zoneList, String id) async {
-    if (zoneList != null) {
-      zoneList.forEach((e) {
-        if (e.id.toString() == id.toString()) {
-          zoneName = e.zoneName; 
-          // setValue('${zone}', e.zoneName.toString());
-        }
-      });
+  zoneNameSet(String zone, String id) async {
+    if (zone != null) {
+      zoneName = zone;
+      // setValue('${zone}', e.zoneName.toString());
     }
   }
 
@@ -73,29 +69,29 @@ class ZoneController extends StateNotifier<BaseState> {
     }
   }
 
-  Future<bool> isLocationSet( String addressN) async{
+  Future<bool> isLocationSet(String addressN) async {
     String? zoneN = ref!.read(zoneProvider.notifier).zoneName;
     String? cityN = ref!.read(cityProvider.notifier).cityName;
     String? areaN = ref!.read(areaProvider.notifier).areaName;
     if (cityN == null) {
-      toast("City not set!" , textColor:KColor.red12);
+      toast("City not set!", textColor: KColor.red12);
       return false;
     }
     if (zoneN == null) {
-      toast("Zone not set!" , textColor:KColor.red12);
+      toast("Zone not set!", textColor: KColor.red12);
       return false;
     }
     if (areaN == null) {
-      toast("area not set!" , textColor:KColor.red12);
+      toast("area not set!", textColor: KColor.red12);
       return false;
     }
-     
+
     await setValue(addressName, addressN);
     await setValue(city, cityN);
     await setValue(zone, zoneN);
     await setValue(area, areaN);
-    await setValue(userNameToOrder,getStringAsync(userName));
-    await setValue(userContractToOrder,getStringAsync(userContact));
+    await setValue(userNameToOrder, getStringAsync(userName));
+    await setValue(userContractToOrder, getStringAsync(userContact));
 
     totalDelivery();
     return true;
@@ -118,14 +114,10 @@ class CityController extends StateNotifier<BaseState> {
   CityController({this.ref}) : super(const InitialState());
   CityModel? cityModel;
   String? cityName;
-  cityNameSet(List<City> cityList, String id) async {
-    if (cityList != null) {
-      cityList.forEach((e) {
-        if (e.id.toString() == id.toString()) {
-          cityName = e.name;
-          // setValue('${city}', e.name);
-        }
-      });
+  cityNameSet(String name, String id) async {
+    if (name != null) {
+      cityName = name;
+      // setValue('${city}', e.name);
     }
   }
 
@@ -155,14 +147,10 @@ class AreaController extends StateNotifier<BaseState> {
   AreaController({this.ref}) : super(const InitialState());
   AreaModel? areaModel;
   String? areaName;
-  areaNameSet(List<Area> areaList, String id) async {
-    if (areaList != null) {
-      areaList.forEach((e) {
-        if (e.id.toString() == id.toString()) {
-          areaName = e.name;
-          // setValue('${area}', e.name);
-        }
-      });
+  areaNameSet(String area, String id) async {
+    if (area != null) {
+      areaName = area;
+      // setValue('${area}', e.name);
     }
   }
 

@@ -32,8 +32,8 @@ class API {
   static const category = 'app/allGroups';
   static const allBrand = 'app/AllBrands';
 
-  static shop({str = "", groupId = "", categoryId = ""}) =>
-      'app/shopPageData?order=id,desc&page=1&groupId=$groupId&categoryId=$categoryId&str=$str&price=&brandId=&colour=&size';
+  static shop({str = "", groupId = "", categoryId = "",price = "",brandId = "" , colour = "" ,size = ""}) =>
+      'app/shopPageData?order=id,desc&page=1&groupId=$groupId&categoryId=$categoryId&str=$str&price=$price&brandId=$brandId&colour=$colour&size=$size';
   // 'app/shopPageData?order=id,desc&page=1&groupId=&categoryId=29&str=&price=&brandId=&colour=&size='
 
   static productDetails(productId) =>

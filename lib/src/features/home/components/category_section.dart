@@ -36,7 +36,9 @@ class _CategorySectionState extends State<CategorySection> {
               return InkWell(
                 onTap: () {
                   // setState(() => selectIndex = index);
-                  ref.read(shopProvider.notifier).fetchShopProductList(groupId: categoryData[index].id);
+                  ref.read(shopProvider.notifier).fetchShopProductList(groupId: categoryData[index].id,
+                      categoryId: "",
+                      str: "");
                   Navigator.pushNamed(context, '/shop');
                 },
                 child: Column(

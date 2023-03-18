@@ -79,9 +79,7 @@ class _AddHomeState extends State<AddHome> {
                 ),
                 _editInformation(
                   'City',
-                  DeliveryAddress(
-                  
-                  ),
+                  DeliveryAddress(),
                 ),
                
               ],
