@@ -5,6 +5,7 @@ import 'package:finesse/src/features/auth/login/controller/login_controller.dart
 import 'package:finesse/src/features/auth/login/model/user_model.dart';
 import 'package:finesse/src/features/auth/login/state/login_state.dart';
 import 'package:finesse/src/features/auth/login/view/login_page.dart';
+import 'package:finesse/src/features/profile/controller/profile_controller.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
@@ -107,6 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               title: 'Dashboard',
                               image: 'assets/images/dashboard.png',
                               onPressed: () {
+
                                 Navigator.pushNamed(context, '/dashboard');
                               },
                             ),
@@ -114,6 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               title: 'My Order',
                               image: 'assets/images/my-order.png',
                               onPressed: () {
+                                ref.read(orderProvider.notifier).fetchOrders();
                                 Navigator.pushNamed(context, '/myOrder');
                               },
                             ),

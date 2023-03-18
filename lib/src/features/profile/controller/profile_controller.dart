@@ -5,6 +5,7 @@ import 'package:finesse/core/network/network_utils.dart';
 import 'package:finesse/service/navigation_service.dart';
 import 'package:finesse/src/features/auth/login/model/user_model.dart';
 import 'package:finesse/src/features/auth/signup/view/signup_page.dart';
+import 'package:finesse/src/features/profile/model/order_model.dart';
 import 'package:finesse/src/features/profile/model/report_model.dart';
 import 'package:finesse/src/features/profile/state/profile_state.dart';
 import 'package:finesse/src/features/profile/view/profile_page.dart';
@@ -20,6 +21,9 @@ final reportProvider = StateNotifierProvider<ReportController, BaseState>(
 
 final profileProvider = StateNotifierProvider<ProfileController, BaseState>(
   (ref) => ProfileController(ref: ref),
+);
+final orderProvider = StateNotifierProvider<OrderController, BaseState>(
+  (ref) => OrderController(ref: ref),
 );
 
 /// Controllers
@@ -172,7 +176,7 @@ class OrderController extends StateNotifier<BaseState> {
 
   OrderController({this.ref}) : super(const InitialState());
   ReportModel? reportModel;
-
+  OrderModel? orderModel; 
   Future order({
     required int areaId,
     required String billingAddress,
@@ -242,7 +246,7 @@ class OrderController extends StateNotifier<BaseState> {
     }
   }
 
-  Future fetchOrders() async {
+    Future fetchOrders() async {
     state = const LoadingState();
     dynamic responseBody;
     try {
@@ -250,8 +254,10 @@ class OrderController extends StateNotifier<BaseState> {
         await Network.getRequest(API.getOrder),
       );
       if (responseBody != null) {
-        reportModel = ReportModel.fromJson(responseBody);
-        state = FetchReportSuccessState(reportModel);
+         orderModel = OrderModel.fromJson(responseBody);
+        state =  FetchOrderSuccessState(orderModel);
+        print("fetch order state");
+        print("$responseBody");
       } else {
         state = const ErrorState();
       }
@@ -261,6 +267,26 @@ class OrderController extends StateNotifier<BaseState> {
       state = const ErrorState();
     }
   }
+
+  // Future fetchOrders() async {
+  //   state = const LoadingState();
+  //   dynamic responseBody;
+  //   try {
+  //     responseBody = await Network.handleResponse(
+  //       await Network.getRequest(API.getOrder),
+  //     );
+  //     if (responseBody != null) {
+  //       reportModel = ReportModel.fromJson(responseBody);
+  //       state = FetchReportSuccessState(reportModel);
+  //     } else {
+  //       state = const ErrorState();
+  //     }
+  //   } catch (error, stackTrace) {
+  //     print("error = $error");
+  //     print("error = $stackTrace");
+  //     state = const ErrorState();
+  //   }
+  // }
 
   Future cancelOrder({
     required int id,

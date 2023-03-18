@@ -141,10 +141,13 @@ class RouteGenerator {
         return CupertinoPageRoute(
           builder: (_) => const MyOrder(),
         );
-      case '/orderDetails':
-        return CupertinoPageRoute(
-          builder: (_) => const OrderDetails(),
-        );
+
+        // there is an error to send data
+      // case '/orderDetails':
+      //   print(arguments);
+      //   return CupertinoPageRoute(
+      //     builder: (_) =>  OrderDetails(orderData: arguments![''],),
+      //   );
       case '/writeReview':
         return CupertinoPageRoute(
           builder: (_) => const WriteReview(),
