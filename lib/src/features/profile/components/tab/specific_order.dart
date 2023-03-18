@@ -12,14 +12,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-class AllOrder extends StatefulWidget {
-  const AllOrder({Key? key}) : super(key: key);
+class SpecificOrder extends StatefulWidget {
+  final String OrderStatus; 
+  const SpecificOrder({Key? key , required this.OrderStatus}) : super(key: key);
 
   @override
-  State<AllOrder> createState() => _AllOrderState();
+  State<SpecificOrder> createState() => _SpecificOrderState();
 }
 
-class _AllOrderState extends State<AllOrder> {
+class _SpecificOrderState extends State<SpecificOrder> {
   @override
   Widget build(BuildContext context) {
     return Consumer(
@@ -27,7 +28,13 @@ class _AllOrderState extends State<AllOrder> {
         final orderState = ref.watch(orderProvider);
       //  final List<Datum>? wishlistData = wishlistProductsState is WishlistSuccessState ? wishlistProductsState.wishlistModel?.wishlist.data : [];
 
-       final List<OrderData>? orderList = orderState is FetchOrderSuccessState ? orderState.orderModel?.order.data : [];
+       final List<OrderData>? orderList = orderState is FetchOrderSuccessState ? orderState.orderModel?.order.data.where((element) => (element.status == widget.OrderStatus)).toList() : [];
+       print("using -----index where"); 
+        List<OrderData>? specificOrderList ; 
+        if(orderList!.isNotEmpty){
+         print(orderList.where((element) => element.status == "Canceled").length) ;
+        }
+       print("using index where"); 
           return SingleChildScrollView(
       child:Container(
         margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
@@ -37,7 +44,7 @@ class _AllOrderState extends State<AllOrder> {
           children: [
             if(orderState is LoadingState)...[const KLoading(shimmerHeight: 123,)],
             if(orderState is FetchOrderSuccessState)...[
-            orderList!.isEmpty?  
+            orderList.isEmpty?  
             Center(child:Text("no order found"))
             :
             

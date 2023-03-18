@@ -1,5 +1,6 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/src/features/profile/components/tab/all_order.dart';
+import 'package:finesse/src/features/profile/components/tab/specific_order.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
@@ -75,10 +76,10 @@ class _MyOrderState extends State<MyOrder> with SingleTickerProviderStateMixin {
               child: TabBarView(
                 children: [
                   AllOrder(),
-                  AllOrder(),
-                  AllOrder(),
-                  AllOrder(),
-                  AllOrder(),
+                  SpecificOrder(OrderStatus: "Order Placed"),
+                  SpecificOrder(OrderStatus: "Processing"),
+                  SpecificOrder(OrderStatus: "Shipped"),
+                  SpecificOrder(OrderStatus: "Delivered"),
                 ],
               ),
             ),

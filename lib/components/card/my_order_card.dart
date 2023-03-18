@@ -5,8 +5,24 @@ import 'package:flutter_svg/svg.dart';
 
 class MyOrderCard extends StatelessWidget {
   final bool isChecked;
-
-  const MyOrderCard({required this.isChecked, Key? key}) : super(key: key);
+  final String id;
+  final String date;
+  final String userName;
+  final String contract;
+  final String grandTotal;
+  final String paymentType;
+  final String status;
+  const MyOrderCard(
+      {required this.isChecked,
+      Key? key,
+      required this.id,
+      required this.date,
+      required this.userName,
+      required this.contract,
+      required this.grandTotal,
+      required this.paymentType,
+      required this.status})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,36 +55,38 @@ class MyOrderCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "ID: #99045677 ",
+                "ID: #${id}",
                 style: KTextStyle.subtitle1.copyWith(
                   color: KColor.blackbg,
                 ),
               ),
               Text(
-                isChecked == true ? "Delivered" : "Shipped",
+                // isChecked == true ? "Delivered" : "Shipped",
+                status,
                 style: KTextStyle.bodyText2.copyWith(
-                  color: isChecked == true ? KColor.selectColor : KColor.red12,
+                  color: status == "Delivered" ? KColor.selectColor : KColor.red12,
                 ),
               ),
             ],
           ),
           const SizedBox(height: 8),
           Text(
-            "Placed on 8 May",
+            // "Placed on 8 May",
+            date,
             style: KTextStyle.bodyText1.copyWith(
               color: KColor.blackbg.withOpacity(0.3),
             ),
           ),
           const SizedBox(height: 15),
           Text(
-            "Mariam Crane",
+            userName,
             style: KTextStyle.bodyText1.copyWith(
               color: KColor.blackbg.withOpacity(0.3),
             ),
           ),
           const SizedBox(height: 7),
           Text(
-            "+97 4556 7681",
+            contract,
             style: KTextStyle.bodyText1.copyWith(
               color: KColor.blackbg.withOpacity(0.3),
             ),
@@ -78,13 +96,13 @@ class MyOrderCard extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  "Total : ",
+                  "Grand total: ",
                   style: KTextStyle.bodyText2.copyWith(
                     color: KColor.blackbg.withOpacity(0.7),
                   ),
                 ),
                 Text(
-                  "\$44.90",
+                  "\$${grandTotal}",
                   style: KTextStyle.bodyText2.copyWith(
                     color: KColor.blackbg.withOpacity(0.7),
                   ),
@@ -100,21 +118,22 @@ class MyOrderCard extends StatelessWidget {
                   SvgPicture.asset('assets/images/success.svg', height: 18),
                   const SizedBox(width: 3),
                   Text(
-                    "Payment made via Paypal",
+                    paymentType,
                     style: KTextStyle.bodyText1.copyWith(
                       color: KColor.blackbg.withOpacity(0.6),
                     ),
                   ),
                 ],
               ),
-              if (isChecked == true)
+              if (status == "Delivered")
                 InkWell(
                   onTap: () {
                     Navigator.pushNamed(context, '/orderDetails');
                   },
                   child: Container(
                     height: 40,
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
