@@ -11,6 +11,7 @@ import 'package:finesse/src/features/cart/model/city_model.dart';
 import 'package:finesse/src/features/cart/model/zone_model.dart';
 import 'package:finesse/src/features/cart/state/zone_state.dart';
 import 'package:finesse/styles/k_colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -34,22 +35,33 @@ class ZoneController extends StateNotifier<BaseState> {
 
   ZoneController({this.ref}) : super(const InitialState());
   ZoneModel? zoneModel;
+
   int deliveryFee = 0;
   int roundingFee = 0;
   int subtotal = 0;
   int totalAmount = 0;
   int countTotalFee = 0;
   String? zoneName;
-  
+  String? zoneId;
 
-  zoneNameSet(String zone, String id) async {
-    if (zone != null) {
-      zoneName = zone;
-      // setValue('${zone}', e.zoneName.toString());
-    }
+  void zoneNameSet(String? zone, String? id) async {
+    zoneName = zone;
+    zoneId = id;
+    ref!.read(areaProvider.notifier).areaNameSet(null, null);
   }
 
-  Future allZone({id = ""}) async {
+  void makeZoneNull() {
+    zoneName = null;
+    zoneId = null;
+    zoneModel = null;
+    state = EmptyState();
+  }
+
+  Future allZone(
+      {id = "",
+      zoneId,
+      isUpdateBillingInfo = false,
+      isShippingAddressPage = false}) async {
     state = const LoadingState();
     dynamic responseBody;
     try {
@@ -58,7 +70,9 @@ class ZoneController extends StateNotifier<BaseState> {
       if (responseBody != null) {
         zoneModel = ZoneModel.fromJson(responseBody);
         state = ZoneSuccessState(zoneModel);
-        totalDelivery();
+        if (isUpdateBillingInfo == false && isShippingAddressPage == false) {
+          totalDelivery();
+        }
       } else {
         state = const ErrorState();
       }
@@ -69,40 +83,49 @@ class ZoneController extends StateNotifier<BaseState> {
     }
   }
 
-  Future<bool> isLocationSet(String addressN) async {
-    String? zoneN = ref!.read(zoneProvider.notifier).zoneName;
-    String? cityN = ref!.read(cityProvider.notifier).cityName;
-    String? areaN = ref!.read(areaProvider.notifier).areaName;
-    if (cityN == null) {
-      toast("City not set!", textColor: KColor.red12);
-      return false;
-    }
-    if (zoneN == null) {
-      toast("Zone not set!", textColor: KColor.red12);
-      return false;
-    }
-    if (areaN == null) {
-      toast("area not set!", textColor: KColor.red12);
-      return false;
+  // void totalDelivery() {
+  //   subtotal = ref?.read(cartProvider.notifier).subtotal as int;
+  //   countTotalFee = subtotal + deliveryFee;
+  //   print(countTotalFee);
+  // }
+  // update deliveryfee if AddBillingAddress page  upadate click
+
+  void updateTotalDelivery({ifZoneNotCall = false, zoneN}) {
+    if (ifZoneNotCall) {
+      if (zoneN == "Sylhet Sadar") {
+        deliveryFee = 50;
+      } else {
+        deliveryFee = 100;
+      }
+    } else {
+      if (zoneName == "Sylhet Sadar") {
+        deliveryFee = 50;
+      } else {
+        for (int i = 0; i < zoneModel!.zones.length; i++) {
+          deliveryFee = zoneModel!.zones[i].delivery!;
+          print("the kking deliverfee:  ${deliveryFee}");
+        }
+      }
     }
 
-    await setValue(addressName, addressN);
-    await setValue(city, cityN);
-    await setValue(zone, zoneN);
-    await setValue(area, areaN);
-    await setValue(userNameToOrder, getStringAsync(userName));
-    await setValue(userContractToOrder, getStringAsync(userContact));
-
-    totalDelivery();
-    return true;
+    subtotal = ref?.read(cartProvider.notifier).subtotal as int;
+    countTotalFee = subtotal + deliveryFee;
+    print(countTotalFee);
   }
 
+// calculation for all
   void totalDelivery() {
-    for (int i = 0; i < zoneModel!.zones.length; i++) {
-      deliveryFee = zoneModel!.zones[i].delivery!;
-      print("the kking deliverfee:  ${deliveryFee}");
+    if (zoneName == "Sylhet Sadar") {
+      deliveryFee = 50;
+    } else {
+      for (int i = 0; i < zoneModel!.zones.length; i++) {
+        deliveryFee = zoneModel!.zones[i].delivery!;
+        print("the kking deliverfee:  ${deliveryFee}");
+      }
     }
+
     subtotal = ref?.read(cartProvider.notifier).subtotal as int;
+    // subtotal += deliveryFee; 
     countTotalFee = subtotal + deliveryFee;
     print(countTotalFee);
   }
@@ -114,21 +137,29 @@ class CityController extends StateNotifier<BaseState> {
   CityController({this.ref}) : super(const InitialState());
   CityModel? cityModel;
   String? cityName;
-  cityNameSet(String name, String id) async {
-    if (name != null) {
-      cityName = name;
-      // setValue('${city}', e.name);
-    }
+  String? cityId;
+  void cityNameSet(String? name, String? id) async {
+    cityName = name;
+    cityId = id;
+    ref!.read(zoneProvider.notifier).zoneNameSet(null, null);
+    ref!.read(areaProvider.notifier).areaNameSet(null, null);
   }
 
-  Future allCity() async {
+  void makeCityNull() {
+    cityName = null;
+    cityId = null;
+  }
+
+  Future allCity({cityId}) async {
     state = const LoadingState();
     dynamic responseBody;
+
     try {
       responseBody =
           await Network.handleResponse(await Network.getRequest(API.allCity));
       if (responseBody != null) {
         cityModel = CityModel.fromJson(responseBody);
+
         state = CitySuccessState(cityModel);
       } else {
         state = const ErrorState();
@@ -147,19 +178,25 @@ class AreaController extends StateNotifier<BaseState> {
   AreaController({this.ref}) : super(const InitialState());
   AreaModel? areaModel;
   String? areaName;
-  areaNameSet(String area, String id) async {
-    if (area != null) {
-      areaName = area;
-      // setValue('${area}', e.name);
-    }
+  String? areaId;
+  void areaNameSet(String? area, String? id) async {
+    areaName = area;
+    areaId = id;
   }
 
-  Future allArea({zoneId = ""}) async {
+  void makeAreaNull() {
+    areaName = null;
+    areaId = null;
+    areaModel = null;
+    state = EmptyState();
+  }
+
+  Future allArea({id = "", areaId}) async {
     state = const LoadingState();
     dynamic responseBody;
     try {
       responseBody = await Network.handleResponse(
-          await Network.getRequest(API.allArea(zoneId: zoneId)));
+          await Network.getRequest(API.allArea(zoneId: id)));
       if (responseBody != null) {
         areaModel = AreaModel.fromJson(responseBody);
         state = AreaSuccessState(areaModel);

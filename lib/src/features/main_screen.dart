@@ -5,10 +5,14 @@ import 'package:finesse/components/navigation/inspired/inspired.dart';
 import 'package:finesse/components/navigation/k_navigation_bar.dart';
 import 'package:finesse/components/navigation/tab_item.dart';
 import 'package:finesse/constants/asset_path.dart';
+import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/src/features/auth/login/controller/login_controller.dart';
 import 'package:finesse/src/features/cart/controller/cart_controller.dart';
+import 'package:finesse/src/features/cart/controller/zone_controller.dart';
 import 'package:finesse/src/features/cart/view/cart_page.dart';
+import 'package:finesse/src/features/checkout/controller/address_controller.dart';
+import 'package:finesse/src/features/home/controllers/menu_data_controller.dart';
 import 'package:finesse/src/features/home/views/home_page.dart';
 import 'package:finesse/src/features/profile/view/profile_page.dart';
 import 'package:finesse/src/features/wishlist/controller/wishlist_controller.dart';
@@ -47,7 +51,20 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                 onPageChanged: (index) {
                   setState(() => _currentIndex = index);
                   if (wishlistState is! LoadingState) {
-                    if (_currentIndex == 1) ref.read(cartProvider.notifier).cartDetails();
+                    if (_currentIndex == 1){
+                       ref.read(cartProvider.notifier).cartDetails();
+                     ref.read(addressProvider.notifier).setLocationNameOnce();
+                    
+                  
+                     
+                      // var userDaata = ref.read(menuDataProvider.notifier).menuList!.user; 
+                      // if( userDaata.customer.cityId !=null &&  userDaata.customer.zoneId != null &&  userDaata.customer.areaId != null){
+                      //   ref.read(cityProvider.notifier).allCity(cityId: userDaata.customer.cityId);
+                      //   ref.read(zoneProvider.notifier).allZone(id: userDaata.customer.cityId,zoneId: userDaata.customer.zoneId);
+                      //   ref.read(areaProvider.notifier).allArea(id: userDaata.customer.zoneId , areaId: userDaata.customer.areaId );
+                      // }
+
+                    }
                     if (_currentIndex == 2) ref.read(wishlistProvider.notifier).fetchWishlistProducts();
                     if (_currentIndex == 3) ref.read(loginProvider.notifier).userModel;
                   }

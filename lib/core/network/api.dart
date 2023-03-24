@@ -12,6 +12,9 @@ class API {
   static const base = AppMode.PRODUCTION_MODE ? live : test;
   static const baseImage = AppMode.PRODUCTION_MODE ? liveImage : testImage;
 
+  // user 
+  static const updateUser = 'app/user/edit';
+
   //authentication
   static const signup = 'app/registration';
   static const login = 'app/login';

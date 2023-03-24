@@ -73,6 +73,8 @@ class Customer {
     this.contact,
     this.email,
     this.zone,
+    this.city, 
+    this.area, 
     this.facebook,
     this.instagram,
     this.barcode,
@@ -92,7 +94,9 @@ class Customer {
   dynamic address;
   String? contact;
   String? email;
-  dynamic zone;
+  dynamic? zone;
+  dynamic? city; 
+  dynamic? area;
   String? facebook;
   String? instagram;
   dynamic barcode;
@@ -113,6 +117,8 @@ class Customer {
         contact: json["contact"],
         email: json["email"],
         zone: json["zone"],
+        area: json['area'], 
+        city: json['city'], 
         facebook: json["facebook"],
         instagram: json["instagram"],
         barcode: json["barcode"],
@@ -134,6 +140,8 @@ class Customer {
         "contact": contact,
         "email": email,
         "zone": zone,
+        "city":city, 
+        "area": area, 
         "facebook": facebook,
         "instagram": instagram,
         "barcode": barcode,

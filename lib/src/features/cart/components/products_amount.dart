@@ -34,7 +34,7 @@ class _ProductsAmountState extends State<ProductsAmount> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CartItems(),
-            DeliveryAddress(),
+            DeliveryAddress(isCheckoutPage: true),
             const SizedBox(height: 20),
             const GetDiscount(),
             SizedBox(height: context.screenHeight * 0.05),

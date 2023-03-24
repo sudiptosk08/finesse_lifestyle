@@ -1,8 +1,15 @@
+import 'package:finesse/core/base/base_state.dart';
+import 'package:finesse/src/features/auth/login/model/user_model.dart';
+
 abstract class  AddressState{}
 
-class AddressInitial extends AddressState{}
-class AddressLoadingState extends AddressState{}
+class AddressInitial extends InitialState{}
+class AddressLoadingState extends SuccessState{}
 
-class AddressSuccessState extends  AddressState{}
+class AddressSuccessState extends  SuccessState{}
 
-class AddressErrorState extends  AddressState{}
+class ShippingAddressSuccessState extends SuccessState{
+  User? userModel; 
+  ShippingAddressSuccessState(this.userModel);
+}
+class AddressErrorState extends  ErrorState{}

@@ -23,7 +23,7 @@ class AccountDetails extends StatelessWidget {
       builder: (context, ref, _) {
         final userState = ref.watch(menuDataProvider);
         final MenuDataModel? userData = userState is MenuDataSuccessState ? userState.menuList : null;
-
+          
         return Scaffold(
           backgroundColor: KColor.appBackground,
           appBar: const PreferredSize(
@@ -36,7 +36,7 @@ class AccountDetails extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _editProfile('Name', userData!.user.name ?? "", () {}),
+                  _editProfile('Name', userData!.user.customer.cityId ?? "", () {}),
                   _editProfile('Email', userData.user.email.toString() ?? "", () {}),
                   _editProfile('Address', userData.user.customer.address ?? "Not set yet", () {}),
                   _editProfile('Phone Number', userData.user.contact.toString() ?? "", () {}),

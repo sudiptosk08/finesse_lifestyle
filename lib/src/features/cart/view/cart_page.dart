@@ -6,6 +6,7 @@ import 'package:finesse/src/features/auth/login/controller/login_controller.dart
 import 'package:finesse/src/features/auth/login/view/login_page.dart';
 import 'package:finesse/src/features/cart/components/products_amount.dart';
 import 'package:finesse/src/features/cart/controller/zone_controller.dart';
+import 'package:finesse/src/features/checkout/controller/address_controller.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
@@ -60,13 +61,10 @@ class _CartPageState extends State<CartPage> {
                               return KButton(
                                 title: 'Checkout',
                                 onTap: () async {
-                                 if( await ref.read(zoneProvider.notifier).isLocationSet(addressName)){
-                                   Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => AddressPage(
-                                                )));
-                                 }
+                                   
+                               if(  await ref.read(addressProvider.notifier).isLocationSet()){
+                                 Navigator.pushNamed(context, '/addressPage');
+                               };
                                 },
                               );
                             }),

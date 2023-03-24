@@ -47,6 +47,7 @@ class _NotificationPageState extends State<NotificationPage> {
               children: [
                  SearchTextField(
                   callbackFunction: (e) {
+                   
                     ref.read(notificationProvider.notifier).fetchNotification();
                   },
                   controller: search,
@@ -65,35 +66,49 @@ class _NotificationPageState extends State<NotificationPage> {
                         ),
                         const SizedBox(height: 16),
                         if (notificationState is LoadingState) ...[const KLoading(shimmerHeight: 114)],
-                        if(notification.isEmpty) ...[ Center(child:Text("You have no new notifications" , style: KTextStyle.bodyText1.copyWith(color:KColor.blackbg.withOpacity(.7))))],
-                        ListView.builder(
+
+                        if(notificationState is GetNotificationSuccessState)...[
+                         notification.isEmpty? 
+                         Center(child:Text("You have no new notifications" , style: KTextStyle.bodyText1.copyWith(color:KColor.blackbg.withOpacity(.7))))
+                          :  ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          // itemCount: notification.length,
-                          itemCount: 5,
+                          itemCount: notification.length,
+                        
                           itemBuilder: (BuildContext context, int index) {
-                            return NotificationCard(
-                              // msg: notification[index].msg,
-                              msg: "Notification message here",
-                              // date: createDate(notification[index].createdAt.toString(), 1),
-                              date: "this is date",
-                              cancel: () {
-                                setState(() {
+                            return InkWell( 
+                              onTap: (){
+                                 if(notification[index].seen == 0){
+                                    ref.read(notificationProvider.notifier).updateNotification(id: notification[index].id.toString());
+                                 }
+                              },
+                              child: NotificationCard(
+                                msg: notification[index].msg,
+                               seen: notification[index].seen.toString(), 
+                                date: createDate(notification[index].createdAt.toString(), 1),
+                                // seen:
+                                cancel: () {
+                                  setState(() {
+                                    Navigator.pop(context);
+                                  });
+                                },
+                                                       
+                                delete: () {
+                                  // if (notificationState is! LoadingState) {
+                                  //   ref.read(notificationProvider.notifier).deleteNotification(
+                                  //         id: notification[index].id.toString(),
+                                  //       );
+                                  // }
                                   Navigator.pop(context);
-                                });
-                              },
-                           
-                              delete: () {
-                                // if (notificationState is! LoadingState) {
-                                //   ref.read(notificationProvider.notifier).deleteNotification(
-                                //         id: notification[index].id.toString(),
-                                //       );
-                                // }
-                                Navigator.pop(context);
-                              },
+                                },
+                              ),
                             );
                           },
                         ),
+                      
+                      
+                        ]
+                        
                       ],
                     ),
                   ),

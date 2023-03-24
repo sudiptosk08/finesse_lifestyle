@@ -9,6 +9,7 @@ class ZoneSuccessState extends SuccessState {
 
   const ZoneSuccessState(this.zoneModel);
 }
+class EmptyState extends SuccessState{}
 
 
 class CitySuccessState extends SuccessState {

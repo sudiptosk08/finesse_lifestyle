@@ -16,9 +16,10 @@ import 'package:nb_utils/nb_utils.dart';
 
 // ignore: must_be_immutable
 class DeliveryAddress extends StatefulWidget {
-  const DeliveryAddress({
-    Key? key,
-  }) : super(key: key);
+  bool? isCheckoutPage;
+  bool isBilliingInfoPage;
+  bool isShippingAddressPage;
+  DeliveryAddress({Key? key, this.isCheckoutPage = false , this.isBilliingInfoPage = false , this.isShippingAddressPage = false}) : super(key: key);
 
   @override
   State<DeliveryAddress> createState() => _DeliveryAddressState();
@@ -30,12 +31,15 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
   String? zones = "Zone";
   String? areas = "Area";
   String selectedCity = "";
-
+  String addressKey = 'null';
   @override
   void initState() {
-    cities = getStringAsync(city);
-    zones = getStringAsync(zone);
-    areas = getStringAsync(area);
+    // cities = getStringAsync(city);
+    // zones = getStringAsync(zone);
+    // areas = getStringAsync(area);
+
+    //  addressKey = tempAddressMap[tempAdrKey]![TempAdrKeyName]!;
+    print("billist map in get location : ${billingAddressMap}");
     super.initState();
   }
 
@@ -46,7 +50,6 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
         final userState = ref.watch(menuDataProvider);
         final MenuDataModel? userData =
             userState is MenuDataSuccessState ? userState.menuList : null;
-
         final cityState = ref.watch(cityProvider);
         final zoneState = ref.watch(zoneProvider);
         final areaState = ref.watch(areaProvider);
@@ -91,10 +94,12 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            cities.toString(),
+                            widget.isCheckoutPage! &&
+                                    billingAddressMap.isNotEmpty
+                                ? billingAddressMap['city'].toString()
+                                : ref.read(cityProvider.notifier).cityName ??
+                                    cities.toString(),
                             softWrap: false,
-                            //textScaleFactor: textScaleFactor,
-                            // style: bodyRobotoTextStyle,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: KTextStyle.bodyText1.copyWith(
@@ -102,7 +107,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 5),
+                        const SizedBox(width: 5),
                         const Icon(
                           Icons.arrow_drop_down,
                           color: Colors.grey,
@@ -113,9 +118,13 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                   onSelected: (v) {
                     // Tools.hideKeyboard(context);
                     setState(() {
+                      if (widget.isCheckoutPage == true) {
+                        billingAddressMap.clear();
+                        billingAddressMap['city'] = v.name!;
+                        billingAddressMap['cityId'] = v.id.toString();
+                      }
                       cities = v.name!;
-
-                      ref.read(zoneProvider.notifier).allZone(id: v.id);
+                      ref.read(zoneProvider.notifier).allZone(id: v.id ,isUpdateBillingInfo: widget.isBilliingInfoPage);
                       ref
                           .read(cityProvider.notifier)
                           .cityNameSet(cities.toString(), v.id.toString());
@@ -155,7 +164,13 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            zones.toString(),
+                            widget.isCheckoutPage! &&
+                                    billingAddressMap.containsKey('zone')
+                                ? billingAddressMap['zone'].toString()
+                                : ref.read(zoneProvider.notifier).zoneName ??
+                                    zones.toString(),
+
+                            // ref.read(zoneProvider.notifier).zoneName??  zone.toString(),
                             softWrap: false,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -164,7 +179,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 5),
+                       const  SizedBox(width: 5),
                         const Icon(
                           Icons.arrow_drop_down,
                           color: Colors.grey,
@@ -175,10 +190,15 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                   onSelected: (v) {
                     setState(() {
                       zones = v.zoneName;
-                      ref.read(areaProvider.notifier).allArea(zoneId: v.id);
+                      if(widget.isCheckoutPage!){
+                          billingAddressMap['zone'] = v.zoneName!;
+                           billingAddressMap['zoneId'] = v.id.toString();
+                      }
+                     
+                      ref.read(areaProvider.notifier).allArea(id: v.id , );
                       ref
                           .read(zoneProvider.notifier)
-                          .zoneNameSet(zones.toString(), v.id.toString());
+                          .zoneNameSet(v.zoneName.toString(), v.id.toString());
                     });
                   },
                 ),
@@ -206,7 +226,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                     }).toList();
                   },
                   child: Padding(
-                    padding: EdgeInsets.only(
+                    padding:const EdgeInsets.only(
                       left: 10,
                       right: 10,
                     ),
@@ -215,7 +235,13 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            areas.toString(),
+                            //  ref.read(areaProvider.notifier).areaName??  area.toString(),
+                            widget.isCheckoutPage! &&
+                                    billingAddressMap.containsKey('area')
+                                ? billingAddressMap['area'].toString()
+                                : ref.read(areaProvider.notifier).areaName ??
+                                   areas.toString(),
+
                             softWrap: false,
                             //textScaleFactor: textScaleFactor,
                             // style: bodyRobotoTextStyle,
@@ -237,9 +263,14 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                   onSelected: (v) {
                     setState(() {
                       areas = v.name.toString();
+                       if(widget.isCheckoutPage!){
+                          billingAddressMap['area'] = v.name;
+                          billingAddressMap['areaId'] = v.id.toString();
+                      }
+                     
                       ref
                           .read(areaProvider.notifier)
-                          .areaNameSet(areas.toString(), v.id.toString());
+                          .areaNameSet(v.name.toString(), v.id.toString());
                     });
                   },
                 ),
@@ -250,10 +281,11 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
       },
     );
   }
-  text(String title){
-  return Text(
-          title,
-          style: KTextStyle.subtitle7.copyWith(color: KColor.blackbg),
-        );
+
+  text(String title) {
+    return Text(
+      title,
+      style: KTextStyle.subtitle7.copyWith(color: KColor.blackbg),
+    );
   }
 }

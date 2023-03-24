@@ -14,17 +14,17 @@ class PaymentCategory extends StatefulWidget {
 
 class _PaymentCategoryState extends State<PaymentCategory> {
   List<String> payment = [
-    "PayPal",
-    "Visa Card",
-    "Master Card",
-    "bKash",
+    // "PayPal",
+    // "Visa Card",
+    // "Master Card",
+    // "bKash",
     "Cash On Delivery",
   ];
   List<dynamic> paymentIcons = [
-    AssetPath.visa,
-    AssetPath.visa,
-    AssetPath.masterCard,
-    AssetPath.bKash,
+    // AssetPath.visa,
+    // AssetPath.visa,
+    // AssetPath.masterCard,
+    // AssetPath.bKash,
     AssetPath.cashOnDelivery,
   ];
   int selectedIndex = 0;
@@ -59,7 +59,7 @@ class _PaymentCategoryState extends State<PaymentCategory> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const KCheckedButton(
+                         KCheckedButton(
                           width: 20,
                           height: 20,
                           radius: 5,
@@ -73,43 +73,13 @@ class _PaymentCategoryState extends State<PaymentCategory> {
                         ),
                       ],
                     ),
-                    index == 0
-                        ? SvgPicture.asset(AssetPath.editIcon)
-                        : Image.asset(
-                            paymentIcons[index],
-                            height: 30,
-                          ),
+                    Image.asset(
+                        AssetPath.cashOnDelivery,
+                        height: 32,)
                   ],
                 ),
-                if (index == 0) const SizedBox(height: 18),
-                if (index == 0)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Paypal Email',
-                            style: KTextStyle.bodyText1.copyWith(
-                              color: KColor.blackbg.withOpacity(0.6),
-                            ),
-                          ),
-                          const SizedBox(height: 7),
-                          Text(
-                            'mari12346@gmail.com',
-                            style: KTextStyle.bodyText1.copyWith(
-                              color: KColor.blackbg.withOpacity(0.6),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Image.asset(
-                        AssetPath.paypal,
-                        height: 32,
-                      )
-                    ],
-                  ),
+                // if (index == 0) const SizedBox(height: 18),
+                
               ],
             ),
           ),

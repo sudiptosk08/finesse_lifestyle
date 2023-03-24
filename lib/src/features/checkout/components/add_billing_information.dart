@@ -1,6 +1,11 @@
+import 'package:finesse/core/base/base_state.dart';
+import 'package:finesse/src/features/auth/login/model/user_model.dart';
 import 'package:finesse/src/features/checkout/components/add_new_address.dart';
 import 'package:finesse/src/features/checkout/controller/address_controller.dart';
 import 'package:finesse/src/features/checkout/state/add_address.dart';
+import 'package:finesse/src/features/home/controllers/menu_data_controller.dart';
+import 'package:finesse/src/features/home/models/menu_data_model.dart';
+import 'package:finesse/src/features/home/state/menu_data_state.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,14 +18,14 @@ import '../../../../styles/k_colors.dart';
 import '../../../../styles/k_text_style.dart';
 import '../../cart/components/get_location.dart';
 
-class AddHome extends StatefulWidget {
-  const AddHome({Key? key}) : super(key: key);
+class AddBillingInformation extends StatefulWidget {
+  const AddBillingInformation({Key? key}) : super(key: key);
 
   @override
-  State<AddHome> createState() => _AddHomeState();
+  State<AddBillingInformation> createState() => AddBillingInformationState();
 }
 
-class _AddHomeState extends State<AddHome> {
+class AddBillingInformationState extends State<AddBillingInformation> {
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
@@ -30,11 +35,14 @@ class _AddHomeState extends State<AddHome> {
   var username = getStringAsync(userName);
   var useremail = getStringAsync(userEmail);
   var contact = getStringAsync(userContact);
+  
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, _) {
-       
+       final menuData = ref.watch(menuDataProvider); 
+       User? user = menuData is MenuDataSuccessState? menuData.menuList!.user: null ;
+
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -44,7 +52,7 @@ class _AddHomeState extends State<AddHome> {
                 _editInformation(
                   'Name',
                   KFillNormal(
-                    controller: name..text = username,
+                    controller: name..text = user!.customer.customerName!,
                     hintText: 'Enter your name here...',
                     label: '',
                     readOnly: false,
@@ -53,21 +61,13 @@ class _AddHomeState extends State<AddHome> {
                 _editInformation(
                   'Email',
                   KFillNormal(
-                    controller: email..text = useremail,
+                    controller: email..text = user.customer.email!,
                     hintText: 'Enter your email here...',
                     label: '',
                     readOnly: false,
                   ),
                 ),
-                _editInformation(
-                  'Address',
-                  KFillNormal(
-                    controller: address,
-                    hintText: 'Enter your address here...',
-                    label: '',
-                    readOnly: false,
-                  ),
-                ),
+                
                 _editInformation(
                   'Phone Number',
                   KFillPhone(
@@ -78,10 +78,18 @@ class _AddHomeState extends State<AddHome> {
                   ),
                 ),
                 _editInformation(
-                  'City',
-                  DeliveryAddress(),
+                  '',
+                  DeliveryAddress(isBilliingInfoPage: true,),
                 ),
-               
+                _editInformation(
+                  'Address',
+                  KFillNormal(
+                    controller: address..text = user.customer.address?? '',
+                    hintText: 'Enter your address here...',
+                    label: '',
+                    readOnly: false,
+                  ),
+                ),
               ],
             ),
             SizedBox(height: context.screenHeight * 0.05),
@@ -89,10 +97,10 @@ class _AddHomeState extends State<AddHome> {
               builder: (context,ref,child){
                  final addressState  = ref.watch(addressProvider);
                  return KButton(
-                    title:addressState is AddressLoadingState ?'please wait...':   'Add Address',
+                    title:addressState is LoadingState ?'please wait...':   'Update',
                     onTap: () {
-                      if(addressState is! AddressLoadingState){
-                          ref.read(addressProvider.notifier).AddAddress(nameis: name.text, emailis: email.text, phoneis: phone.text, addressLabel: homeAddress, addressis: address.text);
+                      if(addressState is! LoadingState){
+                           ref.read(addressProvider.notifier).addBillingINfo(context: context,nameis: name.text, emailis: email.text, phoneis: phone.text,  addressis: address.text);
                       }
                       // Navigator.pushNamed(context, '/accountDetails');
                     }

@@ -86,33 +86,39 @@ class NotificationController extends StateNotifier<BaseState> {
 
     dynamic responseBody;
     var requestBody = {'id': id};
-
+    print("update notification called");
     try {
       responseBody = await Network.handleResponse(
         await Network.postRequest(API.updateNotification, requestBody),
       );
       if (responseBody != null) {
-        if (responseBody['token'] != null) {
-          state = const UpdateNotificationSuccessState();
-          setValue(isLoggedIn, true);
-          setValue(token, responseBody['token']);
-          toast(
-            "Update Notification Successfully",
-            bgColor: KColor.selectColor,
-          );
-          NavigationService.navigateToReplacement(
-            CupertinoPageRoute(
-              builder: (context) => const ProductInfo(),
-            ),
-          );
-        }
+          state = GetNotificationSuccessState(notificationModel);
+          fetchNotification();
+        //  state = const UpdateNotificationSuccessState();
+        // if (responseBody['token'] != null) {
+        //   state = const UpdateNotificationSuccessState();
+        //   setValue(isLoggedIn, true);
+        //   setValue(token, responseBody['token']);
+        //   toast(
+        //     "Update Notification Successfully",
+        //     bgColor: KColor.selectColor,
+        //   );
+        //    print("update notification successfull");
+        //   //  fetchNotification();
+        //   NavigationService.navigateToReplacement(
+        //     CupertinoPageRoute(
+        //       builder: (context) => const ProductInfo(),
+        //     ),
+        //   );
+        // }
       } else {
-        state = const ErrorState();
+         print("update notification error");
+        // state = const ErrorState();
       }
     } catch (error, stackTrace) {
       print(error);
       print(stackTrace);
-      state = const ErrorState();
+      // state = const ErrorState();
     }
   }
 }

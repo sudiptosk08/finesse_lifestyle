@@ -2,12 +2,11 @@ import 'package:finesse/styles/b_style.dart';
 import 'package:flutter/material.dart';
 
 class KCheckedButton extends StatefulWidget {
-  const KCheckedButton({required this.height, required this.radius, required this.width, Key? key}) : super(key: key);
+   KCheckedButton({required this.height, required this.radius, required this.width, Key? key}) : super(key: key);
 
   final double width;
   final double height;
   final double radius;
-
   @override
   State<KCheckedButton> createState() => _KCheckedButtonState();
 }
@@ -29,7 +28,7 @@ class _KCheckedButtonState extends State<KCheckedButton> {
           borderRadius: BorderRadius.circular(widget.radius),
         ),
         side: const BorderSide(color: KColor.black),
-        onChanged: (value) {
+        onChanged:(value) {
           setState(() {
             isChecked = value!;
           });

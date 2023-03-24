@@ -11,13 +11,13 @@ import '../../styles/k_text_style.dart';
 class NotificationCard extends StatefulWidget {
   final String? msg;
   final String? date;
-  bool? seen;
+  String? seen;
   final VoidCallback? cancel;
   final VoidCallback? delete;
   NotificationCard({
     this.cancel,
     this.delete,
-    this.seen = false,
+    this.seen ,
     Key? key,
     this.msg,
     this.date,
@@ -32,11 +32,11 @@ class _NotificationCardState extends State<NotificationCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        setState(() {
-          widget.seen = true;
-        });
-      },
+      // onTap: () {
+      //   setState(() {
+      //     // widget.seen = 0;
+      //   });
+      // },
       child: Dismissible(
         key: UniqueKey(),
         dragStartBehavior: DragStartBehavior.start,
@@ -114,7 +114,7 @@ class _NotificationCardState extends State<NotificationCard> {
                         width: 24,
                       ),
                     ),
-                    if (widget.seen == false)
+                    if (widget.seen.toString() == "0")
                       Positioned(
                         top: 7,
                         right: 7,
@@ -138,10 +138,10 @@ class _NotificationCardState extends State<NotificationCard> {
                         widget.msg.toString(),
                         // style:widget.isRead ? KTextStyle.bodyText1.copyWith(color: KColor.blackbg.withOpacity(0.7)):
                         //  KTextStyle.bodyText2.copyWith(color: KColor.blackbg.withOpacity(0.7)),
-                        style: widget.seen == true
-                            ? KTextStyle.bodyText1.copyWith(
+                        style: widget.seen.toString() == "0"
+                            ? KTextStyle.bodyText2.copyWith(
                                 color: KColor.blackbg.withOpacity(0.7))
-                            : KTextStyle.bodyText2.copyWith(
+                            : KTextStyle.bodyText1.copyWith(
                                 color: KColor.blackbg.withOpacity(0.7)),
                       ),
                     ),

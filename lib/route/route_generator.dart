@@ -9,6 +9,7 @@ import 'package:finesse/src/features/cart/view/cart_page.dart';
 import 'package:finesse/src/features/category/category_page.dart';
 import 'package:finesse/src/features/category/men_categories.dart';
 import 'package:finesse/src/features/checkout/components/add_new_address.dart';
+import 'package:finesse/src/features/checkout/components/add_shipping_address.dart';
 import 'package:finesse/src/features/checkout/components/confirm_order.dart';
 import 'package:finesse/src/features/checkout/components/payment_page.dart';
 import 'package:finesse/src/features/checkout/components/preview_page.dart';
@@ -207,6 +208,14 @@ class RouteGenerator {
       case '/checkoutNewAddress':
         return CupertinoPageRoute(
           builder: (_) => const AddNewAddress(),
+        );
+      case '/addressPage':
+        return CupertinoPageRoute(
+          builder: (_) =>  AddressPage(),
+        );
+       case '/checkoutShippingAddress':
+        return CupertinoPageRoute(
+          builder: (_) => const AddShippingAddress(),
         );
       case '/about':
         return CupertinoPageRoute(

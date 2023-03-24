@@ -30,21 +30,13 @@ class _PreviewPageState extends State<PreviewPage> {
   String cityN = "";
   String zoneN = "";
   String areaN = "";
-  getAddress() {
-    setState(() {
-      userN = getStringAsync(userName);
-      contractN = getStringAsync(userContact);
-      cityN = getStringAsync(city);
-      zoneN = getStringAsync(zone);
-      areaN = getStringAsync(area);
-    });
-  }
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getAddress();
+   
   }
 
   @override

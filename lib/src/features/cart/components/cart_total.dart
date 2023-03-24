@@ -97,6 +97,26 @@ class _CardTotalState extends State<CardTotal> {
                       color: KColor.blackbg.withOpacity(0.8),
                     ),
                   ),
+
+                  // Text(
+                  //   cartState is CartSuccessState &&
+                  //           zoneState is! ZoneSuccessState
+                  //       ? ref.read(cartProvider.notifier).subtotal.toString()
+                  //       : zoneState is ZoneSuccessState &&
+                  //               discountState is! PromoCodeSuccessState &&
+                  //               discountState is! ReferralCodeSuccessState
+                  //           ? ref
+                  //               .read(zoneProvider.notifier)
+                  //               .countTotalFee
+                  //               .toString()
+                  //           : ref
+                  //               .read(discountProvider.notifier)
+                  //               .totalFee
+                  //               .toString(),
+                  //   style: KTextStyle.sticker.copyWith(
+                  //     color: KColor.blackbg.withOpacity(0.8),
+                  //   ),
+                  // ),
                 ],
               ),
             ],
