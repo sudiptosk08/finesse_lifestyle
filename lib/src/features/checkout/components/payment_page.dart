@@ -1,10 +1,12 @@
 import 'package:finesse/components/button/k_button.dart';
+import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:finesse/src/features/checkout/components/payment_category.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../../../../components/appbar/k_app_bar.dart';
 
@@ -46,7 +48,12 @@ class _PaymentPageState extends State<PaymentPage> {
               KButton(
                 title: 'Preview And Confirm',
                 onTap: () {
-                  Navigator.pushNamed(context, '/preview');
+                  if(paymentOption == null){
+                    toast("Payment method must be selected"); 
+                  }else{
+                     Navigator.pushNamed(context, '/preview');
+                  }
+                 
                 },
               ),
               const SizedBox(height: 10),

@@ -163,7 +163,7 @@ class _AddressPageState extends State<AddressPage> {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          "Add Shipping Address",
+                         getJSONAsync(shippingAddress).isEmpty? "Add Shipping Address":"Shipping Address Added",
                           style: KTextStyle.bodyText2,
                         ),
                       ],

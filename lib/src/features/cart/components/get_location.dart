@@ -171,7 +171,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            widget.isCheckoutPage! &&
+                           ( widget.isCheckoutPage! || widget.isBilliingInfoPage )&&
                                     billingAddressMap.containsKey('zone')
                                 ? billingAddressMap['zone'].toString()
                                 : ref.read(zoneProvider.notifier).zoneName ??

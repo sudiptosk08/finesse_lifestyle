@@ -94,11 +94,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                 },
                                                        
                                 delete: () {
-                                  // if (notificationState is! LoadingState) {
-                                  //   ref.read(notificationProvider.notifier).deleteNotification(
-                                  //         id: notification[index].id.toString(),
-                                  //       );
-                                  // }
+                                  if (notificationState is! LoadingState) {
+                                    ref.read(notificationProvider.notifier).deleteNotification(
+                                          id: notification[index].id.toString(),
+                                        );
+                                  }
                                   Navigator.pop(context);
                                 },
                               ),

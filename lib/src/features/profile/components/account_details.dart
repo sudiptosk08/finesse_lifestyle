@@ -36,7 +36,7 @@ class AccountDetails extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _editProfile('Name', userData!.user.customer.cityId ?? "", () {}),
+                  _editProfile('Name', userData!.user.customer.customerName.toString() ?? "", () {}),
                   _editProfile('Email', userData.user.email.toString() ?? "", () {}),
                   _editProfile('Address', userData.user.customer.address ?? "Not set yet", () {}),
                   _editProfile('Phone Number', userData.user.contact.toString() ?? "", () {}),
@@ -69,7 +69,7 @@ class AccountDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          title,
+          title.toString(),
           style: KTextStyle.subtitle1.copyWith(
             color: KColor.grey,
           ),
@@ -80,7 +80,7 @@ class AccountDetails extends StatelessWidget {
             children: [
               Flexible(
                 child: Text(
-                  info,
+                  info.toString(),
                   style: KTextStyle.description.copyWith(
                     color: KColor.blackbg,
                   ),

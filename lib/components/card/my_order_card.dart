@@ -102,7 +102,7 @@ class MyOrderCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "\$${grandTotal}",
+                  "৳ ${grandTotal}",
                   style: KTextStyle.bodyText2.copyWith(
                     color: KColor.blackbg.withOpacity(0.7),
                   ),
@@ -125,35 +125,37 @@ class MyOrderCard extends StatelessWidget {
                   ),
                 ],
               ),
-              if (status == "Delivered")
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/orderDetails');
-                  },
-                  child: Container(
-                    height: 40,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: KColor.blackbg.withOpacity(0.7),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Review',
-                          style: KTextStyle.subtitle1.copyWith(
-                            color: KColor.blackbg,
-                          ),
-                        ),
-                        const SizedBox(width: 3),
-                        SvgPicture.asset('assets/images/edit.svg', height: 20)
-                      ],
-                    ),
-                  ),
-                ),
+
+              // review
+              // if (status == "Delivered")
+              //   InkWell(
+              //     onTap: () {
+              //       Navigator.pushNamed(context, '/orderDetails');
+              //     },
+              //     child: Container(
+              //       height: 40,
+              //       padding:
+              //           const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+              //       decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(10),
+              //         border: Border.all(
+              //           color: KColor.blackbg.withOpacity(0.7),
+              //         ),
+              //       ),
+              //       child: Row(
+              //         children: [
+              //           Text(
+              //             'Review',
+              //             style: KTextStyle.subtitle1.copyWith(
+              //               color: KColor.blackbg,
+              //             ),
+              //           ),
+              //           const SizedBox(width: 3),
+              //           SvgPicture.asset('assets/images/edit.svg', height: 20)
+              //         ],
+              //       ),
+              //     ),
+              //   ),
             ],
           ),
         ],

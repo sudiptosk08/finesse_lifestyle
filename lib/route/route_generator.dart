@@ -155,7 +155,7 @@ class RouteGenerator {
         );
       case '/trackOrder':
         return CupertinoPageRoute(
-          builder: (_) => const TrackOrder(),
+          builder: (_) =>  TrackOrder( orderData: arguments!['orderData'],),
         );
       case '/notifications':
         return CupertinoPageRoute(

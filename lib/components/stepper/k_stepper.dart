@@ -1,4 +1,5 @@
 import 'package:dotted_line/dotted_line.dart';
+import 'package:finesse/src/features/profile/model/order_model.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
@@ -52,6 +53,7 @@ class _KStepperState extends State<KStepper> {
           onTap: () {
             setState(() {
               currentIndex = index;
+              
             });
           },
           child: AnimatedContainer(
@@ -145,4 +147,6 @@ class _KStepperState extends State<KStepper> {
       ],
     );
   }
+
+
 }
