@@ -1,6 +1,7 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/stepper/k_stepper.dart';
 import 'package:finesse/constants/asset_path.dart';
+import 'package:finesse/src/features/profile/model/order_model.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
@@ -11,7 +12,8 @@ import '../../../../components/textfield/k_search_field.dart';
 import '../../../../components/textfield/k_text_field.dart';
 
 class TrackOrder extends StatefulWidget {
-  const TrackOrder({Key? key}) : super(key: key);
+   final OrderData orderData ; 
+   TrackOrder({Key? key , required this.orderData}) : super(key: key);
 
   @override
   State<TrackOrder> createState() => _TrackOrderState();
@@ -19,9 +21,18 @@ class TrackOrder extends StatefulWidget {
 
 class _TrackOrderState extends State<TrackOrder> {
   TextEditingController controller = TextEditingController();
-
+  @override
+  void initState() {
+    super.initState();
+      print("in track");
+   print(widget.orderData);
+   print("after track");
+  }
   @override
   Widget build(BuildContext context) {
+ 
+
+    // aftear track
     return Scaffold(
       backgroundColor: KColor.appBackground,
       appBar: const PreferredSize(
@@ -65,7 +76,7 @@ class _TrackOrderState extends State<TrackOrder> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Text(
-                  "ID: #99045677 ",
+                 "ID: #${widget.orderData.id.toString()} ",
                   style: KTextStyle.headline4.copyWith(
                     color: KColor.blackbg,
                   ),
@@ -85,7 +96,8 @@ class _TrackOrderState extends State<TrackOrder> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        "6 May",
+                        // "6 May", 
+                        "${widget.orderData.createdAt.toString()}", 
                         style: KTextStyle.bodyText1.copyWith(
                           color: KColor.blackbg.withOpacity(0.4),
                         ),
@@ -102,19 +114,19 @@ class _TrackOrderState extends State<TrackOrder> {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Text(
-                        "6 May - 12 May",
-                        style: KTextStyle.bodyText1.copyWith(
-                          color: KColor.blackbg.withOpacity(0.4),
-                        ),
-                      ),
+                      // Text(
+                      //   "6 May - 12 May",
+                      //   style: KTextStyle.bodyText1.copyWith(
+                      //     color: KColor.blackbg.withOpacity(0.4),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ],
               ),
               const SizedBox(height: 30),
               Text(
-                "Tracking Details",
+                "Tracking Details"  ,
                 style: KTextStyle.subtitle1.copyWith(
                   color: KColor.blackbg,
                 ),

@@ -1,5 +1,6 @@
 import 'package:finesse/components/checkedbutton/k_checked_buttton.dart';
 import 'package:finesse/constants/asset_path.dart';
+import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
@@ -20,6 +21,7 @@ class _PaymentCategoryState extends State<PaymentCategory> {
     // "bKash",
     "Cash On Delivery",
   ];
+  bool isChecked = true;
   List<dynamic> paymentIcons = [
     // AssetPath.visa,
     // AssetPath.visa,
@@ -27,7 +29,13 @@ class _PaymentCategoryState extends State<PaymentCategory> {
     // AssetPath.bKash,
     AssetPath.cashOnDelivery,
   ];
-  int selectedIndex = 0;
+  int selectedIndex = -1; 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    int selectedIndex = paymentOptionIndex ==null ? -1:  paymentOptionIndex!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,53 +43,65 @@ class _PaymentCategoryState extends State<PaymentCategory> {
       itemCount: payment.length,
       shrinkWrap: true,
       itemBuilder: (ctx, index) {
-        return InkWell(
-          onTap: () {
-            setState(() {
-              selectedIndex = index;
-            });
-          },
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            margin: const EdgeInsets.only(bottom: 16),
-            decoration: BoxDecoration(
-              color: KColor.filterDividerColor,
-              border: Border.all(
-                color: index == selectedIndex ? KColor.baseBlack : Colors.transparent,
-              ),
-              borderRadius: BorderRadius.circular(15),
+        return Container(
+          padding: const EdgeInsets.all(16),
+          margin: const EdgeInsets.only(bottom: 16),
+          decoration: BoxDecoration(
+            color: KColor.filterDividerColor,
+            border: Border.all(
+              color: KColor.baseBlack,
             ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                         KCheckedButton(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            paymentOption = null; 
+                            paymentOption = payment[index];
+                            selectedIndex = index;
+                            paymentOptionIndex = null;
+                            paymentOptionIndex = index;
+                          });
+                        },
+                        child: Container(
                           width: 20,
                           height: 20,
-                          radius: 5,
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: KColor.black),
+                              borderRadius: BorderRadius.circular(5),
+                              color: index == selectedIndex
+                                  ? KColor.baseBlack
+                                  : Colors.transparent),
+                          child: index == selectedIndex
+                              ? Image.asset(AssetPath.NoticheckIcon)
+                              : null,
                         ),
-                        const SizedBox(width: 16),
-                        Text(
-                          payment[index],
-                          style: KTextStyle.bodyText2.copyWith(
-                            color: KColor.baseBlack,
-                          ),
+                      ),
+                      const SizedBox(width: 16),
+                      Text(
+                        payment[index],
+                        style: KTextStyle.bodyText2.copyWith(
+                          color: KColor.baseBlack,
                         ),
-                      ],
-                    ),
-                    Image.asset(
-                        AssetPath.cashOnDelivery,
-                        height: 32,)
-                  ],
-                ),
-                // if (index == 0) const SizedBox(height: 18),
-                
-              ],
-            ),
+                      ),
+                    ],
+                  ),
+                  Image.asset(
+                    AssetPath.cashOnDelivery,
+                    height: 32,
+                  )
+                ],
+              ),
+              // if (index == 0) const SizedBox(height: 18),
+            ],
           ),
         );
       },

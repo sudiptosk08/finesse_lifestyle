@@ -53,17 +53,13 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   if (wishlistState is! LoadingState) {
                     if (_currentIndex == 1){
                        ref.read(cartProvider.notifier).cartDetails();
-                     ref.read(addressProvider.notifier).setLocationNameOnce();
-                    
-                  
-                     
+                     ref.read(addressProvider.notifier).setLocationNameOnce();   
                       // var userDaata = ref.read(menuDataProvider.notifier).menuList!.user; 
                       // if( userDaata.customer.cityId !=null &&  userDaata.customer.zoneId != null &&  userDaata.customer.areaId != null){
                       //   ref.read(cityProvider.notifier).allCity(cityId: userDaata.customer.cityId);
                       //   ref.read(zoneProvider.notifier).allZone(id: userDaata.customer.cityId,zoneId: userDaata.customer.zoneId);
                       //   ref.read(areaProvider.notifier).allArea(id: userDaata.customer.zoneId , areaId: userDaata.customer.areaId );
                       // }
-
                     }
                     if (_currentIndex == 2) ref.read(wishlistProvider.notifier).fetchWishlistProducts();
                     if (_currentIndex == 3) ref.read(loginProvider.notifier).userModel;

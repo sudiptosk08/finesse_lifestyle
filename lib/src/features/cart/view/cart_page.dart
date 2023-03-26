@@ -1,12 +1,18 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/button/k_border_btn.dart';
 import 'package:finesse/components/button/k_button.dart';
+import 'package:finesse/components/shimmer/k_shimmer.dart';
 import 'package:finesse/constants/shared_preference_constant.dart';
+import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/src/features/auth/login/controller/login_controller.dart';
 import 'package:finesse/src/features/auth/login/view/login_page.dart';
 import 'package:finesse/src/features/cart/components/products_amount.dart';
+import 'package:finesse/src/features/cart/controller/cart_controller.dart';
 import 'package:finesse/src/features/cart/controller/zone_controller.dart';
+import 'package:finesse/src/features/cart/model/cart_model.dart';
+import 'package:finesse/src/features/cart/state/cart_state.dart';
 import 'package:finesse/src/features/checkout/controller/address_controller.dart';
+import 'package:finesse/src/features/wishlist/view/empty_product_page.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
@@ -35,47 +41,66 @@ class _CartPageState extends State<CartPage> {
               child: const KAppBar(
                   checkTitle: true, dotCheck: false, title: 'Cart'),
             ),
-            body: SingleChildScrollView(
-              child: Container(
-                color: Colors.transparent,
-                alignment: Alignment.center,
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const ProductsAmount(),
-                    SizedBox(height: context.screenHeight * 0.05),
-                    Row(
+            body: Consumer(
+              builder: (contex, ref, child) {
+                final cartState = ref.watch(cartProvider);
+                final List<CartModel> cartData =
+                    cartState is CartSuccessState ? cartState.cartList : [];
+                return SingleChildScrollView(
+                  child: Container(
+                    color: Colors.transparent,
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Flexible(
-                          child: KBorderButton(
-                            title: 'Go Back',
-                            onTap: () => Navigator.pushNamed(context, '/home'),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Flexible(
-                          child: Consumer(
-                            builder: ((context, ref, child) {
-                              return KButton(
-                                title: 'Checkout',
-                                onTap: () async {
-                                   
-                               if(  await ref.read(addressProvider.notifier).isLocationSet()){
-                                 Navigator.pushNamed(context, '/addressPage');
-                               };
-                                },
-                              );
-                            }),
-                          ),
-                        ),
+                        if (cartState is LoadingState) ...[
+                          const KLoading(shimmerHeight: 123)
+                        ],
+                        if (cartState is CartSuccessState) ...[
+                       cartData.isEmpty?const EmptyProductPage(message: 'Your cart is empty') :    Column(
+                            children: [
+                              const ProductsAmount(),
+                              SizedBox(height: context.screenHeight * 0.05),
+                              Row(
+                                children: [
+                                  Flexible(
+                                    child: KBorderButton(
+                                      title: 'Go Back',
+                                      onTap: () =>
+                                          Navigator.pushNamed(context, '/home'),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Flexible(
+                                    child: Consumer(
+                                      builder: ((context, ref, child) {
+                                        return KButton(
+                                          title: 'Checkout',
+                                          onTap: () async {
+                                            if (await ref
+                                                .read(addressProvider.notifier)
+                                                .isLocationSet()) {
+                                              Navigator.pushNamed(
+                                                  context, '/addressPage');
+                                            }
+                                          },
+                                        );
+                                      }),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 36),
+                            ],
+                          )
+                        ],
                       ],
                     ),
-                    const SizedBox(height: 36),
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             ),
           )
         : const LoginPage();

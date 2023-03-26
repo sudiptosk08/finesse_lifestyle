@@ -102,7 +102,7 @@ class ProductCard extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "\$$offerPrice",
+                                    "৳ $offerPrice",
                                     style: KTextStyle.subtitle7.copyWith(color: KColor.blackbg),
                                   ),
                                   const SizedBox(height: 2),

@@ -56,27 +56,31 @@ class NotificationController extends StateNotifier<BaseState> {
         await Network.postRequest(API.deleteNotification, requestBody),
       );
       if (responseBody != null) {
-        if (responseBody['token'] != null) {
-          state = const DeleteNotificationSuccessState();
-          setValue(isLoggedIn, true);
-          setValue(token, responseBody['token']);
-          toast(
-            "Delete Notification Successfully",
-            bgColor: KColor.selectColor,
-          );
-
-          NavigationService.navigateToReplacement(
-            CupertinoPageRoute(
-              builder: (context) => const ProductInfo(),
-            ),
-          );
-        }
+        // state = const DeleteNotificationSuccessState();
+        fetchNotification(); 
+        // if (responseBody['token'] != null) {
+        //   state = const DeleteNotificationSuccessState();
+        //   setValue(isLoggedIn, true);
+        //   setValue(token, responseBody['token']);
+        //   toast(
+        //     "Delete Notification Successfully",
+        //     bgColor: KColor.selectColor,
+        //   );
+        //   fetchNotification();
+        //   NavigationService.navigateToReplacement(
+        //     CupertinoPageRoute(
+        //       builder: (context) => const ProductInfo(),
+        //     ),
+        //   );
+        // }
       } else {
-        state = const ErrorState();
+        // state = const ErrorState();
+        toast("Not deleted! Something went wrong.");
       }
     } catch (error, stackTrace) {
       print(error);
       print(stackTrace);
+       toast("Not deleted! Something went wrong.");
       state = const ErrorState();
     }
   }
