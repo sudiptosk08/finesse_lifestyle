@@ -29,13 +29,8 @@ class _PaymentCategoryState extends State<PaymentCategory> {
     // AssetPath.bKash,
     AssetPath.cashOnDelivery,
   ];
-  int selectedIndex = -1; 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    int selectedIndex = paymentOptionIndex ==null ? -1:  paymentOptionIndex!;
-  }
+  
+  int selectedIndex = paymentOptionIndex == null ? -1 : paymentOptionIndex!;
 
   @override
   Widget build(BuildContext context) {
@@ -43,65 +38,65 @@ class _PaymentCategoryState extends State<PaymentCategory> {
       itemCount: payment.length,
       shrinkWrap: true,
       itemBuilder: (ctx, index) {
-        return Container(
-          padding: const EdgeInsets.all(16),
-          margin: const EdgeInsets.only(bottom: 16),
-          decoration: BoxDecoration(
-            color: KColor.filterDividerColor,
-            border: Border.all(
-              color: KColor.baseBlack,
+        return InkWell(
+          onTap: () {
+            setState(() {
+              paymentOption = null;
+              paymentOption = payment[index];
+              selectedIndex = index;
+              paymentOptionIndex = null;
+              paymentOptionIndex = index;
+            });
+          },
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            margin: const EdgeInsets.only(bottom: 16),
+            decoration: BoxDecoration(
+              color: KColor.filterDividerColor,
+              border: Border.all(
+                color: KColor.baseBlack,
+              ),
+              borderRadius: BorderRadius.circular(15),
             ),
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            paymentOption = null; 
-                            paymentOption = payment[index];
-                            selectedIndex = index;
-                            paymentOptionIndex = null;
-                            paymentOptionIndex = index;
-                          });
-                        },
-                        child: Container(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
                           width: 20,
                           height: 20,
                           decoration: BoxDecoration(
                               border: Border.all(width: 1, color: KColor.black),
                               borderRadius: BorderRadius.circular(5),
-                              color: index == selectedIndex
+                              color: index == selectedIndex 
                                   ? KColor.baseBlack
                                   : Colors.transparent),
-                          child: index == selectedIndex
+                          child: index == selectedIndex 
                               ? Image.asset(AssetPath.NoticheckIcon)
                               : null,
                         ),
-                      ),
-                      const SizedBox(width: 16),
-                      Text(
-                        payment[index],
-                        style: KTextStyle.bodyText2.copyWith(
-                          color: KColor.baseBlack,
+                        const SizedBox(width: 16),
+                        Text(
+                          payment[index],
+                          style: KTextStyle.bodyText2.copyWith(
+                            color: KColor.baseBlack,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Image.asset(
-                    AssetPath.cashOnDelivery,
-                    height: 32,
-                  )
-                ],
-              ),
-              // if (index == 0) const SizedBox(height: 18),
-            ],
+                      ],
+                    ),
+                    Image.asset(
+                      AssetPath.cashOnDelivery,
+                      height: 32,
+                    )
+                  ],
+                )
+                // if (index == 0) const SizedBox(height: 18),
+              ],
+            ),
           ),
         );
       },

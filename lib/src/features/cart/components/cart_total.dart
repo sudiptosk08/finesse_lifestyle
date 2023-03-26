@@ -58,7 +58,8 @@ class _CardTotalState extends State<CardTotal> {
               ),
               const SizedBox(height: 15),
               _getTotal('Discount',
-                  ref.read(discountProvider.notifier).discount.toString(), discount: true),
+                  ref.read(discountProvider.notifier).discount.toString(),
+                  discount: true),
               const SizedBox(height: 15),
               _getTotal('Rounding',
                   ref.read(discountProvider.notifier).roundingFee.toString(),
@@ -80,13 +81,15 @@ class _CardTotalState extends State<CardTotal> {
                   ),
                   Text(
                     cartState is CartSuccessState &&
-                            zoneState is! ZoneSuccessState
-                        ? ref.read(cartProvider.notifier).subtotal.toString()
+                            zoneState is! ZoneSuccessState &&
+                            discountState is! PromoCodeSuccessState &&
+                            discountState is! ReferralCodeSuccessState
+                        ? ref.read(cartProvider.notifier).totalAmount.toString()
                         : zoneState is ZoneSuccessState &&
                                 discountState is! PromoCodeSuccessState &&
                                 discountState is! ReferralCodeSuccessState
                             ? "৳ ${ref.read(zoneProvider.notifier).countTotalFee.toString()}"
-                            : "৳ ${ref.read(discountProvider.notifier).totalFee.toString()}", 
+                            : "৳ ${ref.read(discountProvider.notifier).totalFee.toString()}",
                     style: KTextStyle.sticker.copyWith(
                       color: KColor.blackbg.withOpacity(0.8),
                     ),
@@ -118,7 +121,7 @@ class _CardTotalState extends State<CardTotal> {
     });
   }
 
-  Row _getTotal(title, price ,{bool discount = false , rounding = false} ) {
+  Row _getTotal(title, price, {bool discount = false, rounding = false}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -129,7 +132,11 @@ class _CardTotalState extends State<CardTotal> {
           ),
         ),
         Text(
-          discount == true  ? "${price} %":rounding == true  ? "৳ ${price}": "৳ ${price}",
+          discount == true
+              ? "${price} %"
+              : rounding == true
+                  ? "৳ ${price}"
+                  : "৳ ${price}",
           style: KTextStyle.sticker.copyWith(
             color: KColor.blackbg.withOpacity(0.4),
           ),

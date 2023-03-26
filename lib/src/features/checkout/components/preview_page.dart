@@ -32,12 +32,12 @@ class _PreviewPageState extends State<PreviewPage> {
   String cityN = "";
   String zoneN = "";
   String areaN = "";
-  Map<String,dynamic> shippingAddressN = {};
+  Map<String, dynamic> shippingAddressN = {};
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    shippingAddressN = getJSONAsync(shippingAddress); 
+    shippingAddressN = getJSONAsync(shippingAddress);
   }
 
   @override
@@ -50,7 +50,7 @@ class _PreviewPageState extends State<PreviewPage> {
       ),
       body: Consumer(builder: (context, ref, child) {
         final cartState = ref.watch(cartProvider);
-         User user = ref.read(menuDataProvider.notifier).menuList!.user;
+        User user = ref.read(menuDataProvider.notifier).menuList!.user;
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           child: SingleChildScrollView(
@@ -77,104 +77,90 @@ class _PreviewPageState extends State<PreviewPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                           Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                 Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    'Billing Information',
-                                    style: KTextStyle.subtitle1
-                                        .copyWith(color: KColor.blackbg),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Billing Information',
+                                        style: KTextStyle.subtitle1
+                                            .copyWith(color: KColor.blackbg),
+                                      ),
+                                    ],
                                   ),
-                                  InkWell(
-                                      onTap: () {
-                                        NavigationService.navigateToReplacement(
-                                          CupertinoPageRoute(
-                                            builder: (_) => AddNewAddress(),
-                                          ),
-                                        );
-                                      },
-                                      child:
-                                          SvgPicture.asset(AssetPath.editIcon)),
+                                  const SizedBox(height: 8),
+                                  const SizedBox(height: 12),
+                                  Text(
+                                    '${user.customer.customerName}',
+                                    style: KTextStyle.bodyText1.copyWith(
+                                        color: KColor.blackbg.withOpacity(0.6)),
+                                  ),
+                                  const SizedBox(height: 7),
+                                  Text(
+                                    '${user.customer.contact}',
+                                    style: KTextStyle.bodyText1.copyWith(
+                                        color: KColor.blackbg.withOpacity(0.6)),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Text(
+                                    "${billingAddressMap['area']}, ${billingAddressMap['zone']}, ${billingAddressMap['city']}",
+                                    style: KTextStyle.bodyText1.copyWith(
+                                        color: KColor.blackbg.withOpacity(0.6)),
+                                  ),
                                 ],
                               ),
-                              const SizedBox(height: 8),
-                              const SizedBox(height: 12),
-                              Text(
-                                '${user.customer.customerName}',
-                                style: KTextStyle.bodyText1.copyWith(
-                                    color: KColor.blackbg.withOpacity(0.6)),
-                              ),
-                              const SizedBox(height: 7),
-                              Text(
-                                '${user.customer.contact}',
-                                style: KTextStyle.bodyText1.copyWith(
-                                    color: KColor.blackbg.withOpacity(0.6)),
-                              ),
-                              const SizedBox(height: 20),
-                              Text(
-                                "${billingAddressMap['area']}, ${billingAddressMap['zone']}, ${billingAddressMap['city']}",
-                                style: KTextStyle.bodyText1.copyWith(
-                                    color: KColor.blackbg.withOpacity(0.6)),
-                              ),
-                            
-                              ],
-                            ),
-                          const  SizedBox(height: 15), 
-                            // if(getJSONAsync(shippingAddress).isNotEmpty)...[
-                            //   Column(
-                            //     crossAxisAlignment: CrossAxisAlignment.start,
-                            //     children: [
-                            //       Row(
-                            //         mainAxisAlignment:
-                            //             MainAxisAlignment.spaceBetween,
-                            //         children: [
-                            //           Text(
-                            //             'Shipping Address',
-                            //             style: KTextStyle.subtitle1
-                            //                 .copyWith(color: KColor.blackbg),
-                            //           ),
-                            //           InkWell(
-                            //               onTap: () {
-                            //                 NavigationService
-                            //                     .navigateToReplacement(
-                            //                   CupertinoPageRoute(
-                            //                     builder: (_) => AddNewAddress(),
-                            //                   ),
-                            //                 );
-                            //               },
-                            //               child: SvgPicture.asset(
-                            //                   AssetPath.editIcon)),
-                            //         ],
-                            //       ),
-                            //       const SizedBox(height: 8),
-                            //       const SizedBox(height: 12),
-                            //       Text(
-                            //         '${getJSONAsync(shippingAddress)['name']}',
-                            //         style: KTextStyle.bodyText1.copyWith(
-                            //             color: KColor.blackbg.withOpacity(0.6)),
-                            //       ),
-                            //       const SizedBox(height: 7),
-                            //       Text(
-                            //          '${getJSONAsync(shippingAddress)['phone']}',
-                            //         style: KTextStyle.bodyText1.copyWith(
-                            //             color: KColor.blackbg.withOpacity(0.6)),
-                            //       ),
-                            //       const SizedBox(height: 20),
-                            //       Text(
-                            //         "${getJSONAsync(shippingAddress)['area']}, ${getJSONAsync(shippingAddress)['zone']}, ${getJSONAsync(shippingAddress)['city']}",
-                            //         style: KTextStyle.bodyText1.copyWith(
-                            //             color: KColor.blackbg.withOpacity(0.6)),
-                            //       ),
-                            //     ],
-                            //   )
-                            // ]  
-                           
-                           
-                           
+                              const SizedBox(height: 15),
+                              // if(getJSONAsync(shippingAddress).isNotEmpty)...[
+                              //   Column(
+                              //     crossAxisAlignment: CrossAxisAlignment.start,
+                              //     children: [
+                              //       Row(
+                              //         mainAxisAlignment:
+                              //             MainAxisAlignment.spaceBetween,
+                              //         children: [
+                              //           Text(
+                              //             'Shipping Address',
+                              //             style: KTextStyle.subtitle1
+                              //                 .copyWith(color: KColor.blackbg),
+                              //           ),
+                              //           InkWell(
+                              //               onTap: () {
+                              //                 NavigationService
+                              //                     .navigateToReplacement(
+                              //                   CupertinoPageRoute(
+                              //                     builder: (_) => AddNewAddress(),
+                              //                   ),
+                              //                 );
+                              //               },
+                              //               child: SvgPicture.asset(
+                              //                   AssetPath.editIcon)),
+                              //         ],
+                              //       ),
+                              //       const SizedBox(height: 8),
+                              //       const SizedBox(height: 12),
+                              //       Text(
+                              //         '${getJSONAsync(shippingAddress)['name']}',
+                              //         style: KTextStyle.bodyText1.copyWith(
+                              //             color: KColor.blackbg.withOpacity(0.6)),
+                              //       ),
+                              //       const SizedBox(height: 7),
+                              //       Text(
+                              //          '${getJSONAsync(shippingAddress)['phone']}',
+                              //         style: KTextStyle.bodyText1.copyWith(
+                              //             color: KColor.blackbg.withOpacity(0.6)),
+                              //       ),
+                              //       const SizedBox(height: 20),
+                              //       Text(
+                              //         "${getJSONAsync(shippingAddress)['area']}, ${getJSONAsync(shippingAddress)['zone']}, ${getJSONAsync(shippingAddress)['city']}",
+                              //         style: KTextStyle.bodyText1.copyWith(
+                              //             color: KColor.blackbg.withOpacity(0.6)),
+                              //       ),
+                              //     ],
+                              //   )
+                              // ]
                             ],
                           ),
                           const SizedBox(height: 16),
@@ -204,7 +190,7 @@ class _PreviewPageState extends State<PreviewPage> {
                 SizedBox(height: context.screenHeight * 0.03),
                 KTextButton(
                   title: 'Place Order',
-                  price: '৳ 281.8',
+                  isPrice: false,
                   onTap: () {
                     Navigator.pushNamed(context, '/confirmOrder');
                   },

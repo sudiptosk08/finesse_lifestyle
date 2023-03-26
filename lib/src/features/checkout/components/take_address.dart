@@ -163,7 +163,9 @@ class _AddressPageState extends State<AddressPage> {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                         getJSONAsync(shippingAddress).isEmpty? "Add Shipping Address":"Shipping Address Added",
+                          getJSONAsync(shippingAddress).isEmpty
+                              ? "Add Shipping Address"
+                              : "Shipping Address Added",
                           style: KTextStyle.bodyText2,
                         ),
                       ],
@@ -175,12 +177,6 @@ class _AddressPageState extends State<AddressPage> {
                   title: 'Proceed to Payment',
                   onTap: () {
                     Navigator.pushNamed(context, '/payment');
-                  },
-                ),
-                KBorderButton(
-                  title: 'Go Back',
-                  onTap: () {
-                    Navigator.pushNamed(context, '/home');
                   },
                 ),
                 const SizedBox(height: 10)

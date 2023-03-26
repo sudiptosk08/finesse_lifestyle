@@ -153,7 +153,7 @@ class CartController extends StateNotifier<BaseState> {
     var deliveryFee = ref!.read(zoneProvider.notifier).deliveryFee;
 
     subtotal = total;
-    totalAmount = deliveryFee != 0 ? subtotal + deliveryFee : subtotal;
+    totalAmount = deliveryFee != 0 ? (subtotal + deliveryFee) : subtotal;
     print('subtotal : $subtotal');
   }
 }

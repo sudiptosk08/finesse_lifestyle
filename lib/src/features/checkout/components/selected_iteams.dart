@@ -68,24 +68,23 @@ class _SelectedItemsState extends State<SelectedItems> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    
                                     width: context.screenWidth * .50,
                                     child: Text(
                                       overflow: TextOverflow.ellipsis,
                                       '${cartData[index].vproduct!.productName!}',
                                       style: KTextStyle.bodyText1.copyWith(
-                                          color: KColor.blackbg.withOpacity(0.6)),
+                                          color:
+                                              KColor.blackbg.withOpacity(0.6)),
                                     ),
                                   ),
                                   Text(
-                                      overflow: TextOverflow.ellipsis,
-                                      '(x${cartData[index].quantity})',
-                                      style: KTextStyle.bodyText1.copyWith(
-                                          color: KColor.blackbg.withOpacity(0.6)),
-                                    ),
-                                 
+                                    overflow: TextOverflow.ellipsis,
+                                    '(x${cartData[index].quantity})',
+                                    style: KTextStyle.bodyText1.copyWith(
+                                        color: KColor.blackbg.withOpacity(0.6)),
+                                  ),
                                   Text(
-                                    '\$${cartData[index].vproduct?.sellingPrice}',
+                                    '\৳${cartData[index].vproduct?.sellingPrice}',
                                     style: KTextStyle.bodyText1.copyWith(
                                         color: KColor.blackbg.withOpacity(0.6)),
                                   ),
