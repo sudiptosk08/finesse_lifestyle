@@ -80,8 +80,10 @@ class _CardTotalState extends State<CardTotal> {
                   ),
                   Text(
                     cartState is CartSuccessState &&
-                            zoneState is! ZoneSuccessState
-                        ? ref.read(cartProvider.notifier).subtotal.toString()
+                            zoneState is! ZoneSuccessState && 
+                            discountState is! PromoCodeSuccessState && 
+                            discountState is! ReferralCodeSuccessState
+                        ? ref.read(cartProvider.notifier).totalAmount.toString()
                         : zoneState is ZoneSuccessState &&
                                 discountState is! PromoCodeSuccessState &&
                                 discountState is! ReferralCodeSuccessState

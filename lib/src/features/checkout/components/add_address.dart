@@ -1,4 +1,3 @@
-
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,8 +11,8 @@ import '../../../../styles/k_text_style.dart';
 import '../../cart/components/get_location.dart';
 
 class AddAddress extends StatefulWidget {
-  String addressLabel; 
-   AddAddress({Key? key  , required this.addressLabel}) : super(key: key);
+  String addressLabel;
+  AddAddress({Key? key, required this.addressLabel}) : super(key: key);
 
   @override
   State<AddAddress> createState() => _AddAddressState();
@@ -75,13 +74,7 @@ class _AddAddressState extends State<AddAddress> {
                     readOnly: true,
                   ),
                 ),
-                _editInformation(
-                  '',
-                  DeliveryAddress(
-                   
-                  ),
-                ),
-               
+                DeliveryAddress(),
               ],
             ),
             SizedBox(height: context.screenHeight * 0.05),

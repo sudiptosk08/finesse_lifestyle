@@ -12,6 +12,7 @@ class KColor {
   static const Color appBackground = Color(0xFFF5F5F5);
   static const Color whiteBackground = Color(0xFFF5F5F5);
 
+
   /*
   error red text color
   */
@@ -40,6 +41,7 @@ class KColor {
   */
   static const Color black = Colors.black;
   static const Color white = Colors.white;
+  static const Color transparent = Colors.transparent;
   static Color? grey350 = Colors.grey[350];
   static const Color grey = Color(0xFFB4B4B4);
   static const Color red = Colors.red;

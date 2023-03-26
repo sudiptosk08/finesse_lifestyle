@@ -150,13 +150,14 @@ class _WishlistCardState extends ConsumerState<WishlistCard> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left:8.0,top:8.0,bottom:8.0,right:4.0),
+                        padding: const EdgeInsets.only(
+                            left: 8.0, top: 8.0, bottom: 8.0, right: 4.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              "\$${widget.price.toString()}",
+                              "\৳${widget.price.toString()}",
                               style: KTextStyle.subtitle1
                                   .copyWith(color: KColor.blackbg),
                             ),

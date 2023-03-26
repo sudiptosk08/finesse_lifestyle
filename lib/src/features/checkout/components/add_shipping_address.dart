@@ -32,84 +32,85 @@ class _AddShippingAddressState extends State<AddShippingAddress> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: const PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(56),
         child: KAppBar(checkTitle: true, title: 'Shipping Address'),
       ),
-      body:Container( 
-              margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _editInformation(
-                        'Name',
-                        KFillNormal(
-                          controller: nameCon,
-                          hintText: 'Enter your name here...',
-                          label: '',
-                          readOnly: false,
-                        ),
-                      ),
-                      _editInformation(
-                        'Email',
-                        KFillNormal(
-                          controller: emailCon,
-                          hintText: 'Enter your email here...',
-                          label: '',
-                          readOnly: false,
-                        ),
-                      ),
-                     
-                      _editInformation(
-                        'Phone Number',
-                        KFillPhone(
-                          controller:phoneCon,
-                          hintText: 'Enter your phone number here...',
-                          label: '',
-                          readOnly: false,
-                        ),
-                      ),
-                      _editInformation(
-                       '',
-                        DeliveryAddress( isShippingAddressPage:  true),
-                      ),
-                       _editInformation(
-                        'Address',
-                        KFillNormal(
-                          controller: addressCon,
-                          hintText: 'Enter your address here...',
-                          label: '',
-                          readOnly: false,
-                        ),
-                      ),
-                     
-                    ],
+                  _editInformation(
+                    'Name',
+                    KFillNormal(
+                      controller: nameCon,
+                      hintText: 'Enter your name here...',
+                      label: '',
+                      readOnly: false,
+                    ),
                   ),
-                  SizedBox(height: context.screenHeight * 0.05),
-                  Consumer(
-                    builder: (context,ref,child){
-                       final addressState  = ref.watch(addressProvider);
-                       return KButton(
-                          title:addressState is AddressLoadingState ?'please wait...':   'Add Address',
-                          onTap: () {
-                            if(addressState is! AddressLoadingState){
-                                ref.read(addressProvider.notifier).AddShippingAddress(context: context,nameis: nameCon.text, emailis: emailCon.text, phoneis: phoneCon.text, addressis: addressCon.text ,);
-                            }
-                            // Navigator.pushNamed(context, '/accountDetails');
-                          }
-                        
-                     );
-                    },
+                  _editInformation(
+                    'Email',
+                    KFillNormal(
+                      controller: emailCon,
+                      hintText: 'Enter your email here...',
+                      label: '',
+                      readOnly: false,
+                    ),
                   ),
-                  const SizedBox(height: 16),
+                  _editInformation(
+                    'Phone Number',
+                    KFillPhone(
+                      controller: phoneCon,
+                      hintText: 'Enter your phone number here...',
+                      label: '',
+                      readOnly: false,
+                    ),
+                  ),
+                  _editInformation(
+                    'Address',
+                    KFillNormal(
+                      controller: addressCon,
+                      hintText: 'Enter your address here...',
+                      label: '',
+                      readOnly: false,
+                    ),
+                  ),
+                  DeliveryAddress(isShippingAddressPage: true),
                 ],
               ),
-            ),
+              SizedBox(height: context.screenHeight * 0.05),
+              Consumer(
+                builder: (context, ref, child) {
+                  final addressState = ref.watch(addressProvider);
+                  return KButton(
+                      title: addressState is AddressLoadingState
+                          ? 'please wait...'
+                          : 'Add Address',
+                      onTap: () {
+                        if (addressState is! AddressLoadingState) {
+                          ref.read(addressProvider.notifier).AddShippingAddress(
+                                context: context,
+                                nameis: nameCon.text,
+                                emailis: emailCon.text,
+                                phoneis: phoneCon.text,
+                                addressis: addressCon.text,
+                              );
+                        }
+                        // Navigator.pushNamed(context, '/accountDetails');
+                      });
+                },
+              ),
+              const SizedBox(height: 16),
+            ],
           ),
+        ),
+      ),
     );
   }
 

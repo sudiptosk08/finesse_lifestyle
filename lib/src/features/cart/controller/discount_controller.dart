@@ -49,9 +49,6 @@ class DiscountController extends StateNotifier<BaseState> {
         print("Send promo code Successful");
 
         totalAmount(state, clear);
-        // NavigationService.navigateToReplacement(
-        //     CupertinoPageRoute(builder: (context) => const CartPage()));
-
       } else {
         state = const ErrorState();
       }
@@ -82,7 +79,6 @@ class DiscountController extends StateNotifier<BaseState> {
         print("Send referral code  Successful");
         // NavigationService.navigateToReplacement(
         //     CupertinoPageRoute(builder: (context) => const CartPage()));
-
       } else {
         state = const ErrorState();
       }
@@ -143,54 +139,54 @@ class DiscountController extends StateNotifier<BaseState> {
   //   roundingFee = clear == true ? 0 : int.parse(countTotalFee) % 10;
   //   totalFee =
   //       clear == true ? subtotal : int.parse(countTotalFee) - roundingFee;
-  //   discount = clear == false && promoCodeModel != null ? 
+  //   discount = clear == false && promoCodeModel != null ?
   //   promoCodeDis : clear == false && referralCodeModel != null ? referralCodeDis:0 ;
   //   print(clear);
   //   print(countTotalFee);
   //   print(totalFee);
   // }
 
-    void totalAmount(codeState, clear) {
+  void totalAmount(codeState, clear) {
     final PromoCodeModel? promoCodeData =
         codeState is PromoCodeSuccessState ? codeState.promoCodeModel : null;
     final ReferralCodeModel? referralCodeData =
         codeState is ReferralCodeSuccessState
             ? codeState.referralCodeModel
             : null;
-        
+
     deliveryFee = ref?.read(zoneProvider.notifier).deliveryFee as int;
     subtotal = ref?.read(cartProvider.notifier).subtotal as int;
 
     print("delivery fee is : ${deliveryFee}");
     print("subtotal fee is : ${subtotal}");
-    // int promoCodeDis = promoCodeData?.coupon.discount as int; // previous code 
+    // int promoCodeDis = promoCodeData?.coupon.discount as int; // previous code
     // print("discount of promocode: ${promoCodeDis}");
-      print("------start------countTotalFee");
-    //  int referralCodeDis = referralCodeData?.discount as int; // previous code 
+    print("------start------countTotalFee");
+    //  int referralCodeDis = referralCodeData?.discount as int; // previous code
     //  int referralCodeDis = referralCodeData!.coupon.discount as int;
     // int referralCodeDis = 0;
-    // print(referralCodeDis); // prvious code 
-    if(promoCodeData != null){
-       int promoCodeDis = promoCodeData.coupon.discount as int;
-       countTotalFee = promoCodeData.success == true
-        ? '${deliveryFee + (subtotal - (subtotal * promoCodeDis) / 100).round()}' //promoCodeData?.coupon.discount.toString()
-        : 0; 
+    // print(referralCodeDis); // prvious code
+    if (promoCodeData != null) {
+      int promoCodeDis = promoCodeData.coupon.discount as int;
+      countTotalFee = promoCodeData.success == true
+          ? '${deliveryFee + (subtotal - (subtotal * promoCodeDis) / 100).round()}' //promoCodeData?.coupon.discount.toString()
+          : 0;
 
-       discount = clear == false && promoCodeModel != null ? 
-    promoCodeDis: 0; 
-    }else if(referralCodeData != null){
-       int referralCodeDis = referralCodeData.discount as int;
+      discount = clear == false && promoCodeModel != null ? promoCodeDis : 0;
+    } else if (referralCodeData != null) {
+      int referralCodeDis = referralCodeData.discount as int;
       countTotalFee = referralCodeData.success == true
-            ? '${deliveryFee + (subtotal - (subtotal * referralCodeDis) / 100).round()}'
-            : 0; 
-           discount =  clear == false && referralCodeModel != null ? referralCodeDis:0 ;
+          ? '${deliveryFee + (subtotal - (subtotal * referralCodeDis) / 100).round()}'
+          : 0;
+      discount =
+          clear == false && referralCodeModel != null ? referralCodeDis : 0;
     }
     roundingFee = clear == true ? 0 : int.parse(countTotalFee) % 10;
     totalFee =
-        clear == true ? subtotal : int.parse(countTotalFee!) - roundingFee;
-    
+        clear == true ? (subtotal + deliveryFee ): int.parse(countTotalFee!) - roundingFee;
+
     print(clear);
     print(countTotalFee);
-    print(totalFee);
+    print("Total fee:$totalFee");
   }
 }

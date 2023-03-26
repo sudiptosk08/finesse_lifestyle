@@ -35,13 +35,14 @@ class AddBillingInformationState extends State<AddBillingInformation> {
   var username = getStringAsync(userName);
   var useremail = getStringAsync(userEmail);
   var contact = getStringAsync(userContact);
-  
+
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, _) {
-       final menuData = ref.watch(menuDataProvider); 
-       User? user = menuData is MenuDataSuccessState? menuData.menuList!.user: null ;
+        final menuData = ref.watch(menuDataProvider);
+        User? user =
+            menuData is MenuDataSuccessState ? menuData.menuList!.user : null;
 
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,7 +68,6 @@ class AddBillingInformationState extends State<AddBillingInformation> {
                     readOnly: false,
                   ),
                 ),
-                
                 _editInformation(
                   'Phone Number',
                   KFillPhone(
@@ -78,34 +78,41 @@ class AddBillingInformationState extends State<AddBillingInformation> {
                   ),
                 ),
                 _editInformation(
-                  '',
-                  DeliveryAddress(isBilliingInfoPage: true,),
-                ),
-                _editInformation(
                   'Address',
                   KFillNormal(
-                    controller: address..text = user.customer.address?? '',
+                    controller: address..text = user.customer.address ?? '',
                     hintText: 'Enter your address here...',
                     label: '',
                     readOnly: false,
                   ),
                 ),
+               
+                 
+                  DeliveryAddress(
+                    isBilliingInfoPage: true,
+                  ),
+              
               ],
             ),
             SizedBox(height: context.screenHeight * 0.05),
             Consumer(
-              builder: (context,ref,child){
-                 final addressState  = ref.watch(addressProvider);
-                 return KButton(
-                    title:addressState is LoadingState ?'please wait...':   'Update',
+              builder: (context, ref, child) {
+                final addressState = ref.watch(addressProvider);
+                return KButton(
+                    title: addressState is LoadingState
+                        ? 'please wait...'
+                        : 'Update',
                     onTap: () {
-                      if(addressState is! LoadingState){
-                           ref.read(addressProvider.notifier).addBillingINfo(context: context,nameis: name.text, emailis: email.text, phoneis: phone.text,  addressis: address.text);
+                      if (addressState is! LoadingState) {
+                        ref.read(addressProvider.notifier).addBillingINfo(
+                            context: context,
+                            nameis: name.text,
+                            emailis: email.text,
+                            phoneis: phone.text,
+                            addressis: address.text);
                       }
                       // Navigator.pushNamed(context, '/accountDetails');
-                    }
-                  
-               );
+                    });
               },
             ),
             const SizedBox(height: 16),

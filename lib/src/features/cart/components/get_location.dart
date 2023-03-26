@@ -19,7 +19,12 @@ class DeliveryAddress extends StatefulWidget {
   bool? isCheckoutPage;
   bool isBilliingInfoPage;
   bool isShippingAddressPage;
-  DeliveryAddress({Key? key, this.isCheckoutPage = false , this.isBilliingInfoPage = false , this.isShippingAddressPage = false}) : super(key: key);
+  DeliveryAddress(
+      {Key? key,
+      this.isCheckoutPage = false,
+      this.isBilliingInfoPage = false,
+      this.isShippingAddressPage = false})
+      : super(key: key);
 
   @override
   State<DeliveryAddress> createState() => _DeliveryAddressState();
@@ -94,7 +99,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            widget.isCheckoutPage! &&
+                           ( widget.isCheckoutPage! || widget.isBilliingInfoPage)  &&
                                     billingAddressMap.isNotEmpty
                                 ? billingAddressMap['city'].toString()
                                 : ref.read(cityProvider.notifier).cityName ??
@@ -124,7 +129,9 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                         billingAddressMap['cityId'] = v.id.toString();
                       }
                       cities = v.name!;
-                      ref.read(zoneProvider.notifier).allZone(id: v.id ,isUpdateBillingInfo: widget.isBilliingInfoPage);
+                      ref.read(zoneProvider.notifier).allZone(
+                          id: v.id,
+                          isUpdateBillingInfo: widget.isBilliingInfoPage);
                       ref
                           .read(cityProvider.notifier)
                           .cityNameSet(cities.toString(), v.id.toString());
@@ -179,7 +186,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                             ),
                           ),
                         ),
-                       const  SizedBox(width: 5),
+                        const SizedBox(width: 5),
                         const Icon(
                           Icons.arrow_drop_down,
                           color: Colors.grey,
@@ -190,12 +197,14 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                   onSelected: (v) {
                     setState(() {
                       zones = v.zoneName;
-                      if(widget.isCheckoutPage!){
-                          billingAddressMap['zone'] = v.zoneName!;
-                           billingAddressMap['zoneId'] = v.id.toString();
+                      if (widget.isCheckoutPage!) {
+                        billingAddressMap['zone'] = v.zoneName!;
+                        billingAddressMap['zoneId'] = v.id.toString();
                       }
-                     
-                      ref.read(areaProvider.notifier).allArea(id: v.id , );
+
+                      ref.read(areaProvider.notifier).allArea(
+                            id: v.id,
+                          );
                       ref
                           .read(zoneProvider.notifier)
                           .zoneNameSet(v.zoneName.toString(), v.id.toString());
@@ -226,7 +235,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                     }).toList();
                   },
                   child: Padding(
-                    padding:const EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       left: 10,
                       right: 10,
                     ),
@@ -240,7 +249,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                                     billingAddressMap.containsKey('area')
                                 ? billingAddressMap['area'].toString()
                                 : ref.read(areaProvider.notifier).areaName ??
-                                   areas.toString(),
+                                    areas.toString(),
 
                             softWrap: false,
                             //textScaleFactor: textScaleFactor,
@@ -263,11 +272,11 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                   onSelected: (v) {
                     setState(() {
                       areas = v.name.toString();
-                       if(widget.isCheckoutPage!){
-                          billingAddressMap['area'] = v.name;
-                          billingAddressMap['areaId'] = v.id.toString();
+                      if (widget.isCheckoutPage!) {
+                        billingAddressMap['area'] = v.name;
+                        billingAddressMap['areaId'] = v.id.toString();
                       }
-                     
+
                       ref
                           .read(areaProvider.notifier)
                           .areaNameSet(v.name.toString(), v.id.toString());
@@ -283,9 +292,12 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
   }
 
   text(String title) {
-    return Text(
-      title,
-      style: KTextStyle.subtitle7.copyWith(color: KColor.blackbg),
+    return Padding(
+      padding: const EdgeInsets.only(left: 3.0, bottom: 10),
+      child: Text(
+        title,
+        style: KTextStyle.subtitle7.copyWith(color: KColor.blackbg),
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/core/network/api.dart';
 import 'package:finesse/core/network/network_utils.dart';
+import 'package:finesse/src/features/cart/controller/zone_controller.dart';
 import 'package:finesse/src/features/cart/model/cart_model.dart';
 import 'package:finesse/src/features/cart/state/cart_state.dart';
 import 'package:finesse/src/features/product_details/model/product_details_model.dart';
@@ -20,6 +21,7 @@ class CartController extends StateNotifier<BaseState> {
 
   List<CartModel> cartList = [];
   int subtotal = 0;
+  int totalAmount = 0;
   AllVariationProduct? productVariationDetails;
 
   Future addCart({required int quantity}
@@ -148,7 +150,10 @@ class CartController extends StateNotifier<BaseState> {
     for (int i = 0; i < cartList.length; i++) {
       total += cartList[i].details!.sellingPrice! * cartList[i].quantity!;
     }
+    var deliveryFee = ref!.read(zoneProvider.notifier).deliveryFee;
+
     subtotal = total;
+    totalAmount = deliveryFee != 0 ? subtotal + deliveryFee : subtotal;
     print('subtotal : $subtotal');
   }
 }

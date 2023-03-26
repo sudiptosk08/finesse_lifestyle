@@ -39,7 +39,6 @@ class _AddressPageState extends State<AddressPage> {
   String userN = "";
   String contractN = "";
   bool isShippingAddressAdded = false;
- 
 
   @override
   initState() {
@@ -52,8 +51,8 @@ class _AddressPageState extends State<AddressPage> {
       builder: (context, ref, _) {
         final userState = ref.watch(menuDataProvider);
         final adressState = ref.watch(addressProvider);
-        final User? userData = userState is MenuDataSuccessState ? userState.menuList!.user : null;
-    
+        final User? userData =
+            userState is MenuDataSuccessState ? userState.menuList!.user : null;
 
         return Scaffold(
           backgroundColor: KColor.appBackground,
@@ -71,13 +70,13 @@ class _AddressPageState extends State<AddressPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Select Delivery Address',
+                      'Billing Address',
                       style:
                           KTextStyle.subtitle1.copyWith(color: KColor.blackbg),
                     ),
-                    InkWell( 
-                      onTap: (){
-                        ref.read(addressProvider.notifier).makeAddressNull(); 
+                    InkWell(
+                      onTap: () {
+                        ref.read(addressProvider.notifier).makeAddressNull();
                         Navigator.pushNamed(context, '/checkoutNewAddress');
                       },
                       child: Container(
@@ -95,7 +94,6 @@ class _AddressPageState extends State<AddressPage> {
                           children: [
                             Row(
                               children: [
-                                const SizedBox(width: 16),
                                 Container(
                                   alignment: Alignment.center,
                                   width: context.screenWidth * 0.2,
@@ -119,16 +117,16 @@ class _AddressPageState extends State<AddressPage> {
                             // Text(contractN),
                             // const SizedBox(height: 20),
                             // Text("${areaN}, ${zoneN}, ${cityN}"),
-                    
-                             Text(userData!.customer.customerName.toString()),
+
+                            Text(userData!.customer.customerName.toString()),
                             Text(userData.customer.contact.toString()),
                             const SizedBox(height: 20),
-                            Text("${billingAddressMap['area'].toString()?? ''}, ${billingAddressMap['zone'].toString()?? ''}, ${billingAddressMap['city'].toString()?? ''}"),
+                            Text(
+                                "${billingAddressMap['area'].toString() ?? ''}, ${billingAddressMap['zone'].toString() ?? ''}, ${billingAddressMap['city'].toString() ?? ''}"),
                           ],
                         ),
                       ),
                     ),
-
                     Row(
                       children: [
                         InkWell(
@@ -137,7 +135,9 @@ class _AddressPageState extends State<AddressPage> {
                               setState(() {
                                 isShippingAddressAdded = true;
                               });
-                              ref.read(addressProvider.notifier).makeAddressNull();
+                              ref
+                                  .read(addressProvider.notifier)
+                                  .makeAddressNull();
                               Navigator.pushNamed(
                                   context, '/checkoutShippingAddress');
                             }
@@ -168,7 +168,6 @@ class _AddressPageState extends State<AddressPage> {
                         ),
                       ],
                     )
-                  
                   ],
                 ),
                 SizedBox(height: context.screenHeight * 0.2),
