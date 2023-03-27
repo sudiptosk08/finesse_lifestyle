@@ -13,6 +13,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../../home/controllers/menu_data_controller.dart';
+
 /// Providers
 final loginProvider = StateNotifierProvider<LoginController, BaseState>(
   (ref) => LoginController(ref: ref),
@@ -53,7 +55,7 @@ class LoginController extends StateNotifier<BaseState> {
           setValue(userEmail, userModel!.email);
           setValue(userContact, userModel!.contact);
           toast("Login Successful", bgColor: KColor.selectColor );
-
+          ref!.read(menuDataProvider.notifier).fetchMenuData();
           NavigationService.navigateToReplacement(
             CupertinoPageRoute(
               builder: (context) => const MainScreen(),

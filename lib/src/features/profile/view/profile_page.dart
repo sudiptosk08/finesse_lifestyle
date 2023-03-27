@@ -145,7 +145,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               title: 'Report Issue',
                               image: 'assets/images/report.png',
                               onPressed: () {
+                                 ref
+                                    .read(reportProvider.notifier)
+                                    .fetchReports();
                                 Navigator.pushNamed(context, '/reportIssue');
+                               
                               },
                             ),
                           ],

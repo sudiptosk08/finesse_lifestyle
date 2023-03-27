@@ -65,10 +65,10 @@
 //                 children: [
 //                   _categoryHeader('Main categories', () {}),
 //                   const MainCategory(),
-                
+
 //                   _categoryHeader('Price range', () {}),
 //                   const PriceRange(),
-                
+
 //                   _categoryHeader('Category', () {}),
 //                   const OtherCategory(),
 //                   _categoryHeader('Color', () {}),
@@ -147,7 +147,6 @@ import '../../../../components/button/k_border_btn.dart';
 import '../../../../components/button/k_button.dart';
 import '../../../../components/textfield/k_search_field.dart';
 import '../../../../styles/k_size.dart';
-
 
 filterPage(context) {
   var _chosenValue;
@@ -474,28 +473,33 @@ filterPage(context) {
                         children: [
                           CategoryList(
                               index: 0,
-                              categoryList: 'Full Time',
+                              categoryList: 'Brylcreem',
                               width: KSize.getWidth(context, 100)),
                           CategoryList(
                               index: 1,
-                              categoryList: 'Part Time',
+                              categoryList: 'Finesse',
                               width: KSize.getWidth(context, 100)),
                           CategoryList(
                               index: 2,
-                              categoryList: 'Contract',
+                              categoryList: 'Head & Shoulders',
                               width: KSize.getWidth(context, 95)),
                           CategoryList(
                               index: 3,
-                              categoryList: 'Freelance',
+                              categoryList: 'Tommy Hilfiger',
                               width: KSize.getWidth(context, 100)),
                           CategoryList(
                               index: 4,
-                              categoryList: 'Remote',
+                              categoryList: 'Pull & Bear',
                               width: KSize.getWidth(context, 86)),
                           CategoryList(
-                            categoryList: 'Show All Type',
-                            width: KSize.getWidth(context, 120),
                             index: 5,
+                            categoryList: 'Bershka',
+                            width: KSize.getWidth(context, 120),
+                          ),
+                          CategoryList(
+                            index: 6,
+                            categoryList: 'Levis',
+                            width: KSize.getWidth(context, 120),
                           )
                         ],
                       ),

@@ -1,4 +1,5 @@
 import 'package:finesse/constants/shared_preference_constant.dart';
+import 'package:finesse/src/features/auth/login/state/login_state.dart';
 import 'package:finesse/src/features/cart/controller/zone_controller.dart';
 import 'package:finesse/src/features/cart/model/area_model.dart';
 import 'package:finesse/src/features/cart/model/city_model.dart';
@@ -13,6 +14,9 @@ import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
+
+import '../../auth/login/controller/login_controller.dart';
+import '../../auth/login/model/user_model.dart';
 
 // ignore: must_be_immutable
 class DeliveryAddress extends StatefulWidget {
@@ -52,9 +56,9 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, _) {
-        final userState = ref.watch(menuDataProvider);
-        final MenuDataModel? userData =
-            userState is MenuDataSuccessState ? userState.menuList : null;
+        final userState = ref.watch(loginProvider);
+        final User? userData =
+            userState is LoginSuccessState ? userState.userModel : null;
         final cityState = ref.watch(cityProvider);
         final zoneState = ref.watch(zoneProvider);
         final areaState = ref.watch(areaProvider);

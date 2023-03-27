@@ -42,7 +42,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         return Container(
           color: KColor.appBackground,
           child: Scaffold(
-            appBar: const PreferredSize(preferredSize: Size.fromHeight(56), child: HomeAppBar()),
+            appBar: const PreferredSize(
+                preferredSize: Size.fromHeight(56), child: HomeAppBar()),
             drawer: const Drawer(child: KDrawer()),
             body: SizedBox.expand(
               child: PageView(
@@ -51,18 +52,23 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                 onPageChanged: (index) {
                   setState(() => _currentIndex = index);
                   if (wishlistState is! LoadingState) {
-                    if (_currentIndex == 1){
-                       ref.read(cartProvider.notifier).cartDetails();
-                     ref.read(addressProvider.notifier).setLocationNameOnce();   
-                      // var userDaata = ref.read(menuDataProvider.notifier).menuList!.user; 
+                    if (_currentIndex == 1) {
+                      ref.read(cartProvider.notifier).cartDetails();
+                      ref.read(addressProvider.notifier).setLocationNameOnce();
+                      ref.read(cityProvider.notifier).allCity();
+                      // var userDaata = ref.read(menuDataProvider.notifier).menuList!.user;
                       // if( userDaata.customer.cityId !=null &&  userDaata.customer.zoneId != null &&  userDaata.customer.areaId != null){
                       //   ref.read(cityProvider.notifier).allCity(cityId: userDaata.customer.cityId);
                       //   ref.read(zoneProvider.notifier).allZone(id: userDaata.customer.cityId,zoneId: userDaata.customer.zoneId);
                       //   ref.read(areaProvider.notifier).allArea(id: userDaata.customer.zoneId , areaId: userDaata.customer.areaId );
                       // }
                     }
-                    if (_currentIndex == 2) ref.read(wishlistProvider.notifier).fetchWishlistProducts();
-                    if (_currentIndex == 3) ref.read(loginProvider.notifier).userModel;
+                    if (_currentIndex == 2)
+                      ref
+                          .read(wishlistProvider.notifier)
+                          .fetchWishlistProducts();
+                    if (_currentIndex == 3)
+                      ref.read(menuDataProvider.notifier).fetchMenuData();
                   }
                 },
                 children: const [
@@ -95,10 +101,13 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   curve: Curves.linear,
                 );
               },
-              titleStyle: KTextStyle.caption1.copyWith(fontWeight: FontWeight.w600, color: KColor.black.withOpacity(.3)),
+              titleStyle: KTextStyle.caption1.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: KColor.black.withOpacity(.3)),
               iconSize: 24,
               elevation: 15,
-              chipStyle: const ChipStyle(convexBridge: true, background: KColor.blackbg),
+              chipStyle: const ChipStyle(
+                  convexBridge: true, background: KColor.blackbg),
               itemStyle: ItemStyle.circle,
               animated: true,
             ),

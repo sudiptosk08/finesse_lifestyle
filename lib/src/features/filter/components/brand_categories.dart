@@ -38,34 +38,27 @@ class _CategoryListState extends State<CategoryList> {
           });
         }
       },
-      child: Column(
-        children: [
-          Container(
-            height: KSize.getHeight(context, 35),
-            width: widget.width,
-            alignment: Alignment.center,
-            decoration: widget.index != 5
-                ? BoxDecoration(
-                    border: Border.all(
-                        color: (_selectedItems.contains(widget.index))
-                            ? KColor.transparent
-                            : KColor.black),
-                    color: (_selectedItems.contains(widget.index))
-                        ? KColor.primary
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(10))
-                : BoxDecoration(color: KColor.transparent),
-            child: Text(
-              widget.categoryList!,
-              style: KTextStyle.button.copyWith(
-                  color: widget.index != 2
-                      ? (_selectedItems.contains(widget.index))
-                          ? KColor.white
-                          : KColor.grey350
-                      : KColor.grey350),
-            ),
+      child: Expanded(
+        child: Container(
+          height: KSize.getHeight(context, 35),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              border: Border.all(
+                  color: (_selectedItems.contains(widget.index))
+                      ? KColor.transparent
+                      : KColor.black),
+              color: (_selectedItems.contains(widget.index))
+                  ? KColor.primary
+                  : Colors.transparent,
+              borderRadius: BorderRadius.circular(10)),
+          child: Text(
+            widget.categoryList!,
+            style: KTextStyle.button.copyWith(
+                color: (_selectedItems.contains(widget.index))
+                    ? KColor.white
+                    : KColor.grey350),
           ),
-        ],
+        ),
       ),
     );
   }
