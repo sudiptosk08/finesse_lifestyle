@@ -126,26 +126,19 @@
 //     );
 //   }
 // }
-import 'package:finesse/components/appbar/k_app_bar.dart';
-import 'package:finesse/components/card/product_card.dart';
-import 'package:finesse/constants/asset_path.dart';
-import 'package:finesse/core/base/base_state.dart';
+
 import 'package:finesse/src/features/filter/components/brand_categories.dart';
-import 'package:finesse/src/features/home/controllers/shop_controller.dart';
 import 'package:finesse/src/features/home/models/shop_data_model.dart';
-import 'package:finesse/src/features/home/state/shop_state.dart';
 import 'package:finesse/src/features/product_details/controller/product_details_controller.dart';
-import 'package:finesse/src/features/wishlist/controller/wishlist_controller.dart';
+import 'package:finesse/src/features/product_details/model/all_branda.dart';
+import 'package:finesse/src/features/product_details/state/product_details_state.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../components/button/k_border_btn.dart';
 import '../../../../components/button/k_button.dart';
-import '../../../../components/textfield/k_search_field.dart';
 import '../../../../styles/k_size.dart';
 
 filterPage(context) {
@@ -160,362 +153,364 @@ filterPage(context) {
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (BuildContext context, setState) {
-            return Container(
-              height: KSize.getHeight(context, 708),
-              decoration: BoxDecoration(
-                  color: KColor.grey,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(50),
-                      topRight: Radius.circular(50))),
-              child: SingleChildScrollView(
-                child: Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: KSize.getWidth(context, 20),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: KSize.getHeight(context, 10)),
-                      Center(
-                        child: Image.asset(
-                          'assets/images/bottomSheet.png',
-                          height: KSize.getHeight(context, 4),
-                          width: KSize.getWidth(context, 80),
-                          fit: BoxFit.cover,
+            return Consumer(builder: (contex, ref, child) {
+              final brandState = ref.watch(allBrandsProvider);
+            //  BrandModel allBrandData =
+            //       (brandState is AllBrandsSuccessState ? brandState.brandModel : []);
+              return Container(
+                height: KSize.getHeight(context, 708),
+                decoration: BoxDecoration(
+                    color: KColor.grey,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(50),
+                        topRight: Radius.circular(50))),
+                child: SingleChildScrollView(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(
+                      horizontal: KSize.getWidth(context, 20),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: KSize.getHeight(context, 10)),
+                        Center(
+                          child: Image.asset(
+                            'assets/images/bottomSheet.png',
+                            height: KSize.getHeight(context, 4),
+                            width: KSize.getWidth(context, 80),
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: KSize.getHeight(context, 25)),
+                        SizedBox(height: KSize.getHeight(context, 25)),
 
-                      /// Set Filters
-                      Center(
-                        child: Text(
-                          'Set Filters',
-                          style: KTextStyle.headline6
-                              .copyWith(fontWeight: FontWeight.w700),
+                        /// Set Filters
+                        Center(
+                          child: Text(
+                            'Set Filters',
+                            style: KTextStyle.headline6
+                                .copyWith(fontWeight: FontWeight.w700),
+                          ),
                         ),
-                      ),
-                      SizedBox(height: KSize.getHeight(context, 20)),
-                      Text('Category', style: KTextStyle.subtitle7),
-                      SizedBox(height: KSize.getHeight(context, 15)),
+                        SizedBox(height: KSize.getHeight(context, 20)),
+                        Text('Category', style: KTextStyle.subtitle7),
+                        SizedBox(height: KSize.getHeight(context, 15)),
 
-                      ///  Category Dropdown
-                      Container(
-                        height: KSize.getHeight(context, 50),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: KColor.white),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: KSize.getWidth(context, 20)),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              icon: Icon(Icons.keyboard_arrow_down),
-                              value: _chosenValue,
-                              //elevation: 5,
-                              style: TextStyle(color: KColor.primary),
-                              items: <String>[
-                                'UI/UX Design',
-                                'Product Design',
-                                'Visual Design',
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: GoogleFonts.inter(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: KColor.grey350),
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (String? value) {
-                                setState(() {
-                                  _chosenValue = value;
-                                });
-                              },
+                        ///  Category Dropdown
+                        Container(
+                          height: KSize.getHeight(context, 50),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: KColor.white),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: KSize.getWidth(context, 20)),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                icon: Icon(Icons.keyboard_arrow_down),
+                                value: _chosenValue,
+                                //elevation: 5,
+                                style: TextStyle(color: KColor.primary),
+                                items: <String>[
+                                  'UI/UX Design',
+                                  'Product Design',
+                                  'Visual Design',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(
+                                      value,
+                                      style: GoogleFonts.inter(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: KColor.grey350),
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _chosenValue = value;
+                                  });
+                                },
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: KSize.getHeight(context, 15)),
-                      Text('Sub Category', style: KTextStyle.subtitle7),
-                      SizedBox(height: KSize.getHeight(context, 15)),
+                        SizedBox(height: KSize.getHeight(context, 15)),
+                        Text('Sub Category', style: KTextStyle.subtitle7),
+                        SizedBox(height: KSize.getHeight(context, 15)),
 
-                      /// Sub Category Dropdown
-                      Container(
-                        height: KSize.getHeight(context, 50),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: KColor.white),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: KSize.getWidth(context, 20)),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              icon: Icon(Icons.keyboard_arrow_down),
-                              value: _chosenValue2,
-                              style: TextStyle(color: KColor.primary),
-                              items: <String>[
-                                'Graphics Design',
-                                'Product Design',
-                                'Visual Design',
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value,
-                                      style: KTextStyle.bodyText1
-                                          .copyWith(color: KColor.grey350)),
-                                );
-                              }).toList(),
-                              onChanged: (String? value) {
-                                setState(() {
-                                  _chosenValue2 = value;
-                                });
-                              },
+                        /// Sub Category Dropdown
+                        Container(
+                          height: KSize.getHeight(context, 50),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: KColor.white),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: KSize.getWidth(context, 20)),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                icon: Icon(Icons.keyboard_arrow_down),
+                                value: _chosenValue2,
+                                style: TextStyle(color: KColor.primary),
+                                items: <String>[
+                                  'Graphics Design',
+                                  'Product Design',
+                                  'Visual Design',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value,
+                                        style: KTextStyle.bodyText1
+                                            .copyWith(color: KColor.grey350)),
+                                  );
+                                }).toList(),
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _chosenValue2 = value;
+                                  });
+                                },
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: KSize.getHeight(context, 15)),
+                        SizedBox(height: KSize.getHeight(context, 15)),
 
-                      /// Location .... Salary
+                        /// Location .... Salary
 
-                      Text('Colors', style: KTextStyle.subtitle7),
-                      SizedBox(height: KSize.getHeight(context, 15)),
+                        Text('Colors', style: KTextStyle.subtitle7),
+                        SizedBox(height: KSize.getHeight(context, 15)),
 
-                      /// Sub Category Dropdown
-                      Container(
-                        height: KSize.getHeight(context, 50),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: KColor.white),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: KSize.getWidth(context, 20)),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              icon: Icon(Icons.keyboard_arrow_down),
-                              value: _chosenValue2,
-                              style: TextStyle(color: KColor.primary),
-                              items: <String>[
-                                'Graphics Design',
-                                'Product Design',
-                                'Visual Design',
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value,
-                                      style: KTextStyle.bodyText1
-                                          .copyWith(color: KColor.grey350)),
-                                );
-                              }).toList(),
-                              onChanged: (String? value) {
-                                setState(() {
-                                  _chosenValue2 = value;
-                                });
-                              },
+                        /// Sub Category Dropdown
+                        Container(
+                          height: KSize.getHeight(context, 50),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: KColor.white),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: KSize.getWidth(context, 20)),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                icon: Icon(Icons.keyboard_arrow_down),
+                                value: _chosenValue2,
+                                style: TextStyle(color: KColor.primary),
+                                items: <String>[
+                                  'Graphics Design',
+                                  'Product Design',
+                                  'Visual Design',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value,
+                                        style: KTextStyle.bodyText1
+                                            .copyWith(color: KColor.grey350)),
+                                  );
+                                }).toList(),
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _chosenValue2 = value;
+                                  });
+                                },
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: KSize.getHeight(context, 15)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Size', style: KTextStyle.subtitle7),
-                              SizedBox(height: KSize.getHeight(context, 16)),
-                              Container(
-                                height: KSize.getHeight(context, 50),
-                                width: KSize.getWidth(context, 160),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: KColor.white),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: KSize.getWidth(context, 10)),
-                                  child: Row(
-                                    children: [
-                                      // Image.asset('assets/images/location.png',
-                                      //     fit: BoxFit.cover,
-                                      //     height: KSize.getHeight(context, 20),
-                                      //     width: KSize.getWidth(context, 20)),
-                                      SizedBox(
-                                          width: KSize.getWidth(context, 15)),
-                                      DropdownButtonHideUnderline(
-                                        child: DropdownButton<String>(
-                                          icon: Icon(Icons.keyboard_arrow_down),
-                                          value: _locationChosenValue3,
-                                          style:
-                                              TextStyle(color: KColor.primary),
-                                          items: <String>[
-                                            'Canada',
-                                            'Nepal',
-                                            'India',
-                                          ].map<DropdownMenuItem<String>>(
-                                              (String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Padding(
-                                                padding: EdgeInsets.only(
-                                                    right: KSize.getWidth(
-                                                        context, 15.0)),
-                                                child: Text(value,
-                                                    style: KTextStyle.bodyText1
-                                                        .copyWith(
-                                                            color: KColor
-                                                                .grey350)),
-                                              ),
-                                            );
-                                          }).toList(),
-                                          onChanged: (String? value) {
-                                            setState(() {
-                                              _locationChosenValue3 = value;
-                                            });
-                                          },
+                        SizedBox(height: KSize.getHeight(context, 15)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Size', style: KTextStyle.subtitle7),
+                                SizedBox(height: KSize.getHeight(context, 16)),
+                                Container(
+                                  height: KSize.getHeight(context, 50),
+                                  width: KSize.getWidth(context, 160),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: KColor.white),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            KSize.getWidth(context, 10)),
+                                    child: Row(
+                                      children: [
+                                        // Image.asset('assets/images/location.png',
+                                        //     fit: BoxFit.cover,
+                                        //     height: KSize.getHeight(context, 20),
+                                        //     width: KSize.getWidth(context, 20)),
+                                        SizedBox(
+                                            width: KSize.getWidth(context, 15)),
+                                        DropdownButtonHideUnderline(
+                                          child: DropdownButton<String>(
+                                            icon:
+                                                Icon(Icons.keyboard_arrow_down),
+                                            value: _locationChosenValue3,
+                                            style: TextStyle(
+                                                color: KColor.primary),
+                                            items: <String>[
+                                              'Canada',
+                                              'Nepal',
+                                              'India',
+                                            ].map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      right: KSize.getWidth(
+                                                          context, 15.0)),
+                                                  child: Text(value,
+                                                      style: KTextStyle
+                                                          .bodyText1
+                                                          .copyWith(
+                                                              color: KColor
+                                                                  .grey350)),
+                                                ),
+                                              );
+                                            }).toList(),
+                                            onChanged: (String? value) {
+                                              setState(() {
+                                                _locationChosenValue3 = value;
+                                              });
+                                            },
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Price', style: KTextStyle.subtitle7),
-                              SizedBox(height: KSize.getHeight(context, 16)),
-                              Container(
-                                height: KSize.getHeight(context, 50),
-                                width: KSize.getWidth(context, 160),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: KColor.white),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: KSize.getWidth(context, 10)),
-                                  child: Row(
-                                    children: [
-                                      // Image.asset('assets/images/wallet.png',
-                                      //     fit: BoxFit.cover,
-                                      //     //scale: 2.5,
-                                      //     height: KSize.getHeight(context, 20),
-                                      //     width: KSize.getWidth(context, 20)),
-                                      SizedBox(
-                                          width: KSize.getWidth(context, 15)),
-                                      DropdownButtonHideUnderline(
-                                        child: DropdownButton<String>(
-                                          icon: Icon(Icons.keyboard_arrow_down),
-                                          value: dollarChosenValue,
-                                          style:
-                                              TextStyle(color: KColor.primary),
-                                          items: <String>[
-                                            '\$2k-\$5k',
-                                            '\$5k-\$10k',
-                                            '\$7k-\$12k',
-                                          ].map<DropdownMenuItem<String>>(
-                                              (String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Padding(
-                                                padding: EdgeInsets.only(
-                                                    right: KSize.getWidth(
-                                                        context, 9.0)),
-                                                child: Text(value,
-                                                    style: KTextStyle.bodyText1
-                                                        .copyWith(
-                                                            color: KColor
-                                                                .grey350)),
-                                              ),
-                                            );
-                                          }).toList(),
-                                          onChanged: (String? value) {
-                                            setState(() {
-                                              dollarChosenValue = value;
-                                            });
-                                          },
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Price', style: KTextStyle.subtitle7),
+                                SizedBox(height: KSize.getHeight(context, 16)),
+                                Container(
+                                  height: KSize.getHeight(context, 50),
+                                  width: KSize.getWidth(context, 160),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: KColor.white),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            KSize.getWidth(context, 10)),
+                                    child: Row(
+                                      children: [
+                                        // Image.asset('assets/images/wallet.png',
+                                        //     fit: BoxFit.cover,
+                                        //     //scale: 2.5,
+                                        //     height: KSize.getHeight(context, 20),
+                                        //     width: KSize.getWidth(context, 20)),
+                                        SizedBox(
+                                            width: KSize.getWidth(context, 15)),
+                                        DropdownButtonHideUnderline(
+                                          child: DropdownButton<String>(
+                                            icon:
+                                                Icon(Icons.keyboard_arrow_down),
+                                            value: dollarChosenValue,
+                                            style: TextStyle(
+                                                color: KColor.primary),
+                                            items: <String>[
+                                              '\$2k-\$5k',
+                                              '\$5k-\$10k',
+                                              '\$7k-\$12k',
+                                            ].map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      right: KSize.getWidth(
+                                                          context, 9.0)),
+                                                  child: Text(value,
+                                                      style: KTextStyle
+                                                          .bodyText1
+                                                          .copyWith(
+                                                              color: KColor
+                                                                  .grey350)),
+                                                ),
+                                              );
+                                            }).toList(),
+                                            onChanged: (String? value) {
+                                              setState(() {
+                                                dollarChosenValue = value;
+                                              });
+                                            },
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: KSize.getHeight(context, 30)),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: KSize.getHeight(context, 30)),
 
-                      /// Job Type
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Brand',
-                              style:
-                                  KTextStyle.headline6.copyWith(fontSize: 18)),
-                          Icon(Icons.more_horiz_sharp)
-                        ],
-                      ),
-                      SizedBox(height: KSize.getHeight(context, 20)),
+                        /// Job Type
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Brand',
+                                style: KTextStyle.headline6
+                                    .copyWith(fontSize: 18)),
+                            Icon(Icons.more_horiz_sharp)
+                          ],
+                        ),
+                        SizedBox(height: KSize.getHeight(context, 20)),
 
-                      /// Job Type List
-                      Wrap(
-                        direction: Axis.horizontal,
-                        spacing: KSize.getWidth(context, 13),
-                        runSpacing: KSize.getHeight(context, 14),
-                        children: [
-                          CategoryList(
-                              index: 0,
-                              categoryList: 'Brylcreem',
-                              width: KSize.getWidth(context, 100)),
-                          CategoryList(
-                              index: 1,
-                              categoryList: 'Finesse',
-                              width: KSize.getWidth(context, 100)),
-                          CategoryList(
-                              index: 2,
-                              categoryList: 'Head & Shoulders',
-                              width: KSize.getWidth(context, 95)),
-                          CategoryList(
-                              index: 3,
-                              categoryList: 'Tommy Hilfiger',
-                              width: KSize.getWidth(context, 100)),
-                          CategoryList(
-                              index: 4,
-                              categoryList: 'Pull & Bear',
-                              width: KSize.getWidth(context, 86)),
-                          CategoryList(
-                            index: 5,
-                            categoryList: 'Bershka',
-                            width: KSize.getWidth(context, 120),
-                          ),
-                          CategoryList(
-                            index: 6,
-                            categoryList: 'Levis',
-                            width: KSize.getWidth(context, 120),
-                          )
-                        ],
-                      ),
+                        /// Job Type List
+                        Wrap(
+                          direction: Axis.horizontal,
+                          spacing: KSize.getWidth(context, 13),
+                          runSpacing: KSize.getHeight(context, 14),
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Container(
+                                      child: Wrap(
+                                          //s: 5.0,
+                                          //runSpacing: 3.0,
+                                          spacing: 7,
+                                          runSpacing: -4,
+                                         // children: List.generate(
+                                            // allBrandData.length,
+                                            // (index) => FilterChipWidget(
+                                            //   chipName: allBrandData[index].brands[index].name.toString(),
+                                            //   chipId: int.parse(
+                                            //       allBrandData[index].id.toString()
+                                            //     )
+                                           // ),
+                                         // ).toList()
+                                         ))),
+                            ),
+                          ],
+                        ),
 
-                      SizedBox(height: KSize.getHeight(context, 40)),
-                      KButton(
-                          title: 'Apply Filters',
-                          onTap: () {
-                            Navigator.pop(context);
-                          }),
-                      SizedBox(height: KSize.getHeight(context, 30)),
-                    ],
+                        SizedBox(height: KSize.getHeight(context, 40)),
+                        KButton(
+                            title: 'Apply Filters',
+                            onTap: () {
+                              Navigator.pop(context);
+                            }),
+                        SizedBox(height: KSize.getHeight(context, 30)),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
+              );
+            });
           },
         );
       });

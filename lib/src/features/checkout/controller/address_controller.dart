@@ -90,8 +90,8 @@ class AddAddressController extends StateNotifier<BaseState> {
     ref!.read(areaProvider.notifier).makeAreaNull();
   }
 
-  void setLocationNameOnce() {
-    User? userData = ref!.read(menuDataProvider.notifier).menuList!.user;
+  void setLocationNameOnce(User userData) {
+    
 
     if (billingAddressMap.isEmpty) {
       if (userData.customer.area != null &&
@@ -104,7 +104,8 @@ class AddAddressController extends StateNotifier<BaseState> {
             zoneId: userData.customer.zoneId.toString(),
             areaN: userData.customer.area,
             areaId: userData.customer.areaId.toString());
-               ref!.read(zoneProvider.notifier).updateTotalDelivery(ifZoneNotCall: true, zoneN: userData.customer.zone);
+        ref!.read(zoneProvider.notifier).updateTotalDelivery(
+            ifZoneNotCall: true, zoneN: userData.customer.zone);
         //          billingAddressMap['city'] = userData.customer.city;
         // billingAddressMap['cityId'] = userData.customer.cityId;
         // billingAddressMap['zone'] =userData.customer.zone;

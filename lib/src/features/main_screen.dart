@@ -21,6 +21,9 @@ import 'package:finesse/styles/b_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'auth/login/model/user_model.dart';
+import 'home/state/menu_data_state.dart';
+
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
 
@@ -38,6 +41,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       builder: (context, ref, _) {
         final wishlistState = ref.watch(wishlistProvider);
         // final cartState = ref.watch(cartProvider);
+        final menuData = ref.watch(menuDataProvider);
+        User? user =
+            menuData is MenuDataSuccessState ? menuData.menuList!.user : null;
 
         return Container(
           color: KColor.appBackground,
@@ -54,7 +60,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   if (wishlistState is! LoadingState) {
                     if (_currentIndex == 1) {
                       ref.read(cartProvider.notifier).cartDetails();
-                      ref.read(addressProvider.notifier).setLocationNameOnce();
+                      ref.read(addressProvider.notifier).setLocationNameOnce(user!);
                       ref.read(cityProvider.notifier).allCity();
                       // var userDaata = ref.read(menuDataProvider.notifier).menuList!.user;
                       // if( userDaata.customer.cityId !=null &&  userDaata.customer.zoneId != null &&  userDaata.customer.areaId != null){

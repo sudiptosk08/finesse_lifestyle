@@ -40,6 +40,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
     super.initState();
+
     initData();
   }
 
@@ -54,6 +55,7 @@ class _MyAppState extends ConsumerState<MyApp> {
     ref.read(shopProvider.notifier).fetchShopProductList();
     ref.read(categoryProvider.notifier).fetchCategoryDetails();
     ref.read(allBrandsProvider.notifier).fetchAllBrands();
+    ref.read(menuDataProvider.notifier).fetchMenuData();
   }
 
   @override

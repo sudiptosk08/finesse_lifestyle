@@ -1,65 +1,48 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../styles/k_colors.dart';
-import '../../../../styles/k_size.dart';
 import '../../../../styles/k_text_style.dart';
 
-class CategoryList extends StatefulWidget {
-  final String? categoryList;
-  final double? width;
-  final int? index;
+class FilterChipWidget extends StatefulWidget {
+  final String chipName;
+  final int chipId;
 
-  const CategoryList({
-    Key? key,
-    this.categoryList,
-    this.index,
-    this.width,
-  }) : super(key: key);
+  FilterChipWidget({Key? key, required this.chipName, required this.chipId})
+      : super(key: key);
 
   @override
-  _CategoryListState createState() => _CategoryListState();
+  _FilterChipWidgetState createState() => _FilterChipWidgetState();
 }
 
-class _CategoryListState extends State<CategoryList> {
-  List<int> _selectedItems = [];
+class _FilterChipWidgetState extends State<FilterChipWidget> {
+  var _isSelected = false;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        if (_selectedItems.contains(widget.index)) {
-          setState(() {
-            _selectedItems.removeWhere((val) => val == widget.index);
-          });
-        } else {
-          setState(() {
-            _selectedItems.add(widget.index!);
-          });
-        }
+    return FilterChip(
+      label: Text(widget.chipName),
+      labelStyle: KTextStyle.bodyText1
+          .copyWith(color: KColor.grey, fontWeight: FontWeight.normal),
+      selected: _isSelected,
+      showCheckmark: false,
+      disabledColor: Colors.white,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(7.0),
+          side: BorderSide(
+            color: KColor.grey,
+            width: 1.2,
+          )),
+      padding: EdgeInsets.only(left: 2.5, right: 2.5),
+      backgroundColor: KColor.white,
+      onSelected: (isSelected) {
+        setState(() {
+          _isSelected = isSelected;
+          // store.dispatch(FilterTagAction(widget.chipId));
+        });
       },
-      child: Expanded(
-        child: Container(
-          height: KSize.getHeight(context, 35),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              border: Border.all(
-                  color: (_selectedItems.contains(widget.index))
-                      ? KColor.transparent
-                      : KColor.black),
-              color: (_selectedItems.contains(widget.index))
-                  ? KColor.primary
-                  : Colors.transparent,
-              borderRadius: BorderRadius.circular(10)),
-          child: Text(
-            widget.categoryList!,
-            style: KTextStyle.button.copyWith(
-                color: (_selectedItems.contains(widget.index))
-                    ? KColor.white
-                    : KColor.grey350),
-          ),
-        ),
-      ),
+      labelPadding: EdgeInsets.symmetric(horizontal: 7),
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      selectedColor: Colors.black,
     );
   }
 }
