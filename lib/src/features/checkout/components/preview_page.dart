@@ -1,13 +1,20 @@
 import 'package:finesse/components/button/k_text_button.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/constants/shared_preference_constant.dart';
+import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/service/navigation_service.dart';
 import 'package:finesse/src/features/auth/login/model/user_model.dart';
 import 'package:finesse/src/features/cart/components/cart_total.dart';
 import 'package:finesse/src/features/cart/controller/cart_controller.dart';
+import 'package:finesse/src/features/cart/controller/discount_controller.dart';
+import 'package:finesse/src/features/cart/controller/zone_controller.dart';
+import 'package:finesse/src/features/cart/state/cart_state.dart';
+import 'package:finesse/src/features/cart/state/code_state.dart';
+import 'package:finesse/src/features/cart/state/zone_state.dart';
 import 'package:finesse/src/features/checkout/components/add_address.dart';
 import 'package:finesse/src/features/checkout/components/add_new_address.dart';
 import 'package:finesse/src/features/checkout/components/selected_iteams.dart';
+import 'package:finesse/src/features/checkout/controller/checkout_controller.dart';
 import 'package:finesse/src/features/home/controllers/menu_data_controller.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
@@ -35,7 +42,6 @@ class _PreviewPageState extends State<PreviewPage> {
   Map<String, dynamic> shippingAddressN = {};
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     shippingAddressN = getJSONAsync(shippingAddress);
   }
@@ -51,6 +57,20 @@ class _PreviewPageState extends State<PreviewPage> {
       body: Consumer(builder: (context, ref, child) {
         final cartState = ref.watch(cartProvider);
         User user = ref.read(menuDataProvider.notifier).menuList!.user;
+       final checkoutProviderState =   ref.watch(checkoutProvider);
+       final zoneState =   ref.watch(zoneProvider);
+       final discountState =   ref.watch(discountProvider);
+                       
+       int totalFee =  cartState is CartSuccessState &&
+                            zoneState is! ZoneSuccessState &&
+                            discountState is! PromoCodeSuccessState &&
+                            discountState is! ReferralCodeSuccessState
+                        ? ref.read(cartProvider.notifier).totalAmount
+                        : zoneState is ZoneSuccessState &&
+                                discountState is! PromoCodeSuccessState &&
+                                discountState is! ReferralCodeSuccessState
+                            ? ref.read(zoneProvider.notifier).countTotalFee
+                            :ref.read(discountProvider.notifier).totalFee;
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           child: SingleChildScrollView(
@@ -189,10 +209,16 @@ class _PreviewPageState extends State<PreviewPage> {
                 ),
                 SizedBox(height: context.screenHeight * 0.03),
                 KTextButton(
-                  title: 'Place Order',
+                  title:checkoutProviderState is LoadingState ?'Please wait': 'Place Order',
                   isPrice: false,
                   onTap: () {
-                    Navigator.pushNamed(context, '/confirmOrder');
+                    // Navigator.pushNamed(context, '/confirmOrder'); 
+
+                    if(user!= null && billingAddressMap.isNotEmpty  && checkoutProviderState is! LoadingState){
+                         
+                        ref.read(checkoutProvider.notifier).placeOrder(totalFee,context);
+                    }
+                  
                   },
                 ),
                 const SizedBox(height: 10)

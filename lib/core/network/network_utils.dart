@@ -73,6 +73,7 @@ class Network {
   }
 
   static handleResponse(Response response) async {
+    // print("response is : ${response.body}");
     if (!await isNetworkAvailable()) {
       toast('No network available');
     } else if (response.statusCode >= 200 && response.statusCode <= 210) {

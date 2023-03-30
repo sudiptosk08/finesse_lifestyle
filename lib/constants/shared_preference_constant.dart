@@ -28,3 +28,6 @@ const String shippingAddress = 'SHIPPING_ADDRESS';
 Map<String,String> billingAddressMap = {};
 String? paymentOption ; 
 int? paymentOptionIndex; 
+String ? cuponText; 
+String ? discountType ; 
+String ? discountValue; 

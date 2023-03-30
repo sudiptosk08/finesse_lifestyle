@@ -84,7 +84,7 @@ class _CardTotalState extends State<CardTotal> {
                             zoneState is! ZoneSuccessState &&
                             discountState is! PromoCodeSuccessState &&
                             discountState is! ReferralCodeSuccessState
-                        ? ref.read(cartProvider.notifier).totalAmount.toString()
+                        ? "৳ ${ref.read(cartProvider.notifier).totalAmount.toString()}"
                         : zoneState is ZoneSuccessState &&
                                 discountState is! PromoCodeSuccessState &&
                                 discountState is! ReferralCodeSuccessState

@@ -71,7 +71,7 @@ class _ProductInfoState extends ConsumerState<ProductInfo> {
                         ),
                         const SizedBox(width: 5),
                         Text(
-                          '৳${widget.price}',
+                          '৳ ${widget.price}',
                           style: KTextStyle.headline2
                               .copyWith(color: KColor.blackbg),
                         ),

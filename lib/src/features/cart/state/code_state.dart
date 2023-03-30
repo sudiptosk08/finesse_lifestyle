@@ -9,14 +9,23 @@ class PromoCodeSuccessState extends SuccessState {
   const PromoCodeSuccessState(this.promoCodeModel);
 }
 
+class PromoCodeEmptyState extends SuccessState {
+ }
+
+
 class ReferralCodeSuccessState extends SuccessState {
   final ReferralCodeModel? referralCodeModel;
 
   const ReferralCodeSuccessState(this.referralCodeModel);
 }
 
+class ReferralCodeEmptyState extends SuccessState {
+}
+
 class VoucherCodeSuccessState extends SuccessState {
   final VoucherCodeModel? voucherCodeModel;
 
   const VoucherCodeSuccessState(this.voucherCodeModel);
+}
+class VoucherCodeEmptyState extends SuccessState {
 }

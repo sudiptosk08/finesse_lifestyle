@@ -90,20 +90,21 @@ class AddAddressController extends StateNotifier<BaseState> {
     ref!.read(areaProvider.notifier).makeAreaNull();
   }
 
-  void setLocationNameOnce(User userData) {
-    
-
-    if (billingAddressMap.isEmpty) {
+  void setLocationNameOnce(User? userData) {
+    if (billingAddressMap.isEmpty  && userData!= null) {
       if (userData.customer.area != null &&
           userData.customer.city != null &&
-          userData.customer.zone != null) {
+          userData.customer.zone != null ) {
         setTempAddress(
             cityN: userData.customer.city,
             cityId: userData.customer.cityId.toString(),
             zoneN: userData.customer.zone,
             zoneId: userData.customer.zoneId.toString(),
             areaN: userData.customer.area,
-            areaId: userData.customer.areaId.toString());
+            areaId: userData.customer.areaId.toString(), 
+            address:  userData.customer.address.toString(),
+            );
+            
         ref!.read(zoneProvider.notifier).updateTotalDelivery(
             ifZoneNotCall: true, zoneN: userData.customer.zone);
         //          billingAddressMap['city'] = userData.customer.city;
@@ -159,6 +160,7 @@ class AddAddressController extends StateNotifier<BaseState> {
     required String zoneId,
     required String areaN,
     required String areaId,
+     String address = '',
   }) {
     billingAddressMap.clear();
     billingAddressMap['city'] = cityN;
@@ -167,6 +169,7 @@ class AddAddressController extends StateNotifier<BaseState> {
     billingAddressMap['zoneId'] = zoneId;
     billingAddressMap['area'] = areaN;
     billingAddressMap['areaId'] = areaId;
+    billingAddressMap['address'] = address;
   }
 
   Future addBillingINfo(

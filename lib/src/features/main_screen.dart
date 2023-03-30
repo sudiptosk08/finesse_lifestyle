@@ -60,7 +60,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   if (wishlistState is! LoadingState) {
                     if (_currentIndex == 1) {
                       ref.read(cartProvider.notifier).cartDetails();
-                      ref.read(addressProvider.notifier).setLocationNameOnce(user!);
+                      ref.read(addressProvider.notifier).setLocationNameOnce(user);
                       ref.read(cityProvider.notifier).allCity();
                       // var userDaata = ref.read(menuDataProvider.notifier).menuList!.user;
                       // if( userDaata.customer.cityId !=null &&  userDaata.customer.zoneId != null &&  userDaata.customer.areaId != null){
