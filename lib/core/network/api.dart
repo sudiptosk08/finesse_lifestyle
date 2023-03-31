@@ -34,6 +34,7 @@ class API {
   static const productsCategory = 'app/ladingProducts';
   static const category = 'app/allGroups';
   static const allBrand = 'app/AllBrands';
+  static const colorAndSize = 'app/allColors'; 
 
   static shop({str = "", groupId = "", categoryId = "",price = "",brandId = "" , colour = "" ,size = ""}) =>
       'app/shopPageData?order=id,desc&page=1&groupId=$groupId&categoryId=$categoryId&str=$str&price=$price&brandId=$brandId&colour=$colour&size=$size';

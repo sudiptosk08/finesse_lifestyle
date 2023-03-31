@@ -1,7 +1,9 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/card/product_card.dart';
+import 'package:finesse/components/shimmer/k_shimmer.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/core/base/base_state.dart';
+import 'package:finesse/src/features/home/controllers/category_controller.dart';
 import 'package:finesse/src/features/home/controllers/shop_controller.dart';
 import 'package:finesse/src/features/home/models/shop_data_model.dart';
 import 'package:finesse/src/features/home/state/shop_state.dart';
@@ -88,6 +90,8 @@ class _ShopPageState extends State<ShopPage> {
                           //     context,
                           //     MaterialPageRoute(
                           //         builder: (context) => FilterPage()));
+                          ref.read(categoryProvider.notifier).fetchCategoryDetails();
+                          ref.read(colorAndSizeProvider.notifier).fetchAllColorAndSize();
                           filterPage(context);
                         },
                         child: Container(
@@ -106,6 +110,13 @@ class _ShopPageState extends State<ShopPage> {
                   ),
                   const SizedBox(height: 24),
                   Expanded(
+                    child: Column(
+                      children: [
+                        if(shopState is LoadingState)...[
+                          KLoading(shimmerHeight: 123,), 
+                        ], 
+                        if(shopState is ShopSuccessState)...[
+                            Expanded(
                     child: shopData!.isEmpty
                         ? const Center(child: Text('No products found!'))
                         : SingleChildScrollView(
@@ -185,6 +196,94 @@ class _ShopPageState extends State<ShopPage> {
                             ),
                           ),
                   ),
+               
+               
+                        ],
+                      ],
+                    )
+                  )
+                  // Expanded(
+                  //   child: shopData!.isEmpty
+                  //       ? const Center(child: Text('No products found!'))
+                  //       : SingleChildScrollView(
+                  //           child: GridView.builder(
+                  //             physics: const ScrollPhysics(),
+                  //             shrinkWrap: true,
+                  //             gridDelegate:
+                  //                 const SliverGridDelegateWithFixedCrossAxisCount(
+                  //               crossAxisCount: 2,
+                  //               crossAxisSpacing: 3.0,
+                  //               mainAxisSpacing: 6.0,
+                  //               childAspectRatio: 7 / 10,
+                  //             ),
+                  //             itemCount: shopData.length,
+                  //             scrollDirection: Axis.vertical,
+                  //             itemBuilder: (context, index) {
+                  //               return ProductCard(
+                  //                   img: shopData[index].productImage,
+                  //                   name: shopData[index].productName,
+                  //                   genre: shopData[index]
+                  //                       .allgroup
+                  //                       .groupName
+                  //                       .toString()
+                  //                       .split('.')
+                  //                       .last,
+                  //                   offerPrice:
+                  //                       shopData[index].sellingPrice.toString(),
+                  //                   regularPrice: "",
+                  //                   discount:
+                  //                       shopData[index].discount.toString(),
+                  //                   check: false,
+                  //                   tap: () {
+                  //                     ref
+                  //                         .read(productDetailsProvider.notifier)
+                  //                         .fetchProductsDetails(
+                  //                             shopData[index].id);
+
+                  //                     Navigator.pushNamed(
+                  //                       context,
+                  //                       '/productDetails',
+                  //                       arguments: {
+                  //                         'productName':
+                  //                             shopData[index].productName,
+                  //                         'productGroup': shopData[index]
+                  //                             .allgroup
+                  //                             .groupName
+                  //                             .toString()
+                  //                             .split('.')
+                  //                             .last,
+                  //                         'price': shopData[index]
+                  //                             .sellingPrice
+                  //                             .toString(),
+                  //                         'description':
+                  //                             shopData[index].briefDescription,
+                  //                         'id': shopData[index].id,
+                  //                       },
+                  //                     );
+                  //                     ref
+                  //                         .read(productDetailsProvider.notifier)
+                  //                         .fetchProductsDetails(
+                  //                             shopData[index].id);
+                  //                   },
+                  //                   pressed: () {
+                  //                     if (wishlistState is! LoadingState) {
+                  //                       ref
+                  //                           .read(wishlistProvider.notifier)
+                  //                           .addWishlist(
+                  //                               id: shopData[index]
+                  //                                   .id
+                  //                                   .toString());
+                  //                     }
+                  //                     ref
+                  //                         .read(wishlistProvider.notifier)
+                  //                         .fetchWishlistProducts();
+                  //                   });
+                  //             },
+                  //           ),
+                  //         ),
+                  // ),
+               
+               
                 ],
               ),
             ),

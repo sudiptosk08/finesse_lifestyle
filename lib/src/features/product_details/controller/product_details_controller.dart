@@ -1,6 +1,7 @@
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/core/network/api.dart';
 import 'package:finesse/core/network/network_utils.dart';
+import 'package:finesse/src/features/filter/model/color_and_size_model.dart';
 import 'package:finesse/src/features/product_details/model/all_branda.dart';
 import 'package:finesse/src/features/product_details/model/all_colors.dart';
 import 'package:finesse/src/features/product_details/model/product_details_model.dart';
@@ -16,13 +17,18 @@ final allBrandsProvider = StateNotifierProvider<AllBrandController, BaseState>(
   (ref) => AllBrandController(ref: ref),
 );
 
+
+final colorAndSizeProvider = StateNotifierProvider<ColorAndSizeController, BaseState>(
+  (ref) => ColorAndSizeController(ref: ref),
+);
+
 /// Controllers
 class ProductDetailsController extends StateNotifier<BaseState> {
   final Ref? ref;
 
   ProductDetailsController({this.ref}) : super(const InitialState());
   ProductDetailsModel? productDetailsModel;
-  ColorModel? colorModel;
+  ColorAndSizeModel? colorAndSizeModel;
 
   
   updateSuccessState() {
@@ -72,6 +78,31 @@ class AllBrandController extends StateNotifier<BaseState> {
       print("error = $error");
       print("error = $stackTrace");
       state = const ErrorState();
+    }
+  }
+}
+
+
+class ColorAndSizeController extends StateNotifier<BaseState>{
+  final Ref? ref; 
+   ColorAndSizeController({this.ref}) : super(const InitialState());
+  Future fetchAllColorAndSize()async{
+    ColorAndSizeModel ? colorAndSizeModel; 
+    var responseBody; 
+    try{
+      state = LoadingState(); 
+      responseBody =await Network.handleResponse(await Network.getRequest(API.colorAndSize));
+      if(responseBody != null){
+        colorAndSizeModel = ColorAndSizeModel.fromJson(responseBody); 
+        state =  AllColorAndSizeSuccessState(colorAndSizeModel) ; 
+      }else{
+        state =const  ErrorState(); 
+      }
+
+    }catch(error, stack){
+      print(error); 
+      print(stack) ; 
+      state = ErrorState();
     }
   }
 }

@@ -18,13 +18,20 @@ class ShopController extends StateNotifier<BaseState> {
   ShopDataModel? shopDataModel;
   List<ShopDataModel>? searchModel = [];
 
-  Future fetchShopProductList({str, groupId, categoryId}) async {
+  Future fetchShopProductList({str, groupId, categoryId ='', brandId='' , price='' , color='', size=''}) async {
     state = const LoadingState();
+    
     dynamic responseBody;
 
+    //for filter page value
+          price = price ==null ? '':price.toString(); 
+       brandId = brandId ==null ? '':brandId.toString(); 
+        color = color ==null ? '':color.toString(); 
+         size = size ==null ? '':size.toString(); 
+    
     try {
       responseBody = await Network.handleResponse(
-        await Network.getRequest(API.shop(str: str, groupId: groupId, categoryId: categoryId)),
+        await Network.getRequest(API.shop(str: str, groupId: groupId, categoryId: categoryId , price: price, colour: color,size: size)),
       );
 
       if (responseBody != null) {
