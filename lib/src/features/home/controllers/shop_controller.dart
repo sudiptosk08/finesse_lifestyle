@@ -22,8 +22,8 @@ class ShopController extends StateNotifier<BaseState> {
     state = const LoadingState();
     
     dynamic responseBody;
-
     //for filter page value
+     categoryId = categoryId ==null ?'': categoryId.toString();
           price = price ==null ? '':price.toString(); 
        brandId = brandId ==null ? '':brandId.toString(); 
         color = color ==null ? '':color.toString(); 
@@ -31,7 +31,7 @@ class ShopController extends StateNotifier<BaseState> {
     
     try {
       responseBody = await Network.handleResponse(
-        await Network.getRequest(API.shop(str: str, groupId: groupId, categoryId: categoryId , price: price, colour: color,size: size)),
+        await Network.getRequest(API.shop(str: str, groupId: groupId, categoryId: categoryId , price: price,brandId:brandId,  colour: color,size: size)),
       );
 
       if (responseBody != null) {

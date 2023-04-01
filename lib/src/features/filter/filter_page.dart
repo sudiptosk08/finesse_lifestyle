@@ -164,6 +164,8 @@ filterPage(context) {
   List<Group> subCategoryData = [];
   List<String> brandIdList = [];
   String? selectSubCat = null; // subcategory
+
+  bool isBrandSelected = false;
   return showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context,
@@ -241,7 +243,7 @@ filterPage(context) {
 
                         ///  Category Dropdown
                         Container(
-                          height: KSize.getHeight(context, 60),
+                          height: KSize.getHeight(context, 50),
                           width: double.infinity,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
@@ -258,15 +260,23 @@ filterPage(context) {
                                   const Center(
                                       child: CupertinoActivityIndicator()),
                                 },
+                               
                                 if (categoryState is CategorySuccessState) ...{
-                                  DropdownButton<String>(
+                                  DropdownButtonHideUnderline(  
+                                    child: SizedBox(  
+                                  height:KSize.getHeight(context, 50) , 
+                                  child:   DropdownButton<String>(
+                                     isExpanded: true,
+                                    alignment: Alignment.center,
+                                    hint:const Text("Category"),
                                     icon: Icon(Icons.keyboard_arrow_down),
                                     value: _chosenCatValue,
                                     //elevation: 5,
-                                    style: TextStyle(color: KColor.primary),
+                                    // style: TextStyle(color: KColor.primary),
                                     items: categoryData!
                                         .map<DropdownMenuItem<String>>((e) {
                                       return DropdownMenuItem<String>(
+                                        alignment: Alignment.center,
                                         value: e.groupName,
                                         child: Text(
                                           e.groupName.toString(),
@@ -298,75 +308,97 @@ filterPage(context) {
                                       });
                                     },
                                   ),
-                                }
+                                
+                                )
+                                 
+                                  )
+                               }
                               ],
                             ),
                           ),
                         ),
 
                         SizedBox(height: KSize.getHeight(context, 15)),
-                        Text('Sub Category', style: KTextStyle.subtitle7),
-                        SizedBox(height: KSize.getHeight(context, 15)),
+
+                        if (subCategoryData.isNotEmpty) ...{
+                          Text('Sub Category', style: KTextStyle.subtitle7),
+                          SizedBox(height: KSize.getHeight(context, 15)),
+                        },
 
                         // /// Sub Category Dropdown
-                        Container(
-                          height: KSize.getHeight(context, 60),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: KColor.white),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: KSize.getWidth(context, 20),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                if (categoryState is LoadingState) ...{
-                                  const Center(
-                                      child: CupertinoActivityIndicator()),
-                                },
-                                if (subCategoryData.isNotEmpty) ...{
-                                  DropdownButton<String>(
-                                    icon: Icon(Icons.keyboard_arrow_down),
-                                    value: selectSubCat,
-                                    //elevation: 5,
-                                    style: TextStyle(color: KColor.primary),
-                                    items: subCategoryData.isEmpty
-                                        ? []
-                                        : subCategoryData[0]
-                                            .category
-                                            .map<DropdownMenuItem<String>>((e) {
-                                            return DropdownMenuItem<String>(
-                                              value: e.catName,
-                                              child: Text(
-                                                e.catName.toString(),
-                                                style: GoogleFonts.inter(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: KColor.grey350),
-                                              ),
-                                            );
-                                          }).toList(),
-                                    onChanged: (String? value) {
-                                      setState(() {
-                                        selectSubCat = value;
-                                        subCatId = subCategoryData[0]
-                                            .category
-                                            .where((element) =>
-                                                element.catName == value)
-                                            .first
-                                            .id
-                                            .toString();
-                                      });
-                                    },
-                                  ),
-                                }
-                              ],
+                        if (subCategoryData.isNotEmpty) ...{
+                          Container(
+                            height: KSize.getHeight(context, 50),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: KColor.white),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: KSize.getWidth(context, 20),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  if (categoryState is LoadingState) ...{
+                                    const Center(
+                                        child: CupertinoActivityIndicator()),
+                                  },
+                                  if (subCategoryData.isNotEmpty) ...{
+                                    DropdownButtonHideUnderline(   
+                                      child:  SizedBox(  
+                                      height:KSize.getHeight(context, 50) ,  
+                                      child: DropdownButton<String>(
+                                         alignment: Alignment.center,
+                                    hint:const Text("Sub-Category"),
+                                      isExpanded: true,
+                                      icon:const Icon(Icons.keyboard_arrow_down),
+                                      value: selectSubCat,
+                                      //elevation: 5,
+                                      style:const TextStyle(color: KColor.primary),
+                                      items: subCategoryData.isEmpty
+                                          ? []
+                                          : subCategoryData[0]
+                                              .category
+                                              .map<DropdownMenuItem<String>>(
+                                                  (e) {
+                                              return DropdownMenuItem<String>(
+                                                alignment: Alignment.center,
+                                                value: e.catName,
+                                                child: Text(
+                                                  e.catName.toString(),
+                                                  style: GoogleFonts.inter(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: KColor.grey350),
+                                                ),
+                                              );
+                                            }).toList(),
+                                      onChanged: (String? value) {
+                                        setState(() {
+                                          selectSubCat = value;
+                                          subCatId = subCategoryData[0]
+                                              .category
+                                              .where((element) =>
+                                                  element.catName == value)
+                                              .first
+                                              .id
+                                              .toString();
+                                        });
+                                      },
+                                    ),
+                                    ),
+                                     
+                                    ),
+                                  
+                                  }
+                                ],
+                              ),
                             ),
                           ),
-                        ),
+                        },
                         SizedBox(height: KSize.getHeight(context, 15)),
 
                         /// Location .... Salary
@@ -376,7 +408,7 @@ filterPage(context) {
 
                         // / colors Dropdown
                         Container(
-                          height: KSize.getHeight(context, 60),
+                          height: KSize.getHeight(context, 50),
                           width: double.infinity,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
@@ -394,16 +426,24 @@ filterPage(context) {
                                 },
                                 if (colorAndSizeState
                                     is AllColorAndSizeSuccessState) ...{
-                                  DropdownButton<String>(
+                                      DropdownButtonHideUnderline(  
+                                        child:   SizedBox(  
+                                        height:KSize.getHeight(context, 50) , 
+                                        child:  DropdownButton<String>(
+                                           alignment: Alignment.center,
+                                    hint:const Text("Color"),
+                                    isExpanded: true,
+
                                     icon: Icon(Icons.keyboard_arrow_down),
                                     value: _chosenColorValue,
-                                    //elevation: 5,
+                                    // elevation: 5,
                                     style: TextStyle(color: KColor.primary),
                                     items: colorData!.isEmpty
                                         ? []
                                         : colorData
                                             .map<DropdownMenuItem<String>>((e) {
                                             return DropdownMenuItem<String>(
+                                              alignment: Alignment.center,
                                               value: e.value,
                                               child: Text(
                                                 e.value.toString(),
@@ -419,9 +459,13 @@ filterPage(context) {
                                         _chosenColorValue = value;
                                       });
                                     },
-                                  ),
+                                  ), 
+                                      )
+                                  
+                                      )
+                                   
                                   // DropdownButtonHideUnderline(
-                                  //   child: DropdownButton<String>(
+                                  //   child: DropdownButton<String>(  isExpanded: true,
                                   //     icon: Icon(Icons.keyboard_arrow_down),
                                   //     value: _chosenColorValue,
                                   //     style: TextStyle(color: KColor.primary),
@@ -430,7 +474,7 @@ filterPage(context) {
                                   //         : colorData
                                   //             .map<DropdownMenuItem<String>>(
                                   //                 (e) {
-                                  //             return DropdownMenuItem<String>(
+                                  //             return DropdownMenuItem<String>(alignment: Alignment.center,
                                   //               value: e.value,
                                   //               child: Text(e.value!,
                                   //                   style: KTextStyle.bodyText1
@@ -462,7 +506,7 @@ filterPage(context) {
                                 Text('Size', style: KTextStyle.subtitle7),
                                 SizedBox(height: KSize.getHeight(context, 16)),
                                 Container(
-                                  height: KSize.getHeight(context, 60),
+                                  height: KSize.getHeight(context, 50),
                                   width: KSize.getWidth(context, 160),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
@@ -484,7 +528,12 @@ filterPage(context) {
                                         },
                                         if (colorAndSizeState
                                             is AllColorAndSizeSuccessState) ...{
-                                          DropdownButton<String>(
+                                              DropdownButtonHideUnderline(child:       SizedBox(  
+                                                 height:KSize.getHeight(context, 50) , 
+                                                 child:   DropdownButton<String>(
+                                                   alignment: Alignment.center,
+                                    hint:const Text("Size"),
+                                            isExpanded: true,
                                             icon:
                                                 Icon(Icons.keyboard_arrow_down),
                                             value: _chosenSizeValue,
@@ -497,7 +546,7 @@ filterPage(context) {
                                                     DropdownMenuItem<
                                                         String>>((e) {
                                                     return DropdownMenuItem<
-                                                        String>(
+                                                        String>(alignment: Alignment.center,
                                                       value: e.value,
                                                       child: Text(
                                                         e.value.toString(),
@@ -518,8 +567,12 @@ filterPage(context) {
                                               });
                                             },
                                           ),
-                                          // DropdownButtonHideUnderline(
-                                          //   child: DropdownButton<String>(
+                                         
+                                              )
+                                         
+                                              )
+                                        // DropdownButtonHideUnderline(
+                                          //   child: DropdownButton<String>(  isExpanded: true,
                                           //     icon: Icon(Icons.keyboard_arrow_down),
                                           //     value: _chosenColorValue,
                                           //     style: TextStyle(color: KColor.primary),
@@ -528,7 +581,7 @@ filterPage(context) {
                                           //         : colorData
                                           //             .map<DropdownMenuItem<String>>(
                                           //                 (e) {
-                                          //             return DropdownMenuItem<String>(
+                                          //             return DropdownMenuItem<String>(alignment: Alignment.center,
                                           //               value: e.value,
                                           //               child: Text(e.value!,
                                           //                   style: KTextStyle.bodyText1
@@ -557,7 +610,7 @@ filterPage(context) {
                                 Text('Price', style: KTextStyle.subtitle7),
                                 SizedBox(height: KSize.getHeight(context, 16)),
                                 Container(
-                                  height: KSize.getHeight(context, 60),
+                                  height: KSize.getHeight(context, 50),
                                   width: KSize.getWidth(context, 160),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
@@ -578,51 +631,59 @@ filterPage(context) {
                                         // SizedBox(
                                         //     width: KSize.getWidth(context, 17)),
                                         DropdownButtonHideUnderline(
-                                          child: DropdownButton<String>(
-                                            icon:
-                                                Icon(Icons.keyboard_arrow_down),
-                                            value: dollarChosenValue,
-                                            style: TextStyle(
-                                                color: KColor.primary),
-                                            items: <String>[
-                                              '৳500 - ৳1000',
-                                              '৳500 - ৳5000',
-                                              '৳5000 - ৳10000',
-                                              '৳10000 - ৳20000',
-                                              '৳20000 - ৳50000',
-                                            ].map<DropdownMenuItem<String>>(
-                                                (String value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      right: KSize.getWidth(
-                                                          context, 3.0)),
-                                                  child: Text("${value}",
-                                                      style: KTextStyle
-                                                          .bodyText3
-                                                          .copyWith(
-                                                              color: KColor
-                                                                  .grey350)),
-                                                ),
-                                              );
-                                            }).toList(),
-                                            onChanged: (String? value) {
-                                              setState(() {
-                                                if (value != null) {
-                                                  priceString =
-                                                      value.replaceAll('৳', '');
-                                                  priceString = priceString!
-                                                      .replaceAll('-', ',');
-                                                  priceString = priceString!
-                                                      .replaceAll(' ', '');
-                                                }
-
-                                                dollarChosenValue = value;
-                                                print(
-                                                    "price is :${priceString}");
-                                              });
-                                            },
+                                          child: SizedBox( 
+                                              height:KSize.getHeight(context, 50) , 
+                                            child: DropdownButton<String>(
+                                               alignment: Alignment.center,
+                                    hint:const Text("Price"),
+                                              icon:
+                                                  Icon(Icons.keyboard_arrow_down),
+                                              value: dollarChosenValue,
+                                              style: TextStyle(
+                                                  color: KColor.primary),
+                                              items: <String>[
+                                                '৳500 - ৳1000',
+                                                '৳500 - ৳5000',
+                                                '৳5000 - ৳10000',
+                                                '৳10000 - ৳20000',
+                                                '৳20000 - ৳50000',
+                                              ].map<DropdownMenuItem<String>>(
+                                                
+                                                  (String value) {
+                                                return DropdownMenuItem<String>(
+                                                  
+                                                  alignment: Alignment.center,
+                                                  value: value,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: KSize.getWidth(
+                                                            context, 6.0)),
+                                                    child: Text(value,
+                                                        style: KTextStyle
+                                                            .bodyText3
+                                                            .copyWith(
+                                                                color: KColor
+                                                                    .grey350)),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                              onChanged: (String? value) {
+                                                setState(() {
+                                                  if (value != null) {
+                                                    priceString =
+                                                        value.replaceAll('৳', '');
+                                                    priceString = priceString!
+                                                        .replaceAll('-', ',');
+                                                    priceString = priceString!
+                                                        .replaceAll(' ', '');
+                                                  }
+                                          
+                                                  dollarChosenValue = value;
+                                                  print(
+                                                      "price is :${priceString}");
+                                                });
+                                              },
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -648,121 +709,99 @@ filterPage(context) {
                         SizedBox(height: KSize.getHeight(context, 20)),
 
                         // /// all brands
-                        // Wrap(
-                        //   direction: Axis.horizontal,
-                        //   spacing: KSize.getWidth(context, 13),
-                        //   runSpacing: KSize.getHeight(context, 14),
-                        //   children: [
-                        //     Padding(
-                        //       padding: const EdgeInsets.only(left: 8.0),
-                        //       child: Align(
-                        //           alignment: Alignment.centerLeft,
-                        //           child: Container(
-                        //               child: Wrap(
-                        //                   //s: 5.0,
-                        //                   //runSpacing: 3.0,
-                        //                   spacing: 7,
-                        //                   runSpacing: -4,
-                        //                   children: List.generate(
-                        //                     allBrandData.length,
-                        //                     (index) => InkWell(
-                        //                       onTap: () {
-                        //                         if (brandIdList.contains(
-                        //                             allBrandData[index]
-                        //                                 .id
-                        //                                 .toString())) {
-                        //                           brandIdList.removeWhere(
-                        //                               (element) =>
-                        //                                   element ==
-                        //                                   allBrandData[index]
-                        //                                       .id
-                        //                                       .toString());
-                        //                         } else {
-                        //                           brandIdList.add(
-                        //                               allBrandData[index]
-                        //                                   .id
-                        //                                   .toString());
-                        //                         }
-                        //                         print("inside brandidlist");
-                        //                         print(brandIdList);
-                        //                       },
-                        //                       child: FilterChipWidget(
-                        //                           chipName:
-                        //                               allBrandData[index].name,
-                        //                           chipId: int.parse(
-                        //                               allBrandData[index]
-                        //                                   .id
-                        //                                   .toString())),
-                        //                     ),
-                        //                   ).toList()))),
-                        //     ),
-                        //   ],
-                        // ),
-
-                        // / brand Dropdown
-                        Container(
-                          height: KSize.getHeight(context, 60),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: KColor.white),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: KSize.getWidth(context, 20)),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                if (brandState is LoadingState) ...{
-                                  const Center(
-                                      child: CupertinoActivityIndicator()),
-                                },
-                                if (brandState is AllBrandsSuccessState) ...{
-                                  DropdownButton<String>(
-                                    icon: Icon(Icons.keyboard_arrow_down),
-                                    value: brandName,
-                                    //elevation: 5,
-                                    style: TextStyle(color: KColor.primary),
-                                    items: allBrandData.isEmpty
-                                        ? []
-                                        : allBrandData
-                                            .map<DropdownMenuItem<String>>((e) {
-                                            return DropdownMenuItem<String>(
-                                              value: e.name,
-                                              child: Text(
-                                                e.name.toString(),
-                                                style: GoogleFonts.inter(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: KColor.grey350),
-                                              ),
-                                            );
-                                          }).toList(),
-                                    onChanged: (String? value) {
-                                      setState(() {
-                                        brandId = allBrandData
-                                            .where((element) =>
-                                                element.name.toString() ==
-                                                value)
-                                            .first
-                                            .id
-                                            .toString();
-                                        brandName = value;
-                                      });
-                                    },
-                                  ),
-                                  // ),
-                                }
-                              ],
+                        Wrap(
+                          direction: Axis.horizontal,
+                          spacing: KSize.getWidth(context, 13),
+                          runSpacing: KSize.getHeight(context, 14),
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                    child: Wrap(
+                                        //s: 5.0,
+                                        // runSpacing: 3.0,
+                                        spacing: 7,
+                                        runSpacing: 4,
+                                        children: List.generate(
+                                            allBrandData.length,
+                                            (index) => InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      if (brandIdList.contains(
+                                                          allBrandData[index]
+                                                              .id
+                                                              .toString())) {
+                                                        brandIdList.removeWhere(
+                                                            (element) =>
+                                                                element ==
+                                                                allBrandData[
+                                                                        index]
+                                                                    .id
+                                                                    .toString());
+                                                      } else {
+                                                        brandIdList.add(
+                                                            allBrandData[index]
+                                                                .id
+                                                                .toString());
+                                                      }
+                                                      brandId =
+                                                          brandIdList.join(",");
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 4,
+                                                            top: 5,
+                                                            bottom: 5,
+                                                            right: 4),
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            
+                                                            top: 2.5,
+                                                            bottom: 2.5,
+                                                            right: 2.5),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0),
+                                                      color: brandIdList.contains(
+                                                              allBrandData[
+                                                                      index]
+                                                                  .id
+                                                                  .toString())
+                                                          ? Colors.black
+                                                          : KColor.white,
+                                                    ),
+                                                    child: Text(
+                                                      allBrandData[index]
+                                                          .name
+                                                          .toString(),
+                                                      style: KTextStyle
+                                                          .bodyText1
+                                                          .copyWith(
+                                                              color:
+                                                                  KColor.grey,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal),
+                                                    ),
+                                                  ),
+                                                )))),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
+                       
 
                         SizedBox(height: KSize.getHeight(context, 40)),
                         KButton(
                             title: 'Apply Filters',
                             onTap: () {
                               // String brandId =brandIdList.isNotEmpty ? brandIdList.join(","): '';
+
                               ref
                                   .read(shopProvider.notifier)
                                   .fetchShopProductList(
