@@ -80,18 +80,15 @@ class AddBillingInformationState extends State<AddBillingInformation> {
                 _editInformation(
                   'Address',
                   KFillNormal(
-                    controller: address..text = user.customer.address ?? '',
+                    controller: address..text = user.customer.address!,
                     hintText: 'Enter your address here...',
                     label: '',
                     readOnly: false,
                   ),
                 ),
-               
-                 
-                  DeliveryAddress(
-                    isBilliingInfoPage: true,
-                  ),
-              
+                DeliveryAddress(
+                  isBilliingInfoPage: true,
+                ),
               ],
             ),
             SizedBox(height: context.screenHeight * 0.05),
@@ -105,11 +102,14 @@ class AddBillingInformationState extends State<AddBillingInformation> {
                     onTap: () {
                       if (addressState is! LoadingState) {
                         ref.read(addressProvider.notifier).addBillingINfo(
-                            context: context,
-                            nameis: name.text,
-                            emailis: email.text,
-                            phoneis: phone.text,
-                            addressis: address.text);
+                              context: context,
+                              nameis: name.text,
+                              emailis: email.text,
+                              phoneis: phone.text,
+                              addressis: address.text,
+
+                            );
+                        print("Address Text ===================${address.text}");
                       }
                       // Navigator.pushNamed(context, '/accountDetails');
                     });

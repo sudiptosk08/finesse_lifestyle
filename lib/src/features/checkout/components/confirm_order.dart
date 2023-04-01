@@ -2,6 +2,7 @@ import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/button/k_border_btn.dart';
 import 'package:finesse/components/button/k_button.dart';
 import 'package:finesse/constants/asset_path.dart';
+import 'package:finesse/src/features/main_screen.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
@@ -50,16 +51,16 @@ class ConfirmOrder extends StatelessWidget {
             KButton(
               title: 'Continue Shopping',
               onTap: () {
-                Navigator.pushNamed(context, '/mainScreen');
+               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: ((context) =>MainScreen()) ), (route) => false);
               },
             ),
             const SizedBox(height: 16),
-            KBorderButton(
-              title: 'Track Order',
-              onTap: () {
-                Navigator.pushNamed(context, '/mainScreen');
-              },
-            ),
+            // KBorderButton(
+            //   title: 'Track Order',
+            //   onTap: () {
+            //     Navigator.pushNamed(context, '/mainScreen');
+            //   },
+            // ),
           ],
         ),
       ),

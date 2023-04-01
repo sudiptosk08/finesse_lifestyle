@@ -19,7 +19,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../auth/login/model/user_model.dart';
 import '../../checkout/components/take_address.dart';
+import '../../home/controllers/menu_data_controller.dart';
+import '../../home/state/menu_data_state.dart';
 
 class CartPage extends StatefulWidget {
   final bool isFromBottomNav;
@@ -46,6 +49,10 @@ class _CartPageState extends State<CartPage> {
                 final cartState = ref.watch(cartProvider);
                 final List<CartModel> cartData =
                     cartState is CartSuccessState ? cartState.cartList : [];
+                final menuData = ref.watch(menuDataProvider);
+                User? user = menuData is MenuDataSuccessState
+                    ? menuData.menuList!.user
+                    : null;
                 return SingleChildScrollView(
                   child: Container(
                     color: Colors.transparent,
@@ -59,42 +66,47 @@ class _CartPageState extends State<CartPage> {
                           const KLoading(shimmerHeight: 123)
                         ],
                         if (cartState is CartSuccessState) ...[
-                       cartData.isEmpty?const EmptyProductPage(message: 'Your cart is empty') :    Column(
-                            children: [
-                              const ProductsAmount(),
-                              SizedBox(height: context.screenHeight * 0.05),
-                              Row(
-                                children: [
-                                  Flexible(
-                                    child: KBorderButton(
-                                      title: 'Go Back',
-                                      onTap: () =>
-                                          Navigator.pushNamed(context, '/home'),
+                          cartData.isEmpty
+                              ? const EmptyProductPage(
+                                  message: 'Your cart is empty')
+                              : Column(
+                                  children: [
+                                    const ProductsAmount(),
+                                    SizedBox(
+                                        height: context.screenHeight * 0.05),
+                                    Row(
+                                      children: [
+                                        Flexible(
+                                          child: KBorderButton(
+                                            title: 'Go Back',
+                                            onTap: () => Navigator.pushNamed(
+                                                context, '/home'),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 16),
+                                        Flexible(
+                                          child: Consumer(
+                                            builder: ((context, ref, child) {
+                                              return KButton(
+                                                title: 'Checkout',
+                                                onTap: () async {
+                                                  if (await ref
+                                                      .read(addressProvider
+                                                          .notifier)
+                                                      .isLocationSet(user!.customer.address)) {
+                                                    Navigator.pushNamed(context,
+                                                        '/addressPage');
+                                                  }
+                                                },
+                                              );
+                                            }),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Flexible(
-                                    child: Consumer(
-                                      builder: ((context, ref, child) {
-                                        return KButton(
-                                          title: 'Checkout',
-                                          onTap: () async {
-                                            if (await ref
-                                                .read(addressProvider.notifier)
-                                                .isLocationSet()) {
-                                              Navigator.pushNamed(
-                                                  context, '/addressPage');
-                                            }
-                                          },
-                                        );
-                                      }),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 36),
-                            ],
-                          )
+                                    const SizedBox(height: 36),
+                                  ],
+                                )
                         ],
                       ],
                     ),

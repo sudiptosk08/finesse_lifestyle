@@ -91,20 +91,20 @@ class AddAddressController extends StateNotifier<BaseState> {
   }
 
   void setLocationNameOnce(User? userData) {
-    if (billingAddressMap.isEmpty  && userData!= null) {
+    if (billingAddressMap.isEmpty && userData != null) {
       if (userData.customer.area != null &&
           userData.customer.city != null &&
-          userData.customer.zone != null ) {
+          userData.customer.zone != null) {
         setTempAddress(
-            cityN: userData.customer.city,
-            cityId: userData.customer.cityId.toString(),
-            zoneN: userData.customer.zone,
-            zoneId: userData.customer.zoneId.toString(),
-            areaN: userData.customer.area,
-            areaId: userData.customer.areaId.toString(), 
-            address:  userData.customer.address.toString(),
-            );
-            
+          cityN: userData.customer.city,
+          cityId: userData.customer.cityId.toString(),
+          zoneN: userData.customer.zone,
+          zoneId: userData.customer.zoneId.toString(),
+          areaN: userData.customer.area,
+          areaId: userData.customer.areaId.toString(),
+          address: userData.customer.address.toString(),
+        );
+
         ref!.read(zoneProvider.notifier).updateTotalDelivery(
             ifZoneNotCall: true, zoneN: userData.customer.zone);
         //          billingAddressMap['city'] = userData.customer.city;
@@ -123,13 +123,15 @@ class AddAddressController extends StateNotifier<BaseState> {
     }
   }
 
-  Future<bool> isLocationSet() async {
+  Future<bool> isLocationSet(String address) async {
     String? zoneN = billingAddressMap['zone'];
     String? zoneId = billingAddressMap['zoneId'];
     String? cityN = billingAddressMap['city'];
     String? cityId = billingAddressMap['cityId'];
     String? areaN = billingAddressMap['area'];
     String? areaId = billingAddressMap['areaId'];
+
+
     if (cityN == null) {
       toast("City not set!", textColor: KColor.red12);
       return false;
@@ -143,12 +145,14 @@ class AddAddressController extends StateNotifier<BaseState> {
       return false;
     }
     setTempAddress(
-        cityN: cityN,
-        cityId: cityId!,
-        zoneN: zoneN,
-        zoneId: zoneId!,
-        areaN: areaN,
-        areaId: areaId!);
+      cityN: cityN,
+      cityId: cityId!,
+      zoneN: zoneN,
+      zoneId: zoneId!,
+      areaN: areaN,
+      areaId: areaId!,
+      address: address
+    );
 
     return true;
   }
@@ -160,7 +164,7 @@ class AddAddressController extends StateNotifier<BaseState> {
     required String zoneId,
     required String areaN,
     required String areaId,
-     String address = '',
+    required String address,
   }) {
     billingAddressMap.clear();
     billingAddressMap['city'] = cityN;
@@ -179,14 +183,20 @@ class AddAddressController extends StateNotifier<BaseState> {
       required String phoneis,
       required String addressis}) async {
     state = const LoadingState();
-    String? cityis = ref?.read(cityProvider.notifier).cityName;
-    String? cityId = ref?.read(cityProvider.notifier).cityId;
+    String? cityis =
+        ref?.read(cityProvider.notifier).cityName ?? billingAddressMap['city'];
+    String? cityId =
+        ref?.read(cityProvider.notifier).cityId ?? billingAddressMap['cityId'];
 
-    String? zoneis = ref?.read(zoneProvider.notifier).zoneName;
-    String? zoneId = ref?.read(zoneProvider.notifier).zoneId;
+    String? zoneis =
+        ref?.read(zoneProvider.notifier).zoneName ?? billingAddressMap['zone'];
+    String? zoneId =
+        ref?.read(zoneProvider.notifier).zoneId ?? billingAddressMap['zoneId'];
 
-    String? areais = ref?.read(areaProvider.notifier).areaName;
-    String? areaId = ref?.read(areaProvider.notifier).areaId;
+    String? areais =
+        ref?.read(areaProvider.notifier).areaName ?? billingAddressMap['area'];
+    String? areaId =
+        ref?.read(areaProvider.notifier).areaId ?? billingAddressMap['areaId'];
     try {
       if (nameis.isEmpty) {
         toast('Name not Set!');
@@ -243,7 +253,8 @@ class AddAddressController extends StateNotifier<BaseState> {
                 zoneN: zoneis,
                 zoneId: zoneId.toString(),
                 areaN: areais,
-                areaId: areaId.toString());
+                areaId: areaId.toString(),
+                address: addressis);
             ref!.read(zoneProvider.notifier).updateTotalDelivery();
             toast("Billing Information Updated");
             ref?.read(addressProvider.notifier).makeAddressNull();

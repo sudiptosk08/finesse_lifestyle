@@ -19,7 +19,7 @@ final checkoutProvider = StateNotifierProvider<CheckoutController, BaseState>(
 class CheckoutController extends StateNotifier<BaseState> {
   Ref? ref;
   CheckoutController({this.ref}) : super(const InitialState());
-  Future<void> placeOrder(int totalFee , context) async {
+  Future<void> placeOrder(int totalFee, context) async {
     User? user = ref?.read(menuDataProvider.notifier).menuList!.user;
     final discountState = ref!.watch(discountProvider);
     final cartState = ref!.watch(cartProvider);
@@ -29,94 +29,183 @@ class CheckoutController extends StateNotifier<BaseState> {
     var discount = ref!.read(discountProvider.notifier).discount;
 
     state = const LoadingState();
-    var requestBody = {
-      // "billingAddress": billingAddressMap['address'],
-      "billingAddress": billingAddressMap['address'],
-      "billingArea": billingAddressMap['area'],
-      "billingCity": billingAddressMap['city'],
-      "billingZone": billingAddressMap['zone'],
-      "contact": user!.customer.contact.toString(),
-      "coupon": cuponText ?? '', // promo code
-      "date": DateTime.now().toString().substring(0,10),
-      "dgAmount": 0.toString(),
-      "discount": discountValue ?? '', //
-      "discountType": discountType ?? '', // promocode,  referral code
-      "email": user.email,
-      "giftVoucherAmount": 0.toString(),
-      "giftVoucherCode": '',
-      "grandTotal": totalFee.toString(),
-      "isDGMoney": 0.toString(),
-      "isDifferentShipping": getJSONAsync(shippingAddress).isEmpty ? 0 : 1,
-      "membershipDiscount": "",
-      "membershipDiscountAmount": "",
-      "name": user.name,
-      "notes": "",
-      "paymentType": paymentOption,
-      "postCode": user.customer.postCode.toString(),
-      "promoDiscount":
-          ref!.read(discountProvider.notifier).promoCodeModel != null
-              ? ref!.read(discountProvider.notifier).promoCodeModel!.discount
-              : '',
-      "promoDiscountAmount":
-          ref!.read(discountProvider.notifier).discountAmount.toString(),
-      "referralCode": '',
-      "refferalDiscount": '',
-      "refferalDiscountAmount": '',
-      "roundAmount": roundfee.toString(),
-      "shippingPrice": ref!.read(discountProvider.notifier).deliveryFee.toString(),
-      "shippingDetails['name']": getJSONAsync(shippingAddress).isEmpty
-          ? ""
-          : getJSONAsync(shippingAddress)['name'],
-      "shippingDetails['email']": getJSONAsync(shippingAddress).isEmpty
-          ? ""
-          : getJSONAsync(shippingAddress)['email'],
-      "shippingDetails['contact']": getJSONAsync(shippingAddress).isEmpty
-          ? ""
-          : getJSONAsync(shippingAddress)['phone'],
-      "shippingDetails['shippingCity']": getJSONAsync(shippingAddress).isEmpty
-          ? ""
-          : getJSONAsync(shippingAddress)['city'],
-      "shippingDetails['shippingZone']": getJSONAsync(shippingAddress).isEmpty
-          ? ""
-          : getJSONAsync(shippingAddress)['zone'],
-      "shippingDetails['shippingArea']": getJSONAsync(shippingAddress).isEmpty
-          ? ""
-          : getJSONAsync(shippingAddress)['area'],
-      "shippingDetails['postCode']": "",
-      "shippingDetails['address']": getJSONAsync(shippingAddress).isEmpty
-          ? ""
-          : getJSONAsync(shippingAddress)['address'],
-      "subTotal": ref!.read(cartProvider.notifier).subtotal.toString(),
-
-      "totalSellingPrice": ref!.read(cartProvider.notifier).subtotal.toString(),
-    };
-
-    // print("request body is:  ${requestBody}");
-
-    dynamic responseBody;
-
     try {
-      responseBody = await Network.handleResponse(
-        await Network.postRequest(API.addOrder, requestBody),
-      );
-      if (responseBody != null) {
-        print("-----------");
-        print("success is : ${responseBody}");
-        removeKey(shippingAddress); 
-        paymentOption = null; 
-        paymentOptionIndex = null; 
-        state = const OrderSuccessState();
-                Navigator.pushReplacementNamed(context, '/confirmOrder');
-      } else {
-        print("print response is in null :${responseBody}");
+      if (billingAddressMap['address'] == null &&
+          user!.customer.address == null) {
+        toast('Add Billing Address.');
         state = ErrorState();
       }
-    } catch (error, stackTrace) {
-      print("error state");
-      print(error);
-      print(stackTrace);
-      state = const ErrorState();
-      toast("Something went wrong!", bgColor: KColor.red);
+      // else if () {
+      //   toast('Email not Set!');
+      // } else if (phoneis.isEmpty) {
+      //   state = AddressErrorState();
+      //   toast('phone not Set!');
+      // } else if (cityis == null) {
+      //   toast('City not Set!');
+      //   state = AddressErrorState();
+      // } else if (zoneis == null) {
+      //   toast('Zone not Set!');
+      //   state = AddressErrorState();
+      // } else if (areais == null) {
+      //   toast('area not Set!');
+      //   state = AddressErrorState();
+      // } else if (addressis.isEmpty) {
+      //   toast('Address not Set!');
+      //   state = AddressErrorState();
+      // }
+      else {
+        var requestBody;
+        getJSONAsync(shippingAddress).isEmpty
+            ? requestBody = {
+                "billingAddress":
+                    billingAddressMap['address'] ?? user!.customer.address,
+                "billingArea": billingAddressMap['area'],
+                "billingCity": billingAddressMap['city'],
+                "billingZone": billingAddressMap['zone'],
+                "contact": user!.customer.contact.toString(),
+                "coupon": cuponText ?? '', // promo code
+                "date": DateTime.now().day,
+                "dgAmount": 0,
+                "discount": discountValue ?? 0, //
+                "discountType": discountType ?? '', // promocode,  referral code
+                "email": user.email,
+                "giftVoucherAmount": 0,
+                "giftVoucherCode": '',
+                "grandTotal": totalFee,
+                "isDGMoney": 0,
+                "isDifferentShipping":
+                    getJSONAsync(shippingAddress).isEmpty ? 0 : 1,
+                "membershipDiscount": 0,
+                "membershipDiscountAmount": 0,
+                "name": user.name,
+                "notes": '',
+                "paymentType": paymentOption,
+                "postCode": user.customer.postCode,
+                "promoDiscount":
+                    ref!.read(discountProvider.notifier).promoCodeModel != null
+                        ? ref!
+                            .read(discountProvider.notifier)
+                            .promoCodeModel!
+                            .discount
+                        : 0,
+                "promoDiscountAmount":
+                    ref!.read(discountProvider.notifier).discountAmount == 0
+                        ? 0
+                        : ref!.read(discountProvider.notifier).discountAmount,
+                "referralCode": cuponText,
+                "refferalDiscount":
+                    ref!.read(discountProvider.notifier).referralCodeModel !=
+                            null
+                        ? ref!
+                            .read(discountProvider.notifier)
+                            .referralCodeModel!
+                            .discount
+                        : 0,
+                "refferalDiscountAmount": 0,
+                "roundAmount": roundfee == 0 ? 0 : roundfee,
+                "shippingPrice":
+                    ref!.read(discountProvider.notifier).deliveryFee,
+
+                "subTotal": ref!.read(cartProvider.notifier).subtotal,
+
+                "totalSellingPrice": ref!.read(cartProvider.notifier).subtotal,
+              }
+            : requestBody = {
+                "billingAddress":
+                    billingAddressMap['address'] ?? user!.customer.address,
+                "billingArea": billingAddressMap['area'],
+                "billingCity": billingAddressMap['city'],
+                "billingZone": billingAddressMap['zone'],
+                "contact": user!.customer.contact.toString(),
+                "coupon": cuponText ?? '', // promo code
+                "date": DateTime.now().day,
+                "dgAmount": 0,
+                "discount": discountValue ?? 0, //
+                "discountType": discountType ?? '', // promocode,  referral code
+                "email": user.email,
+                "giftVoucherAmount": 0,
+                "giftVoucherCode": '',
+                "grandTotal": totalFee,
+                "isDGMoney": 0,
+                "isDifferentShipping":
+                    getJSONAsync(shippingAddress).isEmpty ? 0 : 1,
+                "membershipDiscount": 0,
+                "membershipDiscountAmount": 0,
+                "name": user.name,
+                "notes": '',
+                "paymentType": paymentOption,
+                "postCode": user.customer.postCode,
+                "promoDiscount":
+                    ref!.read(discountProvider.notifier).promoCodeModel != null
+                        ? ref!
+                            .read(discountProvider.notifier)
+                            .promoCodeModel!
+                            .discount
+                        : 0,
+                "promoDiscountAmount":
+                    ref!.read(discountProvider.notifier).discountAmount == 0
+                        ? 0
+                        : ref!.read(discountProvider.notifier).discountAmount,
+                "referralCode": cuponText,
+                "refferalDiscount":
+                    ref!.read(discountProvider.notifier).referralCodeModel !=
+                            null
+                        ? ref!
+                            .read(discountProvider.notifier)
+                            .referralCodeModel!
+                            .discount
+                        : 0,
+                "refferalDiscountAmount": 0,
+                "roundAmount": roundfee == 0 ? 0 : roundfee,
+                "shippingPrice":
+                    ref!.read(discountProvider.notifier).deliveryFee,
+                "shippingDetails": {
+                  'name': getJSONAsync(shippingAddress)['name'],
+                  'email': getJSONAsync(shippingAddress)['email'],
+                  'contact': getJSONAsync(shippingAddress)['contact'],
+                  'shippingCity': getJSONAsync(shippingAddress)['city'],
+                  'shippingZone': getJSONAsync(shippingAddress)['zone'],
+                  'shippingArea': getJSONAsync(shippingAddress)['area'],
+                  'postCode': 'null',
+                  'address': getJSONAsync(shippingAddress)['address']
+                },
+                "subTotal": ref!.read(cartProvider.notifier).subtotal,
+
+                "totalSellingPrice": ref!.read(cartProvider.notifier).subtotal,
+              };
+
+        // print("request body is:  ${requestBody}");
+        print("Shpping Address :${getJSONAsync(shippingAddress)['address']}");
+
+        dynamic responseBody;
+
+        try {
+          responseBody = await Network.handleResponse(
+            await Network.postRequest(API.addOrder, requestBody),
+          );
+          if (responseBody != null) {
+            print("-----------");
+            print("success is : ${responseBody}");
+            removeKey(shippingAddress);
+
+            paymentOption = null;
+            paymentOptionIndex = null;
+            state = const OrderSuccessState();
+            Navigator.pushReplacementNamed(context, '/confirmOrder');
+          } else {
+            print("print response is in null :${responseBody}");
+            state = ErrorState();
+          }
+        } catch (error, stackTrace) {
+          print("error state");
+          print(error);
+          print(stackTrace);
+          state = const ErrorState();
+          toast("Something went wrong!", bgColor: KColor.red);
+        }
+      }
+    } catch (e) {
+      state = ErrorState();
     }
   }
 }

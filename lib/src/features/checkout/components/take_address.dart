@@ -93,6 +93,7 @@ class _AddressPageState extends State<AddressPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
                                   alignment: Alignment.center,
@@ -108,6 +109,11 @@ class _AddressPageState extends State<AddressPage> {
                                       color: KColor.white,
                                     ),
                                   ),
+                                ),
+                                Icon(
+                                  Icons.edit,
+                                  color: KColor.blackbg,
+                                  size: 25,
                                 )
                               ],
                             ),
@@ -164,7 +170,7 @@ class _AddressPageState extends State<AddressPage> {
                         const SizedBox(width: 10),
                         Text(
                           getJSONAsync(shippingAddress).isEmpty
-                              ? "Add Shipping Address"
+                              ? "Add Different Shipping Address"
                               : "Shipping Address Added",
                           style: KTextStyle.bodyText2,
                         ),
