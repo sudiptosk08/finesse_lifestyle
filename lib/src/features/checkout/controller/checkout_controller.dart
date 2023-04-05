@@ -72,6 +72,7 @@ class CheckoutController extends StateNotifier<BaseState> {
                 "giftVoucherAmount": 0,
                 "giftVoucherCode": '',
                 "grandTotal": totalFee,
+                "invoiceTotal": ref!.read(cartProvider.notifier).subtotal,
                 "isDGMoney": 0,
                 "isDifferentShipping":
                     getJSONAsync(shippingAddress).isEmpty ? 0 : 1,
@@ -107,10 +108,10 @@ class CheckoutController extends StateNotifier<BaseState> {
                     ref!.read(discountProvider.notifier).deliveryFee,
 
                 "subTotal": ref!.read(cartProvider.notifier).subtotal,
-
-                "totalSellingPrice": ref!.read(cartProvider.notifier).subtotal,
+                
               }
-            : requestBody = {
+            : 
+        requestBody = {
                 "billingAddress":
                     billingAddressMap['address'] ?? user!.customer.address,
                 "billingArea": billingAddressMap['area'],
@@ -126,6 +127,7 @@ class CheckoutController extends StateNotifier<BaseState> {
                 "giftVoucherAmount": 0,
                 "giftVoucherCode": '',
                 "grandTotal": totalFee,
+                "invoiceTotal": totalFee,
                 "isDGMoney": 0,
                 "isDifferentShipping":
                     getJSONAsync(shippingAddress).isEmpty ? 0 : 1,
@@ -171,7 +173,7 @@ class CheckoutController extends StateNotifier<BaseState> {
                 },
                 "subTotal": ref!.read(cartProvider.notifier).subtotal,
 
-                "totalSellingPrice": ref!.read(cartProvider.notifier).subtotal,
+                
               };
 
         // print("request body is:  ${requestBody}");

@@ -1,4 +1,3 @@
-import 'package:finesse/components/card/wishlist_card.dart';
 import 'package:finesse/components/shimmer/k_shimmer.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/core/base/base_state.dart';
@@ -7,7 +6,6 @@ import 'package:finesse/src/features/cart/model/cart_model.dart';
 import 'package:finesse/src/features/cart/state/cart_state.dart';
 import 'package:finesse/src/features/wishlist/view/empty_product_page.dart';
 import 'package:finesse/styles/b_style.dart';
-import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

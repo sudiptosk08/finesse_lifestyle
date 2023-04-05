@@ -27,38 +27,42 @@ class SearchTextField extends StatefulWidget {
 class _SearchTextFieldState extends State<SearchTextField> {
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please FillUp';
-        }
-        return null;
-      },
-      readOnly: widget.readOnly,
-      controller: widget.controller,
-      onChanged: (val) {
-        if (widget.callbackFunction != null) widget.callbackFunction!(val);
-      },
-      onTap: widget.readOnly
-          ? () {
-              widget.onTap!();
-            }
-          : null,
-      textAlignVertical: TextAlignVertical.center,
-      decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: const EdgeInsets.all(14.0),
-          child: SvgPicture.asset(AssetPath.searchIcon),
+    return Padding(
+      padding: const EdgeInsets.only(top: 7),
+      child: TextFormField(
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please FillUp';
+          }
+          return null;
+        },
+        readOnly: widget.readOnly,
+        controller: widget.controller,
+        onChanged: (val) {
+          if (widget.callbackFunction != null) widget.callbackFunction!(val);
+        },
+        onTap: widget.readOnly
+            ? () {
+                widget.onTap!();
+              }
+            : null,
+        textAlignVertical: TextAlignVertical.center,
+        decoration: InputDecoration(
+          prefixIcon: Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: SvgPicture.asset(AssetPath.searchIcon),
+          ),
+          hintText: widget.hintText,
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12),
+          border: const UnderlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+            borderSide: BorderSide.none,
+          ),
+          fillColor: KColor.searchColor.withOpacity(0.8),
+          filled: true,
+          floatingLabelBehavior: FloatingLabelBehavior.always,
         ),
-        hintText: widget.hintText,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12),
-        border: const UnderlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-          borderSide: BorderSide.none,
-        ),
-        fillColor: KColor.searchColor.withOpacity(0.8),
-        filled: true,
-        floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
     );
   }

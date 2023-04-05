@@ -1,22 +1,14 @@
 import 'package:finesse/constants/shared_preference_constant.dart';
-import 'package:finesse/src/features/auth/login/state/login_state.dart';
 import 'package:finesse/src/features/cart/controller/zone_controller.dart';
 import 'package:finesse/src/features/cart/model/area_model.dart';
 import 'package:finesse/src/features/cart/model/city_model.dart';
 import 'package:finesse/src/features/cart/model/zone_model.dart';
 import 'package:finesse/src/features/cart/state/zone_state.dart';
-import 'package:finesse/src/features/home/controllers/menu_data_controller.dart';
-import 'package:finesse/src/features/home/models/menu_data_model.dart';
-import 'package:finesse/src/features/home/state/menu_data_state.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
-import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nb_utils/nb_utils.dart';
 
-import '../../auth/login/controller/login_controller.dart';
-import '../../auth/login/model/user_model.dart';
 
 // ignore: must_be_immutable
 class DeliveryAddress extends StatefulWidget {
@@ -48,7 +40,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
     // areas = getStringAsync(area);
 
     //  addressKey = tempAddressMap[tempAdrKey]![TempAdrKeyName]!;
-    print("billist map in get location : ${billingAddressMap}");
+    print("billist map in get location : $billingAddressMap");
     super.initState();
   }
 
@@ -56,9 +48,6 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, _) {
-        final userState = ref.watch(loginProvider);
-        final User? userData =
-            userState is LoginSuccessState ? userState.userModel : null;
         final cityState = ref.watch(cityProvider);
         final zoneState = ref.watch(zoneProvider);
         final areaState = ref.watch(areaProvider);
@@ -249,11 +238,13 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                         Expanded(
                           child: Text(
                             //  ref.read(areaProvider.notifier).areaName??  area.toString(),
-                            widget.isCheckoutPage! &&
+                            (widget.isCheckoutPage! || widget.isBilliingInfoPage)&& 
                                     billingAddressMap.containsKey('area')
                                 ? billingAddressMap['area'].toString()
                                 : ref.read(areaProvider.notifier).areaName ??
                                     areas.toString(),
+
+                               
 
                             softWrap: false,
                             //textScaleFactor: textScaleFactor,
@@ -265,7 +256,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 15),
+                        const SizedBox(width: 15),
                         const Icon(
                           Icons.arrow_drop_down,
                           color: Colors.grey,

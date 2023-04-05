@@ -55,7 +55,7 @@ class MyOrderCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "ID: #${id}",
+                "ID: #$id",
                 style: KTextStyle.subtitle1.copyWith(
                   color: KColor.blackbg,
                 ),
@@ -102,7 +102,7 @@ class MyOrderCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "৳ ${grandTotal}",
+                  "৳ $grandTotal",
                   style: KTextStyle.bodyText2.copyWith(
                     color: KColor.blackbg.withOpacity(0.7),
                   ),

@@ -1,12 +1,8 @@
-import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/service/navigation_service.dart';
 import 'package:finesse/src/features/home/components/shop_page.dart';
-import 'package:finesse/styles/b_style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../textfield/k_search_field.dart';
-import '../textfield/k_text_field.dart';
 
 class KFilter extends StatefulWidget {
   final bool? check;
@@ -28,6 +24,7 @@ class _KFilterState extends State<KFilter> {
       children: [
         Expanded(
           child: SizedBox(
+          
             height: 62,
             child: SearchTextField(
               onTap: () =>

@@ -28,7 +28,6 @@ import 'package:finesse/src/features/profile/components/dashboard.dart';
 import 'package:finesse/src/features/profile/components/edit_profile.dart';
 import 'package:finesse/src/features/profile/components/my_order.dart';
 import 'package:finesse/src/features/profile/components/notifications.dart';
-import 'package:finesse/src/features/profile/components/order_details.dart';
 import 'package:finesse/src/features/profile/components/report_issue.dart';
 import 'package:finesse/src/features/profile/components/report_list.dart';
 import 'package:finesse/src/features/profile/components/track_order.dart';

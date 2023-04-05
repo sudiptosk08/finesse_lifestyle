@@ -133,10 +133,10 @@ class _CardTotalState extends State<CardTotal> {
         ),
         Text(
           discount == true
-              ? "${price} %"
+              ? "$price %"
               : rounding == true
-                  ? "৳ ${price}"
-                  : "৳ ${price}",
+                  ? "৳ $price"
+                  : "৳ $price",
           style: KTextStyle.sticker.copyWith(
             color: KColor.blackbg.withOpacity(0.4),
           ),

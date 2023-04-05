@@ -5,7 +5,6 @@ import 'package:finesse/src/features/home/models/menu_data_model.dart';
 import 'package:finesse/src/features/home/state/menu_data_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../auth/login/model/user_model.dart';
 
 final menuDataProvider = StateNotifierProvider<MenuDataController, BaseState>(
   (ref) => MenuDataController(ref: ref),

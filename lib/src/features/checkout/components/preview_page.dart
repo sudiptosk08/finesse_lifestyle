@@ -1,8 +1,6 @@
 import 'package:finesse/components/button/k_text_button.dart';
-import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:finesse/core/base/base_state.dart';
-import 'package:finesse/service/navigation_service.dart';
 import 'package:finesse/src/features/auth/login/model/user_model.dart';
 import 'package:finesse/src/features/cart/components/cart_total.dart';
 import 'package:finesse/src/features/cart/controller/cart_controller.dart';
@@ -11,15 +9,12 @@ import 'package:finesse/src/features/cart/controller/zone_controller.dart';
 import 'package:finesse/src/features/cart/state/cart_state.dart';
 import 'package:finesse/src/features/cart/state/code_state.dart';
 import 'package:finesse/src/features/cart/state/zone_state.dart';
-import 'package:finesse/src/features/checkout/components/add_address.dart';
-import 'package:finesse/src/features/checkout/components/add_new_address.dart';
 import 'package:finesse/src/features/checkout/components/selected_iteams.dart';
 import 'package:finesse/src/features/checkout/controller/checkout_controller.dart';
 import 'package:finesse/src/features/home/controllers/menu_data_controller.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -82,7 +77,7 @@ class _PreviewPageState extends State<PreviewPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SelectedItems(),
+                    const SelectedItems(),
                     Container(
                       padding: const EdgeInsets.all(16),
                       margin: const EdgeInsets.symmetric(vertical: 16),

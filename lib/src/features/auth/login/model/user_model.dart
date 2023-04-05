@@ -94,9 +94,9 @@ class Customer {
   dynamic address;
   String? contact;
   String? email;
-  dynamic? zone;
-  dynamic? city; 
-  dynamic? area;
+  dynamic zone;
+  dynamic city; 
+  dynamic area;
   String? facebook;
   String? instagram;
   dynamic barcode;

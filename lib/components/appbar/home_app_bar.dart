@@ -35,7 +35,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
           );
         },
       ),
-      title: const KFilter(),
+      title:  const KFilter(),
       actions: [
         Consumer(
           builder: (context, ref, _) {

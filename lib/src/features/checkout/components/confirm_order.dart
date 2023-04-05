@@ -1,5 +1,4 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
-import 'package:finesse/components/button/k_border_btn.dart';
 import 'package:finesse/components/button/k_button.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/src/features/main_screen.dart';
@@ -15,9 +14,18 @@ class ConfirmOrder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: KColor.appBackground,
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(56),
-        child: KAppBar(checkTitle: false),
+      appBar:  PreferredSize(
+        preferredSize: const Size.fromHeight(56),
+        child: KAppBar(checkTitle: false,
+        dotCheck: true,
+        onTap: () {
+          Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: ((context) => const MainScreen())),
+                (route) => false);
+        },
+        
+        ),
       ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
@@ -35,23 +43,23 @@ class ConfirmOrder extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Estimated Delivery 12th May- 26 May',
+              'Estimated Delivery in 7 days',
               style: KTextStyle.bodyText1.copyWith(
                 color: KColor.blackbg.withOpacity(0.6),
               ),
             ),
             const SizedBox(height: 12),
-            Text(
-              'Order Number #99045677',
-              style: KTextStyle.bodyText1.copyWith(
-                color: KColor.blackbg.withOpacity(0.6),
-              ),
-            ),
+            // Text(
+            //   'Order Number #99045677',
+            //   style: KTextStyle.bodyText1.copyWith(
+            //     color: KColor.blackbg.withOpacity(0.6),
+            //   ),
+            // ),
             SizedBox(height: context.screenHeight * 0.05),
             KButton(
               title: 'Continue Shopping',
               onTap: () {
-               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: ((context) =>MainScreen()) ), (route) => false);
+               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: ((context) =>const MainScreen()) ), (route) => false);
               },
             ),
             const SizedBox(height: 16),

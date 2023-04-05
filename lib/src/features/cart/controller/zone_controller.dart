@@ -1,20 +1,12 @@
-import 'dart:convert';
 import 'dart:core';
-import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/core/network/api.dart';
 import 'package:finesse/core/network/network_utils.dart';
-import 'package:finesse/src/features/auth/login/model/user_model.dart';
-import 'package:finesse/src/features/auth/login/state/login_state.dart';
 import 'package:finesse/src/features/cart/model/area_model.dart';
 import 'package:finesse/src/features/cart/model/city_model.dart';
 import 'package:finesse/src/features/cart/model/zone_model.dart';
 import 'package:finesse/src/features/cart/state/zone_state.dart';
-import 'package:finesse/styles/k_colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart';
-import 'package:nb_utils/nb_utils.dart';
 
 import 'cart_controller.dart';
 

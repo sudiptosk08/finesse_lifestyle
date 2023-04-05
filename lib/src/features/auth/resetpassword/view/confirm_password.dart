@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../components/textfield/k_fill_password_field.dart';
-import '../../../../../components/textfield/k_text_field.dart';
 
 class ConfirmPasswordPage extends StatefulWidget {
   final String? token;

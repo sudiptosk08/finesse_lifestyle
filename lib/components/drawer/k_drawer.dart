@@ -74,7 +74,7 @@ class KDrawer extends ConsumerWidget {
                             }
                           },
                           child: Text(
-                            menuData.menus[index].name ?? '',
+                            menuData.menus[index].name ,
                             style: KTextStyle.subtitle1
                                 .copyWith(color: KColor.whiteBackground),
                           ),

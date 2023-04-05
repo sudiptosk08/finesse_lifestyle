@@ -2,8 +2,6 @@ import 'package:finesse/components/dialog/k_confirm_dialog.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../styles/k_colors.dart';
 import '../../styles/k_text_style.dart';

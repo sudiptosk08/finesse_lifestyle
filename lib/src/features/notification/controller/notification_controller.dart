@@ -1,13 +1,8 @@
-import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/core/network/api.dart';
 import 'package:finesse/core/network/network_utils.dart';
-import 'package:finesse/service/navigation_service.dart';
 import 'package:finesse/src/features/notification/model/notification_model.dart';
 import 'package:finesse/src/features/notification/state/notification_state.dart';
-import 'package:finesse/src/features/product_details/components/product_info.dart';
-import 'package:finesse/styles/k_colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
 

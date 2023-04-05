@@ -1,10 +1,7 @@
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/src/features/auth/login/model/user_model.dart';
-import 'package:finesse/src/features/checkout/components/add_new_address.dart';
 import 'package:finesse/src/features/checkout/controller/address_controller.dart';
-import 'package:finesse/src/features/checkout/state/add_address.dart';
 import 'package:finesse/src/features/home/controllers/menu_data_controller.dart';
-import 'package:finesse/src/features/home/models/menu_data_model.dart';
 import 'package:finesse/src/features/home/state/menu_data_state.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +27,6 @@ class AddBillingInformationState extends State<AddBillingInformation> {
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
   TextEditingController address = TextEditingController();
-  String? _cities;
-  String? _zones;
   var username = getStringAsync(userName);
   var useremail = getStringAsync(userEmail);
   var contact = getStringAsync(userContact);

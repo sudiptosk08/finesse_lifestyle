@@ -3,7 +3,6 @@ import 'package:finesse/core/network/api.dart';
 import 'package:finesse/core/network/network_utils.dart';
 import 'package:finesse/src/features/filter/model/color_and_size_model.dart';
 import 'package:finesse/src/features/product_details/model/all_branda.dart';
-import 'package:finesse/src/features/product_details/model/all_colors.dart';
 import 'package:finesse/src/features/product_details/model/product_details_model.dart';
 import 'package:finesse/src/features/product_details/state/product_details_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

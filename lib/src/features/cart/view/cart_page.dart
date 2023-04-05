@@ -1,14 +1,11 @@
-import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/button/k_border_btn.dart';
 import 'package:finesse/components/button/k_button.dart';
 import 'package:finesse/components/shimmer/k_shimmer.dart';
 import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:finesse/core/base/base_state.dart';
-import 'package:finesse/src/features/auth/login/controller/login_controller.dart';
 import 'package:finesse/src/features/auth/login/view/login_page.dart';
 import 'package:finesse/src/features/cart/components/products_amount.dart';
 import 'package:finesse/src/features/cart/controller/cart_controller.dart';
-import 'package:finesse/src/features/cart/controller/zone_controller.dart';
 import 'package:finesse/src/features/cart/model/cart_model.dart';
 import 'package:finesse/src/features/cart/state/cart_state.dart';
 import 'package:finesse/src/features/checkout/controller/address_controller.dart';
@@ -20,7 +17,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../auth/login/model/user_model.dart';
-import '../../checkout/components/take_address.dart';
 import '../../home/controllers/menu_data_controller.dart';
 import '../../home/state/menu_data_state.dart';
 
@@ -39,11 +35,6 @@ class _CartPageState extends State<CartPage> {
     return checkLogin
         ? Scaffold(
             backgroundColor: KColor.appBackground,
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(widget.isFromBottomNav ? 0 : 56),
-              child: const KAppBar(
-                  checkTitle: true, dotCheck: false, title: 'Cart'),
-            ),
             body: Consumer(
               builder: (contex, ref, child) {
                 final cartState = ref.watch(cartProvider);
@@ -93,7 +84,8 @@ class _CartPageState extends State<CartPage> {
                                                   if (await ref
                                                       .read(addressProvider
                                                           .notifier)
-                                                      .isLocationSet(user!.customer.address)) {
+                                                      .isLocationSet(user!
+                                                          .customer.address)) {
                                                     Navigator.pushNamed(context,
                                                         '/addressPage');
                                                   }

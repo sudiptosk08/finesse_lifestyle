@@ -1,15 +1,9 @@
-import 'package:finesse/components/button/k_border_btn.dart';
 import 'package:finesse/components/button/k_button.dart';
-import 'package:finesse/components/checkedbutton/k_checked_buttton.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/constants/shared_preference_constant.dart';
-import 'package:finesse/src/features/auth/login/controller/login_controller.dart';
 import 'package:finesse/src/features/auth/login/model/user_model.dart';
-import 'package:finesse/src/features/auth/login/state/login_state.dart';
-import 'package:finesse/src/features/cart/controller/zone_controller.dart';
 import 'package:finesse/src/features/checkout/controller/address_controller.dart';
 import 'package:finesse/src/features/home/controllers/menu_data_controller.dart';
-import 'package:finesse/src/features/home/models/menu_data_model.dart';
 import 'package:finesse/src/features/home/state/menu_data_state.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
@@ -128,7 +122,7 @@ class _AddressPageState extends State<AddressPage> {
                             Text(userData.customer.contact.toString()),
                             const SizedBox(height: 20),
                             Text(
-                                "${billingAddressMap['area'].toString() ?? ''}, ${billingAddressMap['zone'].toString() ?? ''}, ${billingAddressMap['city'].toString() ?? ''}"),
+                                "${billingAddressMap['area'].toString()}, ${billingAddressMap['zone'].toString()}, ${billingAddressMap['city'].toString() }"),
                           ],
                         ),
                       ),

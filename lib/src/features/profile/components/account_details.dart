@@ -1,9 +1,6 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/button/k_border_btn.dart';
 import 'package:finesse/components/button/k_button.dart';
-import 'package:finesse/src/features/auth/login/controller/login_controller.dart';
-import 'package:finesse/src/features/auth/login/model/user_model.dart';
-import 'package:finesse/src/features/auth/login/state/login_state.dart';
 import 'package:finesse/src/features/home/models/menu_data_model.dart';
 import 'package:finesse/src/features/home/state/menu_data_state.dart';
 import 'package:finesse/styles/k_colors.dart';
@@ -36,10 +33,10 @@ class AccountDetails extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _editProfile('Name', userData!.user.customer.customerName.toString() ?? "", () {}),
-                  _editProfile('Email', userData.user.email.toString() ?? "", () {}),
+                  _editProfile('Name', userData!.user.customer.customerName.toString() , () {}),
+                  _editProfile('Email', userData.user.email.toString() , () {}),
                   _editProfile('Address', userData.user.customer.address ?? "Not set yet", () {}),
-                  _editProfile('Phone Number', userData.user.contact.toString() ?? "", () {}),
+                  _editProfile('Phone Number', userData.user.contact.toString() , () {}),
                   SizedBox(height: context.screenHeight * 0.22),
                   KButton(
                     title: 'Change Password',

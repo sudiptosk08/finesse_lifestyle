@@ -1,6 +1,5 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/card/product_card.dart';
-import 'package:finesse/components/shimmer/k_shimmer.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/src/features/home/controllers/category_controller.dart';
@@ -13,20 +12,8 @@ import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../components/button/k_border_btn.dart';
-import '../../../../components/button/k_button.dart';
 import '../../../../components/textfield/k_search_field.dart';
-import '../../../../styles/k_size.dart';
-import '../../filter/components/brand_categories.dart';
-import '../../filter/components/main_categories.dart';
-import '../../filter/components/other_category.dart';
-import '../../filter/components/price_range.dart';
-import '../../filter/components/rating.dart';
-import '../../filter/components/select_color.dart';
-import '../../filter/components/view.dart';
 import '../../filter/filter_page.dart';
 
 class ShopPage extends StatefulWidget {

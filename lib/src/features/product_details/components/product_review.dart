@@ -15,7 +15,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../components/textfield/k_text_field.dart';
 import '../../../../constants/asset_path.dart';
 import '../../../../core/base/base_state.dart';
 

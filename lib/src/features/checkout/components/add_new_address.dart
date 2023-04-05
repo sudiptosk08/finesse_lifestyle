@@ -1,9 +1,5 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
-import 'package:finesse/constants/shared_preference_constant.dart';
-import 'package:finesse/src/features/checkout/components/add_address.dart';
-import 'package:finesse/src/features/checkout/components/add_office.dart';
 import 'package:finesse/styles/k_colors.dart';
-import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
 
 import 'add_billing_information.dart';

@@ -4,7 +4,6 @@ import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
 
 import '../textfield/k_field.dart';
-import '../textfield/k_text_field.dart';
 
 class CouponCodeCard extends StatelessWidget {
   final String? title;

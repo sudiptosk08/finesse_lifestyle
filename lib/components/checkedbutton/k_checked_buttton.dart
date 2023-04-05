@@ -2,7 +2,7 @@ import 'package:finesse/styles/b_style.dart';
 import 'package:flutter/material.dart';
 
 class KCheckedButton extends StatefulWidget {
-   KCheckedButton({required this.height, required this.radius, required this.width, Key? key}) : super(key: key);
+   const KCheckedButton({required this.height, required this.radius, required this.width, Key? key}) : super(key: key);
 
   final double width;
   final double height;

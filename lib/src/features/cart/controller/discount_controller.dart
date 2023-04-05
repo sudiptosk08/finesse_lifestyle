@@ -180,9 +180,9 @@ class DiscountController extends StateNotifier<BaseState> {
     if (clear == true) {
       discountValue = null;
     }
-    print("delivery fee is : ${deliveryFee}");
-    print("clear is ${clear}");
-    print("subtotal fee is : ${subtotal}");
+    print("delivery fee is : $deliveryFee");
+    print("clear is $clear");
+    print("subtotal fee is : $subtotal");
     // int promoCodeDis = promoCodeData?.coupon.discount as int; // previous code
     // print("discount of promocode: ${promoCodeDis}");
     print("------start------countTotalFee");
