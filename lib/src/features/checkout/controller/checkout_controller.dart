@@ -32,7 +32,7 @@ class CheckoutController extends StateNotifier<BaseState> {
     try {
       if (billingAddressMap['address'] == null &&
           user!.customer.address == null) {
-        toast('Add Billing Address.');
+        toast('Set Billing Address.');
         state = ErrorState();
       }
       // else if () {
@@ -59,7 +59,7 @@ class CheckoutController extends StateNotifier<BaseState> {
             ? requestBody = {
                 "billingAddress":
                     billingAddressMap['address'] ?? user!.customer.address,
-                "billingArea": billingAddressMap['area'],
+                "billingArea": billingAddressMap['area'] ,
                 "billingCity": billingAddressMap['city'],
                 "billingZone": billingAddressMap['zone'],
                 "contact": user!.customer.contact.toString(),
@@ -71,7 +71,7 @@ class CheckoutController extends StateNotifier<BaseState> {
                 "email": user.email,
                 "giftVoucherAmount": 0,
                 "giftVoucherCode": '',
-                "grandTotal": totalFee,
+                "grandTotal": totalFee - ref!.read(zoneProvider.notifier).deliveryFee,
                 "invoiceTotal": ref!.read(cartProvider.notifier).subtotal,
                 "isDGMoney": 0,
                 "isDifferentShipping":
@@ -104,8 +104,8 @@ class CheckoutController extends StateNotifier<BaseState> {
                         : 0,
                 "refferalDiscountAmount": 0,
                 "roundAmount": roundfee == 0 ? 0 : roundfee,
-                "shippingPrice":
-                    ref!.read(discountProvider.notifier).deliveryFee,
+                "shippingPrice": billingAddressMap['deliveryFee'] ??
+                    ref!.read(zoneProvider.notifier).deliveryFee.toString(),
 
                 "subTotal": ref!.read(cartProvider.notifier).subtotal,
                 
@@ -126,7 +126,7 @@ class CheckoutController extends StateNotifier<BaseState> {
                 "email": user.email,
                 "giftVoucherAmount": 0,
                 "giftVoucherCode": '',
-                "grandTotal": totalFee,
+                "grandTotal": totalFee -( ref!.read(zoneProvider.notifier).deliveryFee),
                 "invoiceTotal": totalFee,
                 "isDGMoney": 0,
                 "isDifferentShipping":
@@ -159,7 +159,7 @@ class CheckoutController extends StateNotifier<BaseState> {
                         : 0,
                 "refferalDiscountAmount": 0,
                 "roundAmount": roundfee == 0 ? 0 : roundfee,
-                "shippingPrice":
+                "shippingPrice":billingAddressMap['deliveryFee'] ??
                     ref!.read(discountProvider.notifier).deliveryFee,
                 "shippingDetails": {
                   'name': getJSONAsync(shippingAddress)['name'],

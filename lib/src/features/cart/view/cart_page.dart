@@ -19,6 +19,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../auth/login/model/user_model.dart';
 import '../../home/controllers/menu_data_controller.dart';
 import '../../home/state/menu_data_state.dart';
+import '../../main_screen.dart';
 
 class CartPage extends StatefulWidget {
   final bool isFromBottomNav;
@@ -70,10 +71,9 @@ class _CartPageState extends State<CartPage> {
                                         Flexible(
                                           child: KBorderButton(
                                             title: 'Go Back',
-                                            onTap: () => Navigator.pushNamed(
-                                                context, '/home'),
+                                            onTap: () =>Navigator.push(context, MaterialPageRoute(builder: ((context) =>const MainScreen())),
                                           ),
-                                        ),
+                                        ),),
                                         const SizedBox(width: 16),
                                         Flexible(
                                           child: Consumer(

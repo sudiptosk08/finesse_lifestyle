@@ -9,7 +9,6 @@ import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 // ignore: must_be_immutable
 class DeliveryAddress extends StatefulWidget {
   bool? isCheckoutPage;
@@ -92,10 +91,14 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                           ( widget.isCheckoutPage! || widget.isBilliingInfoPage)  &&
-                                    billingAddressMap.isNotEmpty
+                            (widget.isCheckoutPage! ||
+                                        widget.isBilliingInfoPage ) &&
+                                    billingAddressMap.isNotEmpty 
                                 ? billingAddressMap['city'].toString()
-                                : ref.read(cityProvider.notifier).cityName ??
+                                : ref
+                                        .read(cityProvider.notifier)
+                                        .cityName
+                                         ??
                                     cities.toString(),
                             softWrap: false,
                             maxLines: 1,
@@ -120,6 +123,8 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                         billingAddressMap.clear();
                         billingAddressMap['city'] = v.name!;
                         billingAddressMap['cityId'] = v.id.toString();
+
+
                       }
                       cities = v.name!;
                       ref.read(zoneProvider.notifier).allZone(
@@ -164,8 +169,9 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                           ( widget.isCheckoutPage! || widget.isBilliingInfoPage )&&
-                                    billingAddressMap.containsKey('zone')
+                            (widget.isCheckoutPage! ||
+                                        widget.isBilliingInfoPage) &&
+                                    billingAddressMap.containsKey('zone') 
                                 ? billingAddressMap['zone'].toString()
                                 : ref.read(zoneProvider.notifier).zoneName ??
                                     zones.toString(),
@@ -238,13 +244,12 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                         Expanded(
                           child: Text(
                             //  ref.read(areaProvider.notifier).areaName??  area.toString(),
-                            (widget.isCheckoutPage! || widget.isBilliingInfoPage)&& 
-                                    billingAddressMap.containsKey('area')
+                            (widget.isCheckoutPage! ||
+                                        widget.isBilliingInfoPage) &&
+                                    billingAddressMap.containsKey('area') 
                                 ? billingAddressMap['area'].toString()
                                 : ref.read(areaProvider.notifier).areaName ??
                                     areas.toString(),
-
-                               
 
                             softWrap: false,
                             //textScaleFactor: textScaleFactor,

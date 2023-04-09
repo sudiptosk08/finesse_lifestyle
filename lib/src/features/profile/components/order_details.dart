@@ -180,7 +180,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    widget.orderData.paymentStatus.toString(),
+                    widget.orderData.status.toString(),
                     style: KTextStyle.bodyText1.copyWith(
                       color: KColor.selectColor,
                     ),

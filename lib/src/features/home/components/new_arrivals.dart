@@ -8,6 +8,8 @@ import 'package:finesse/src/features/wishlist/controller/wishlist_controller.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../cart/controller/cart_controller.dart';
+
 class NewArrivals extends StatefulWidget {
   const NewArrivals({Key? key}) : super(key: key);
 
@@ -21,9 +23,14 @@ class _NewArrivalsState extends State<NewArrivals> {
     return Consumer(builder: (context, ref, _) {
       final wishlistState = ref.watch(wishlistProvider);
       final newArrivalState = ref.watch(productCategoryProvider);
-      final List<Product>? newCategory = newArrivalState is ProductCategorySuccessState ? newArrivalState.productsCategory?.newProducts : [];
+      final List<Product>? newCategory =
+          newArrivalState is ProductCategorySuccessState
+              ? newArrivalState.productsCategory?.newProducts
+              : [];
       final List<MiddlePromotionalCard>? promotionalBanner =
-          newArrivalState is ProductCategorySuccessState ? newArrivalState.productsCategory?.middlePromotionalCard : [];
+          newArrivalState is ProductCategorySuccessState
+              ? newArrivalState.productsCategory?.middlePromotionalCard
+              : [];
 
       return Column(
         children: [
@@ -42,7 +49,10 @@ class _NewArrivalsState extends State<NewArrivals> {
                   discount: newCategory[index].discount.toString(),
                   check: true,
                   tap: () {
-                    ref.read(productDetailsProvider.notifier).fetchProductsDetails(newCategory[index].id);
+                    ref
+                        .read(productDetailsProvider.notifier)
+                        .fetchProductsDetails(newCategory[index].id);
+                    ref.read(cartProvider.notifier).cartDetails();
                     Navigator.pushNamed(
                       context,
                       '/productDetails',
@@ -57,7 +67,9 @@ class _NewArrivalsState extends State<NewArrivals> {
                   },
                   pressed: () {
                     if (wishlistState is! LoadingState) {
-                      ref.read(wishlistProvider.notifier).addWishlist(id: newCategory[index].id.toString());
+                      ref
+                          .read(wishlistProvider.notifier)
+                          .addWishlist(id: newCategory[index].id.toString());
                     }
                     ref.read(wishlistProvider.notifier).fetchWishlistProducts();
                   },

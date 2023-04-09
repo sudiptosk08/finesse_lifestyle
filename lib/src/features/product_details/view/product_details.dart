@@ -3,6 +3,7 @@ import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/src/features/cart/controller/cart_controller.dart';
 import 'package:finesse/src/features/cart/state/cart_state.dart';
+import 'package:finesse/src/features/main_screen.dart';
 import 'package:finesse/src/features/product_details/components/add_to_cart.dart';
 import 'package:finesse/src/features/product_details/components/product_info.dart';
 import 'package:finesse/src/features/product_details/components/product_preview.dart';
@@ -65,7 +66,9 @@ class _ProductDetailsState extends ConsumerState<ProductDetails> {
         ),
         actions: [
           InkWell(
-            onTap: () => Navigator.pushNamed(context, '/cart'),
+            onTap: () {
+               Navigator.push(context, MaterialPageRoute(builder: (context) =>const MainScreen()));
+            },
             child: SizedBox(
               width: context.screenWidth * 0.2,
               child: Stack(
