@@ -212,10 +212,10 @@ class RouteGenerator {
         return CupertinoPageRoute(
           builder: (_) =>  AddressPage(),
         );
-       case '/checkoutShippingAddress':
-        return CupertinoPageRoute(
-          builder: (_) => const AddShippingAddress(),
-        );
+      //  case '/checkoutShippingAddress':
+      //   return CupertinoPageRoute(
+      //     builder: (_) => const AddShippingAddress(),
+      //   );
       case '/about':
         return CupertinoPageRoute(
           builder: (_) => const AboutPage(),

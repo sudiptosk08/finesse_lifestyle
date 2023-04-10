@@ -71,9 +71,9 @@ class AddAddressController extends StateNotifier<BaseState> {
         await setValue(shippingAddress, address);
         ref?.read(addressProvider.notifier).makeAddressNull();
         state = AddressSuccessState();
+         Navigator.pushNamed(context, '/payment');
         toast('Shipping Address added');
         print("inside add shipping method : ${getJSONAsync(shippingAddress)}");
-        Navigator.of(context).pop();
       }
     } catch (e) {
       state = AddressErrorState();

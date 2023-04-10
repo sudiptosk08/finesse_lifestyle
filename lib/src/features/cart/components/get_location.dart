@@ -8,6 +8,7 @@ import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 // ignore: must_be_immutable
 class DeliveryAddress extends StatefulWidget {
@@ -74,8 +75,8 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                     borderRadius: BorderRadius.circular(6.0)),
                 child: PopupMenuButton<City>(
                   itemBuilder: (context) {
-                    return cityData!.map((str) {
-                      return PopupMenuItem(
+                    return widget.isShippingAddressPage && getJSONAsync(shippingAddress).isNotEmpty?[]:  cityData!.map((str) {
+                      return  PopupMenuItem(
                         value: str,
                         child: Text(str.name!),
                       );
@@ -91,11 +92,12 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            (widget.isCheckoutPage! ||
-                                        widget.isBilliingInfoPage ) &&
+                            widget.isCheckoutPage!  &&
                                     billingAddressMap.isNotEmpty 
                                 ? billingAddressMap['city'].toString()
-                                : ref
+                                :widget.isBilliingInfoPage && ref.read(cityProvider.notifier).cityName == null?billingAddressMap['city'].toString(): 
+                                widget.isShippingAddressPage && ref.read(cityProvider.notifier).cityName == null && getJSONAsync(shippingAddress).isNotEmpty?getJSONAsync(shippingAddress)['city']:
+                                ref
                                         .read(cityProvider.notifier)
                                         .cityName
                                          ??
@@ -152,7 +154,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                     borderRadius: BorderRadius.circular(6.0)),
                 child: PopupMenuButton<Zone>(
                   itemBuilder: (context) {
-                    return zoneData!.map((str) {
+                    return   widget.isShippingAddressPage && getJSONAsync(shippingAddress).isNotEmpty?[]:zoneData!.map((str) {
                       return PopupMenuItem(
                         value: str,
                         child: Text(str.zoneName.toString()),
@@ -169,11 +171,11 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            (widget.isCheckoutPage! ||
-                                        widget.isBilliingInfoPage) &&
+                            widget.isCheckoutPage!  &&
                                     billingAddressMap.containsKey('zone') 
-                                ? billingAddressMap['zone'].toString()
-                                : ref.read(zoneProvider.notifier).zoneName ??
+                                ?billingAddressMap['zone'].toString(): widget.isBilliingInfoPage && ref.read(zoneProvider.notifier).zoneName == null?billingAddressMap['zone'].toString():
+                                  widget.isShippingAddressPage && ref.read(zoneProvider.notifier).zoneName == null && getJSONAsync(shippingAddress).isNotEmpty?getJSONAsync(shippingAddress)['zone']:
+                                 ref.read(zoneProvider.notifier).zoneName ??
                                     zones.toString(),
 
                             // ref.read(zoneProvider.notifier).zoneName??  zone.toString(),
@@ -226,7 +228,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                     borderRadius: BorderRadius.circular(6.0)),
                 child: PopupMenuButton<Area>(
                   itemBuilder: (context) {
-                    return areaData!.map((str) {
+                    return widget.isShippingAddressPage && getJSONAsync(shippingAddress).isNotEmpty?[]: areaData!.map((str) {
                       return PopupMenuItem(
                         value: str,
                         child: Text(str.name),
@@ -244,11 +246,13 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                         Expanded(
                           child: Text(
                             //  ref.read(areaProvider.notifier).areaName??  area.toString(),
-                            (widget.isCheckoutPage! ||
-                                        widget.isBilliingInfoPage) &&
+                            widget.isCheckoutPage!  &&
                                     billingAddressMap.containsKey('area') 
-                                ? billingAddressMap['area'].toString()
-                                : ref.read(areaProvider.notifier).areaName ??
+                                ? billingAddressMap['area'].toString(): widget.isBilliingInfoPage && ref.read(areaProvider.notifier).areaName == null?billingAddressMap['area'].toString()
+                                :
+                                
+                                 widget.isShippingAddressPage && ref.read(areaProvider.notifier).areaName == null && getJSONAsync(shippingAddress).isNotEmpty?getJSONAsync(shippingAddress)['area']:
+                                 ref.read(areaProvider.notifier).areaName ??
                                     areas.toString(),
 
                             softWrap: false,
