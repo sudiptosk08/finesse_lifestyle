@@ -2,7 +2,9 @@ import 'package:finesse/components/button/k_button.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:finesse/src/features/auth/login/model/user_model.dart';
+import 'package:finesse/src/features/checkout/components/add_shipping_address.dart';
 import 'package:finesse/src/features/checkout/controller/address_controller.dart';
+import 'package:finesse/src/features/checkout/state/add_address.dart';
 import 'package:finesse/src/features/home/controllers/menu_data_controller.dart';
 import 'package:finesse/src/features/home/state/menu_data_state.dart';
 import 'package:finesse/styles/k_colors.dart';
@@ -32,11 +34,30 @@ class _AddressPageState extends State<AddressPage> {
   String addressN = "";
   String userN = "";
   String contractN = "";
-  bool isShippingAddressAdded = false;
+  bool addShippingAddress = false;
+
+  TextEditingController nameCon = TextEditingController();
+  TextEditingController emailCon = TextEditingController();
+  TextEditingController phoneCon = TextEditingController();
+  TextEditingController addressCon = TextEditingController();
 
   @override
   initState() {
     super.initState();
+
+    if (getJSONAsync(shippingAddress).isNotEmpty) {
+      addShippingAddress = true;
+    }
+  }
+
+  @override 
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose(); 
+    nameCon.dispose();
+    emailCon.dispose();
+    phoneCon.dispose();
+    addressCon.dispose();
   }
 
   @override
@@ -47,7 +68,7 @@ class _AddressPageState extends State<AddressPage> {
         final adressState = ref.watch(addressProvider);
         final User? userData =
             userState is MenuDataSuccessState ? userState.menuList!.user : null;
-
+        final addressState = ref.watch(addressProvider);
         return Scaffold(
           backgroundColor: KColor.appBackground,
           appBar: const PreferredSize(
@@ -56,131 +77,172 @@ class _AddressPageState extends State<AddressPage> {
           ),
           body: Container(
             margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SvgPicture.asset('assets/images/stepper_one.svg'),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Billing Address',
-                      style:
-                          KTextStyle.subtitle1.copyWith(color: KColor.blackbg),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        ref.read(addressProvider.notifier).makeAddressNull();
-                        Navigator.pushNamed(context, '/checkoutNewAddress');
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 16),
-                        margin: const EdgeInsets.symmetric(vertical: 16),
-                        decoration: BoxDecoration(
-                          color: KColor.filterDividerColor,
-                          border: Border.all(color: KColor.baseBlack),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  alignment: Alignment.center,
-                                  width: context.screenWidth * 0.2,
-                                  height: 24,
-                                  decoration: BoxDecoration(
-                                    color: KColor.blackbg,
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  child: Text(
-                                    'Default',
-                                    style: KTextStyle.caption2.copyWith(
-                                      color: KColor.white,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SvgPicture.asset('assets/images/stepper_one.svg'),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Billing Address',
+                        style: KTextStyle.subtitle1
+                            .copyWith(color: KColor.blackbg),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          ref.read(addressProvider.notifier).makeAddressNull();
+                          Navigator.pushNamed(context, '/checkoutNewAddress');
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 16),
+                          margin: const EdgeInsets.symmetric(vertical: 16),
+                          decoration: BoxDecoration(
+                            color: KColor.filterDividerColor,
+                            border: Border.all(color: KColor.baseBlack),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: context.screenWidth * 0.2,
+                                    height: 24,
+                                    decoration: BoxDecoration(
+                                      color: KColor.blackbg,
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    child: Text(
+                                      'Default',
+                                      style: KTextStyle.caption2.copyWith(
+                                        color: KColor.white,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Icon(
-                                  Icons.edit,
-                                  color: KColor.blackbg,
-                                  size: 25,
-                                )
-                              ],
-                            ),
-                            // billingAddressMap['city'].toString()?? ''
-                            const SizedBox(height: 8),
-                            // Text(userN),
-                            // Text(contractN),
-                            // const SizedBox(height: 20),
-                            // Text("${areaN}, ${zoneN}, ${cityN}"),
+                                  // Icon(
+                                  //   Icons.edit,
+                                  //   color: KColor.blackbg,
+                                  //   size: 25,
+                                  // )
+                                ],
+                              ),
+                              // billingAddressMap['city'].toString()?? ''
+                              const SizedBox(height: 8),
+                              // Text(userN),
+                              // Text(contractN),
+                              // const SizedBox(height: 20),
+                              // Text("${areaN}, ${zoneN}, ${cityN}"),
 
-                            Text(userData!.customer.customerName.toString()),
-                            Text(userData.customer.contact.toString()),
-                            const SizedBox(height: 20),
-                            Text(
-                                "${billingAddressMap['area'].toString()}, ${billingAddressMap['zone'].toString()}, ${billingAddressMap['city'].toString() }"),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            if (getJSONAsync(shippingAddress).isEmpty) {
-                              setState(() {
-                                isShippingAddressAdded = true;
-                              });
-                              ref
-                                  .read(addressProvider.notifier)
-                                  .makeAddressNull();
-                              Navigator.pushNamed(
-                                  context, '/checkoutShippingAddress');
-                            }
-                          },
-                          child: Container(
-                            width: 20,
-                            height: 20,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: getJSONAsync(shippingAddress).isEmpty
-                                  ? Colors.transparent
-                                  : KColor.black,
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(color: KColor.black, width: 1),
-                            ),
-                            child: getJSONAsync(shippingAddress).isEmpty
-                                ? null
-                                : Padding(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Image.asset(AssetPath.NoticheckIcon),
-                                  ),
+                              Text(userData!.customer.customerName.toString()),
+                              Text(userData.customer.contact.toString()),
+                              const SizedBox(height: 20),
+                              Text(
+                                  "${billingAddressMap['area'].toString()}, ${billingAddressMap['zone'].toString()}, ${billingAddressMap['city'].toString()}"),
+                            ],
                           ),
                         ),
-                        const SizedBox(width: 10),
-                        Text(
-                          getJSONAsync(shippingAddress).isEmpty
-                              ? "Add Different Shipping Address"
-                              : "Shipping Address Added",
-                          style: KTextStyle.bodyText2,
-                        ),
-                      ],
+                      ),
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              // if (getJSONAsync(shippingAddress).isEmpty) {
+                              //   setState(() {
+                              //     addShippingAddress = true;
+                              //   });
+                              //   ref
+                              //       .read(addressProvider.notifier)
+                              //       .makeAddressNull();
+                              //   Navigator.pushNamed(
+                              //       context, '/checkoutShippingAddress');
+                              // }
+                              print("shipping address tap"); 
+                              print(getJSONAsync(shippingAddress));
+                              setState(() {
+                                if (addShippingAddress == true) {
+                                   nameCon.clear(); 
+                          emailCon.clear(); 
+                          phoneCon.clear(); 
+                          addressCon.clear();
+                                  removeKey(shippingAddress);
+                                }
+                                addShippingAddress = !addShippingAddress;
+                              });
+                            },
+                            child: Container(
+                              width: 20,
+                              height: 20,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: addShippingAddress == false
+                                    ? Colors.transparent
+                                    : KColor.black,
+                                borderRadius: BorderRadius.circular(5),
+                                border:
+                                    Border.all(color: KColor.black, width: 1),
+                              ),
+                              child: addShippingAddress == false
+                                  ? null
+                                  : Padding(
+                                      padding: const EdgeInsets.all(2),
+                                      child:
+                                          Image.asset(AssetPath.NoticheckIcon),
+                                    ),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            getJSONAsync(shippingAddress).isEmpty
+                                ? "Add Different Shipping Address"
+                                : "Shipping Address Added",
+                            style: KTextStyle.bodyText2,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  if (addShippingAddress) ...[
+                    AddShippingAddress(
+                      nameCon: nameCon,
+                      emailCon: emailCon,
+                      phoneCon: phoneCon,
+                      addressCon: addressCon,
                     )
                   ],
-                ),
-                SizedBox(height: context.screenHeight * 0.2),
-                KButton(
-                  title: 'Proceed to Payment',
-                  onTap: () {
-                    Navigator.pushNamed(context, '/payment');
-                  },
-                ),
-                const SizedBox(height: 10)
-              ],
+                  SizedBox(height: context.screenHeight * 0.2),
+                  KButton(
+                    
+                     title:   addShippingAddress ? addressState is AddressLoadingState ?'Please wait':'Proceed to Payment' : 'Proceed to Payment',
+                  
+                      onTap: () {
+                        if (addShippingAddress&& getJSONAsync(shippingAddress).isEmpty) {
+                          if (addressState is! AddressLoadingState ) {
+                            ref
+                                .read(addressProvider.notifier)
+                                .AddShippingAddress(
+                                  context: context,
+                                  nameis: nameCon.text,
+                                  emailis: emailCon.text,
+                                  phoneis: phoneCon.text,
+                                  addressis: addressCon.text,
+                                );
+                          }
+                        } else {
+                         
+                          Navigator.pushNamed(context, '/payment');
+                        }
+                      }),
+                  const SizedBox(height: 10)
+                ],
+              ),
             ),
           ),
         );

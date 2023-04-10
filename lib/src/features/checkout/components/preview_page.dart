@@ -127,55 +127,54 @@ class _PreviewPageState extends State<PreviewPage> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 15),
-                              // if(getJSONAsync(shippingAddress).isNotEmpty)...[
-                              //   Column(
-                              //     crossAxisAlignment: CrossAxisAlignment.start,
-                              //     children: [
-                              //       Row(
-                              //         mainAxisAlignment:
-                              //             MainAxisAlignment.spaceBetween,
-                              //         children: [
-                              //           Text(
-                              //             'Shipping Address',
-                              //             style: KTextStyle.subtitle1
-                              //                 .copyWith(color: KColor.blackbg),
-                              //           ),
-                              //           InkWell(
-                              //               onTap: () {
-                              //                 NavigationService
-                              //                     .navigateToReplacement(
-                              //                   CupertinoPageRoute(
-                              //                     builder: (_) => AddNewAddress(),
-                              //                   ),
-                              //                 );
-                              //               },
-                              //               child: SvgPicture.asset(
-                              //                   AssetPath.editIcon)),
-                              //         ],
-                              //       ),
-                              //       const SizedBox(height: 8),
-                              //       const SizedBox(height: 12),
-                              //       Text(
-                              //         '${getJSONAsync(shippingAddress)['name']}',
-                              //         style: KTextStyle.bodyText1.copyWith(
-                              //             color: KColor.blackbg.withOpacity(0.6)),
-                              //       ),
-                              //       const SizedBox(height: 7),
-                              //       Text(
-                              //          '${getJSONAsync(shippingAddress)['phone']}',
-                              //         style: KTextStyle.bodyText1.copyWith(
-                              //             color: KColor.blackbg.withOpacity(0.6)),
-                              //       ),
-                              //       const SizedBox(height: 20),
-                              //       Text(
-                              //         "${getJSONAsync(shippingAddress)['area']}, ${getJSONAsync(shippingAddress)['zone']}, ${getJSONAsync(shippingAddress)['city']}",
-                              //         style: KTextStyle.bodyText1.copyWith(
-                              //             color: KColor.blackbg.withOpacity(0.6)),
-                              //       ),
-                              //     ],
-                              //   )
-                              // ]
+                              const SizedBox(height: 25),
+                              if(getJSONAsync(shippingAddress).isNotEmpty)...[
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Shipping Address',
+                                          style: KTextStyle.subtitle1
+                                              .copyWith(color: KColor.blackbg),
+                                        ),
+                                        // InkWell(
+                                        //     onTap: () {
+                                        //       NavigationService
+                                        //           .navigateToReplacement(
+                                        //         CupertinoPageRoute(
+                                        //           builder: (_) => AddNewAddress(),
+                                        //         ),
+                                        //       );
+                                        //     },
+                                        //     child: SvgPicture.asset(
+                                        //         AssetPath.editIcon)),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Text(
+                                      '${getJSONAsync(shippingAddress)['name']}',
+                                      style: KTextStyle.bodyText1.copyWith(
+                                          color: KColor.blackbg.withOpacity(0.6)),
+                                    ),
+                                    const SizedBox(height: 7),
+                                    Text(
+                                       '${getJSONAsync(shippingAddress)['phone']}',
+                                      style: KTextStyle.bodyText1.copyWith(
+                                          color: KColor.blackbg.withOpacity(0.6)),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Text(maxLines: 777777,
+                                      "${getJSONAsync(shippingAddress)['address']}, ${getJSONAsync(shippingAddress)['area']}, ${getJSONAsync(shippingAddress)['zone']}, ${getJSONAsync(shippingAddress)['city']}",
+                                      style: KTextStyle.bodyText1.copyWith(
+                                          color: KColor.blackbg.withOpacity(0.6)),
+                                    ),
+                                  ],
+                                )
+                              ]
                             ],
                           ),
                           const SizedBox(height: 16),
