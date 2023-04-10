@@ -85,7 +85,8 @@ class _OtpPageState extends State<OtpPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8),
                 child: RichText(
                   text: TextSpan(
                     text: "Enter the code sent to ",
@@ -143,7 +144,8 @@ class _OtpPageState extends State<OtpPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Text(
                   hasError ? "Please fill up all the cells properly" : "",
-                  style: KTextStyle.subtitle1.copyWith(color: KColor.errorRedText),
+                  style:
+                      KTextStyle.subtitle1.copyWith(color: KColor.errorRedText),
                 ),
               ),
               Row(
@@ -180,7 +182,9 @@ class _OtpPageState extends State<OtpPage> {
                 builder: (context, ref, _) {
                   final authState = ref.watch(otpProvider);
                   return KButton(
-                    title: authState is LoadingState ? 'Please wait...' : 'Send Otp',
+                    title: authState is LoadingState
+                        ? 'Please wait...'
+                        : 'Active Account',
                     onTap: () {
                       if (authState is! LoadingState) {
                         if (_formKey.currentState!.validate()) {

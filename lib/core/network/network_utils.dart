@@ -90,10 +90,10 @@ class Network {
 
       if (response.statusCode == 403) {
         /// Session expired
-        toast('Session expired! Login to continue...', bgColor: KColor.red);
+        toast("${jsonDecode(response.body)['message']}", bgColor: KColor.red);
 
         setValue(isLoggedIn, false);
-        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (_) => const LoginPage()));
+       
       } else if (response.statusCode == 422) {
         /// Custom validation message
         toast(

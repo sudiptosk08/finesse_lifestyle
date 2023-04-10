@@ -31,12 +31,13 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  carousel_pro_nullsafety: ^1.0.2
   flutter_svg: ^1.1.2
   find_dropdown: ^1.0.0
   flutter_switch: ^0.3.2
   group_radio_button: ^1.2.0
   convex_bottom_bar: ^3.0.0
-  banner_carousel: ^1.2.1
+  
   google_fonts: ^3.0.1
   readmore: ^2.2.0
   smooth_page_indicator: ^1.0.0+2

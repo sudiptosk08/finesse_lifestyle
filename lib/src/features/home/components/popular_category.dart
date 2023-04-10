@@ -21,7 +21,7 @@ class _PopularCategoryState extends State<PopularCategory> {
       builder: (context, ref, _) {
         final sliderState = ref.watch(sliderProvider);
         final List<PopularSubCategory>? popularCategory = sliderState is SliderSuccessState ? sliderState.homeSliderModel?.popularSubCategory : [];
-        final List<MainSlider>? middleBanner = sliderState is SliderSuccessState ? sliderState.homeSliderModel?.middleBanner : [];
+        final List<MiddleBanner>? middleBanner = sliderState is SliderSuccessState ? sliderState.homeSliderModel?.middleBanner : [];
 
         return Column(
           children: [

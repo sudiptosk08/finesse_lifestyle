@@ -2,8 +2,8 @@ import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/core/network/api.dart';
 import 'package:finesse/core/network/network_utils.dart';
 import 'package:finesse/service/navigation_service.dart';
-import 'package:finesse/src/features/auth/login/view/login_page.dart';
 import 'package:finesse/src/features/auth/signup/state/otp_state.dart';
+import 'package:finesse/src/features/main_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -36,7 +36,7 @@ class OtpController extends StateNotifier<BaseState> {
       if (responseBody != null) {
         state = const OtpSuccessState();
         print("Otp send Successful");
-        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) => const LoginPage()));
+        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) => const MainScreen()));
       } else {
         state = const ErrorState();
       }
@@ -63,7 +63,7 @@ class OtpController extends StateNotifier<BaseState> {
       if (responseBody != null) {
         state = const OtpSuccessState();
         print("Otp send again Successful");
-        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) => const LoginPage()));
+        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) => const MainScreen()));
       } else {
         state = const ErrorState();
       }

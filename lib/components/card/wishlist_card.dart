@@ -157,7 +157,7 @@ class _WishlistCardState extends ConsumerState<WishlistCard> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              "\$${widget.price.toString()}",
+                              "৳${widget.price.toString()}",
                               style: KTextStyle.subtitle1
                                   .copyWith(color: KColor.blackbg),
                             ),
