@@ -86,6 +86,7 @@ class _CartPageState extends State<CartPage> {
                                                           .notifier)
                                                       .isLocationSet(user!
                                                           .customer.address)) {
+                                                      ref.read(addressProvider.notifier).makeAddressNull();
                                                     Navigator.pushNamed(context,
                                                         '/addressPage');
                                                   }
