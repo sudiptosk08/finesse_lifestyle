@@ -112,6 +112,7 @@ class _GetDiscountState extends State<GetDiscount> {
               ),
               const SizedBox(height: 15),
             ],
+
             CouponCodeCard(
               controller: giftCodeController,
               readOnly: voucherCodeData?.success == true &&
@@ -128,7 +129,7 @@ class _GetDiscountState extends State<GetDiscount> {
                 if (codeState is! LoadingState) {
                   ref
                       .read(discountProvider.notifier)
-                      .sendGiftVoucher(code: giftCodeController.text, clear : giftCodeClear);
+                      .sendGiftVoucher(code: giftCodeController.text, voucherClear : giftCodeClear);
                   setState(() {
                     giftCodeClear = !giftCodeClear;
                   });

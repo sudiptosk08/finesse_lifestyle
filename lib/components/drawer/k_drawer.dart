@@ -12,6 +12,8 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../../src/features/home/components/shop_page.dart';
+
 class KDrawer extends ConsumerWidget {
   const KDrawer({Key? key}) : super(key: key);
 
@@ -63,18 +65,25 @@ class KDrawer extends ConsumerWidget {
                         InkWell(
                           onTap: () {
                             if (menuData.user.isActive == 1) {
-                              ref
-                                  .read(shopProvider.notifier)
-                                  .fetchShopProductList(
-                                      categoryId: menuData.menus[index].id);
+                              if (menuData.menus[index].name == "men") {
+                                ref
+                                    .read(shopProvider.notifier)
+                                    .fetchShopProductList(groupId: "", str: "");
 
-                              Navigator.pushNamed(context, '/shop');
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: ((context) {
+                                  return const ShopPage();
+                                })));
+                              } else {
+                                toast("Coming soon...",
+                                    bgColor: KColor.stickerColor);
+                              }
                             } else {
                               toast('Coming soon...');
                             }
                           },
                           child: Text(
-                            menuData.menus[index].name ,
+                            menuData.menus[index].name,
                             style: KTextStyle.subtitle1
                                 .copyWith(color: KColor.whiteBackground),
                           ),

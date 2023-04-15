@@ -28,6 +28,7 @@ class DiscountController extends StateNotifier<BaseState> {
   int subtotal = 0;
   int discount = 0;
   int discountAmount = 0;
+  int voucherAmount = 0;
   var countTotalFee;
   var totalFee;
 
@@ -58,9 +59,9 @@ class DiscountController extends StateNotifier<BaseState> {
         }
 
         totalAmount(state, clear);
-        if(clear==true){
-          state =  PromoCodeEmptyState(); 
-          promoCodeModel = null; 
+        if (clear == true) {
+          state = PromoCodeEmptyState();
+          promoCodeModel = null;
         }
       } else {
         state = const ErrorState();
@@ -97,7 +98,11 @@ class DiscountController extends StateNotifier<BaseState> {
           cuponText = barCode;
           discountType = "Referral code";
         }
-
+        totalAmount(state, clear);
+        if (clear == true) {
+          state = ReferralCodeEmptyState();
+          referralCodeModel = null;
+        }
         // NavigationService.navigateToReplacement(
         //     CupertinoPageRoute(builder: (context) => const CartPage()));
       } else {
@@ -112,7 +117,7 @@ class DiscountController extends StateNotifier<BaseState> {
 
   Future sendGiftVoucher({
     required String code,
-    required bool clear,
+    required bool voucherClear,
   }) async {
     state = const LoadingState();
     dynamic responseBody;
@@ -128,6 +133,7 @@ class DiscountController extends StateNotifier<BaseState> {
         voucherCodeModel = VoucherCodeModel.fromJson(responseBody);
         state = VoucherCodeSuccessState(voucherCodeModel);
         print("Gift voucher code Successful");
+        totalAmountVoucher(state, voucherClear);
       } else {
         state = const ErrorState();
       }
@@ -200,7 +206,7 @@ class DiscountController extends StateNotifier<BaseState> {
       }
       discount = clear == false && promoCodeModel != null ? promoCodeDis : 0;
     } else if (referralCodeData != null) {
-      int referralCodeDis = referralCodeData.discount as int;
+      int referralCodeDis = int.parse(referralCodeData.discount.toString());
       countTotalFee = referralCodeData.success == true
           ? '${deliveryFee + (subtotal - (subtotal * referralCodeDis) / 100).round()}'
           : 0;
@@ -214,7 +220,7 @@ class DiscountController extends StateNotifier<BaseState> {
     totalFee = clear == true
         ? (subtotal + deliveryFee)
         : int.parse(countTotalFee!) - roundingFee;
-    discountAmount =
+    voucherAmount =
         clear == true ? 0 : (subtotal + deliveryFee) - int.parse(countTotalFee);
     print(clear);
     print(countTotalFee);
@@ -227,5 +233,54 @@ class DiscountController extends StateNotifier<BaseState> {
 
     print("-------------------");
   }
-}
 
+  totalAmountVoucher(codeState, clear) {
+    deliveryFee = ref?.read(zoneProvider.notifier).deliveryFee as int;
+    subtotal = ref?.read(cartProvider.notifier).subtotal as int;
+    if (clear == true) {
+      discountValue = null;
+    }
+    print("delivery fee is : $deliveryFee");
+    print("clear is $clear");
+    print("subtotal fee is : $subtotal");
+    final VoucherCodeModel? voucherCodeData =
+        codeState is VoucherCodeSuccessState
+            ? codeState.voucherCodeModel
+            : null;
+    final PromoCodeModel? promoCodeData =
+        codeState is PromoCodeSuccessState ? codeState.promoCodeModel : null;
+    final ReferralCodeModel? referralCodeData =
+        codeState is ReferralCodeSuccessState
+            ? codeState.referralCodeModel
+            : null;
+    if (voucherCodeData != null) {
+      int voucherCodeDis = voucherCodeData.amount as int;
+      countTotalFee =
+          voucherCodeData.success == true &&( promoCodeData == null ||
+                  referralCodeData == null)
+              ? '${ (subtotal - voucherCodeDis)}'
+              : '${ (countTotalFee - voucherCodeDis)}';
+      // giftVoucherAmount =
+      clear == false && voucherCodeModel != null ? voucherCodeDis : 0;
+      if (clear == false) {
+        discountValue = voucherCodeData.amount.toString();
+      }
+    }
+    
+    totalFee = clear == true
+        ? (subtotal + deliveryFee)
+        : int.parse(countTotalFee!) + deliveryFee ;
+    // discountAmount =
+    //     clear == true ? 0 : (subtotal + deliveryFee) - int.parse(countTotalFee);
+    print(clear);
+    print(countTotalFee);
+    print("Total fee:$totalFee");
+
+    print("-----------------");
+    print(discountType);
+    print(discountValue);
+    print(cuponText);
+
+    print("-------------------");
+  }
+}

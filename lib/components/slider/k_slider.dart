@@ -42,11 +42,15 @@ class _KSliderState extends State<KSlider> {
         return Container(
             key: UniqueKey(),
             width: context.screenWidth * 0.92,
-            height: context.screenHeight * 0.3,
+            height: context.screenHeight * 0.28,
             color: KColor.appBackground,
             child: pageSliders == 1
                 ? sliderState is LoadingState
-                    ? Carousel(
+                    ?Shimmer.fromColors(
+                        baseColor: Colors.black,
+                        highlightColor: Colors.redAccent,
+                        child: Container(height: 150),
+                      ): Carousel(
                         boxFit: BoxFit.cover,
                         images: sliderData!
                             .map<Widget>(
@@ -70,11 +74,7 @@ class _KSliderState extends State<KSlider> {
                         autoplayDuration: Duration(seconds: 3),
                         animationCurve: Curves.easeInOut,
                       )
-                    : Shimmer.fromColors(
-                        baseColor: Colors.black,
-                        highlightColor: Colors.redAccent,
-                        child: Container(height: 150),
-                      )
+                    
                 : Carousel(
                     boxFit: BoxFit.cover,
                     images: sliderData!

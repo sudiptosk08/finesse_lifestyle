@@ -34,77 +34,93 @@ class _CartPageState extends State<CartPage> {
     bool checkLogin = getBoolAsync(isLoggedIn, defaultValue: false);
 
     return checkLogin
-        ? Scaffold(
-            backgroundColor: KColor.appBackground,
-            body: Consumer(
-              builder: (contex, ref, child) {
-                final cartState = ref.watch(cartProvider);
-                final List<CartModel> cartData =
-                    cartState is CartSuccessState ? cartState.cartList : [];
-                final menuData = ref.watch(menuDataProvider);
-                User? user = menuData is MenuDataSuccessState
-                    ? menuData.menuList!.user
-                    : null;
-                return SingleChildScrollView(
-                  child: Container(
-                    color: Colors.transparent,
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (cartState is LoadingState) ...[
-                          const KLoading(shimmerHeight: 123)
-                        ],
-                        if (cartState is CartSuccessState) ...[
-                          cartData.isEmpty
-                              ? const EmptyProductPage(
-                                  message: 'Your cart is empty')
-                              : Column(
-                                  children: [
-                                    const ProductsAmount(),
-                                    SizedBox(
-                                        height: context.screenHeight * 0.05),
-                                    Row(
-                                      children: [
-                                        Flexible(
-                                          child: KBorderButton(
-                                            title: 'Go Back',
-                                            onTap: () =>Navigator.push(context, MaterialPageRoute(builder: ((context) =>const MainScreen())),
+        ? WillPopScope(
+            onWillPop: () async {
+              print("Back button press");
+              return await Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => const MainScreen()));
+            },
+            child: Scaffold(
+              backgroundColor: KColor.appBackground,
+              body: Consumer(
+                builder: (contex, ref, child) {
+                  final cartState = ref.watch(cartProvider);
+                  final List<CartModel> cartData =
+                      cartState is CartSuccessState ? cartState.cartList : [];
+                  final menuData = ref.watch(menuDataProvider);
+                  User? user = menuData is MenuDataSuccessState
+                      ? menuData.menuList!.user
+                      : null;
+                  return SingleChildScrollView(
+                    child: Container(
+                      color: Colors.transparent,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (cartState is LoadingState) ...[
+                            const KLoading(shimmerHeight: 123)
+                          ],
+                          if (cartState is CartSuccessState) ...[
+                            cartData.isEmpty
+                                ? const EmptyProductPage(
+                                    message: 'Your cart is empty')
+                                : Column(
+                                    children: [
+                                      const ProductsAmount(),
+                                      SizedBox(
+                                          height: context.screenHeight * 0.05),
+                                      Row(
+                                        children: [
+                                          Flexible(
+                                            child: KBorderButton(
+                                              title: 'Go Back',
+                                              onTap: () => Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: ((context) =>
+                                                        const MainScreen())),
+                                              ),
+                                            ),
                                           ),
-                                        ),),
-                                        const SizedBox(width: 16),
-                                        Flexible(
-                                          child: Consumer(
-                                            builder: ((context, ref, child) {
-                                              return KButton(
-                                                title: 'Checkout',
-                                                onTap: () async {
-                                                  if (await ref
-                                                      .read(addressProvider
-                                                          .notifier)
-                                                      .isLocationSet(user!
-                                                          .customer.address)) {
-                                                    Navigator.pushNamed(context,
-                                                        '/addressPage');
-                                                  }
-                                                },
-                                              );
-                                            }),
+                                          const SizedBox(width: 16),
+                                          Flexible(
+                                            child: Consumer(
+                                              builder: ((context, ref, child) {
+                                                return KButton(
+                                                  title: 'Checkout',
+                                                  onTap: () async {
+                                                    if (await ref
+                                                        .read(addressProvider
+                                                            .notifier)
+                                                        .isLocationSet(user!
+                                                            .customer
+                                                            .address)) {
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          '/addressPage');
+                                                    }
+                                                  },
+                                                );
+                                              }),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 36),
-                                  ],
-                                )
+                                        ],
+                                      ),
+                                      const SizedBox(height: 36),
+                                    ],
+                                  )
+                          ],
                         ],
-                      ],
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           )
         : const LoginPage();
