@@ -37,7 +37,12 @@ class DiscountController extends StateNotifier<BaseState> {
   int voucherAmount = 0;
   var countTotalFee;
   var totalFee;
-
+  makeDiscountNull(){
+    roundingFee = 0 ; 
+    promoAmount  = 0 ; referralAmount = 0.0;discount = 0;voucherAmount = 0;
+    ref!.read(giftVoucherProvider.notifier).makeVoucherNull();
+    state = PromoCodeEmptyState(); 
+  }
   Future sendPromoCode({
     required String code,
     required bool clear,
@@ -152,6 +157,9 @@ class DiscountController extends StateNotifier<BaseState> {
 
   setTotalFee(totalvalue) {
     totalFee = totalvalue;
+  }
+    setRoundingFee(roundingvalue) {
+    roundingFee = roundingvalue;
   }
 
   setGiftVoucherAmount(voucherValue) {
@@ -329,6 +337,8 @@ class DiscountController extends StateNotifier<BaseState> {
   //   // discountAmount =
   //   //     clear == true ? 0 : (subtotal + deliveryFee) - int.parse(countTotalFee);
   // }
+
+
 }
 
 class GiftVoucherController extends StateNotifier<BaseState> {
@@ -378,11 +388,17 @@ class GiftVoucherController extends StateNotifier<BaseState> {
     }
   }
 
+  makeVoucherNull(){
+    state = VoucherCodeEmptyState();
+     voucherAmount = 0;
+  }
+
   totalAmountVoucher(codeState, clear) {
     deliveryFee = ref?.read(zoneProvider.notifier).deliveryFee as int;
     subtotal = ref?.read(cartProvider.notifier).subtotal as int;
     promoAmount = ref!.read(discountProvider.notifier).promoAmount;
     referralAmount = ref!.read(discountProvider.notifier).referralAmount;
+    // roundingFee = ref!.read(discountProvider.notifier).roundingFee;
     if (clear == true) {
       discountValue = null;
     }
@@ -409,7 +425,16 @@ class GiftVoucherController extends StateNotifier<BaseState> {
           ? (subtotal - promoAmount) + deliveryFee
           : referralAmount > 0
               ? (subtotal - referralAmount) + deliveryFee
-              : subtotal + deliveryFee;
+              : subtotal + deliveryFee ;
+      // countTotalFee = promoAmount  > 0 ? (subtotal - promoAmount) + deliveryFee: 
+      // referralAmount > 0 ? (subtotal - referralAmount) + deliveryFee: 0; 
+      // if(countTotalFee>0){
+      //   roundingFee =int.parse(countTotalFee) %10; 
+      //   totalFee = countTotalFee - roundingFee; 
+      // }else{
+      //   roundingFee= 0; 
+      //   totalFee = subtotal + deliveryFee; 
+      // }
       ref!.read(discountProvider.notifier).setGiftVoucherAmount(voucherAmount);
        state = VoucherCodeEmptyState();
     } else {
@@ -419,7 +444,17 @@ class GiftVoucherController extends StateNotifier<BaseState> {
           : referralAmount > 0
               ? ((subtotal - referralAmount) - voucherAmount) + deliveryFee
               : (subtotal - voucherAmount) + deliveryFee;
+        // countTotalFee = promoAmount > 0
+        //   ? ((subtotal - promoAmount) - voucherAmount) + deliveryFee
+        //   : referralAmount > 0
+        //       ? ((subtotal - referralAmount) - voucherAmount) + deliveryFee
+        //       : (subtotal - voucherAmount) + deliveryFee;
+       
+        // roundingFee =int.parse(countTotalFee)  %10;
+        //  totalFee = countTotalFee - roundingFee; 
+       
     }
+    // ref!.read(discountProvider.notifier).setRoundingFee(roundingFee);
     ref!.read(discountProvider.notifier).setTotalFee(totalFee);
 
     // totalFee = clear == true

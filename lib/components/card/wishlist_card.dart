@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:finesse/components/dialog/k_confirm_dialog.dart';
 import 'package:finesse/src/features/cart/controller/cart_controller.dart';
+import 'package:finesse/src/features/cart/controller/discount_controller.dart';
 import 'package:finesse/src/features/cart/controller/zone_controller.dart';
 import 'package:finesse/styles/b_style.dart';
 import 'package:finesse/utils/extension.dart';
@@ -181,11 +182,13 @@ class _WishlistCardState extends ConsumerState<WishlistCard> {
                                       InkWell(
                                         borderRadius: BorderRadius.circular(10),
                                         onTap: () {
+                                         
                                           setState(() {
                                             widget.quantity =
                                                 (widget.quantity! + 1);
+                                           
                                           });
-
+                                              ref.read(discountProvider.notifier).makeDiscountNull();
                                           ref
                                               .read(cartProvider.notifier)
                                               .updateCart(
@@ -228,7 +231,7 @@ class _WishlistCardState extends ConsumerState<WishlistCard> {
                                               widget.quantity =
                                                   (widget.quantity! - 1);
                                             });
-
+                                               ref.read(discountProvider.notifier).makeDiscountNull();
                                             ref
                                                 .read(cartProvider.notifier)
                                                 .updateCart(

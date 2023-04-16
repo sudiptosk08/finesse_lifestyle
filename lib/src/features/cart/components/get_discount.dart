@@ -33,7 +33,6 @@ class _GetDiscountState extends State<GetDiscount> {
         final PromoCodeModel? promoCodeData = codeState is PromoCodeSuccessState
             ? codeState.promoCodeModel
             : null;
-          // promoCodeClear =   codeState is PromoCodeSuccessState && codeState.promoCodeModel != null ? false: true;
         final ReferralCodeModel? referralCodeData =
             codeState is ReferralCodeSuccessState
                 ? codeState.referralCodeModel
@@ -66,12 +65,14 @@ class _GetDiscountState extends State<GetDiscount> {
                     hintText: codeState is PromoCodeSuccessState && codeState.promoCodeModel != null ? codeState.promoCodeModel!.coupon.code.toString(): 'Promo Code',
 
                     buttonText: promoCodeData?.success == true &&
-                            codeState is PromoCodeSuccessState
+                            promoCodeController.text.isNotEmpty
                         ? 'Clear'
                         : 'Apply Code',
                     tap: () {
-                     
+                     print("promo code auth ${promoCodeClear}");
                         if (codeState is! LoadingState) {
+                        //     promoCodeClear =   codeState is PromoCodeSuccessState && codeState.promoCodeModel != null && promoCodeData?.success == true ? true: false;
+
                           ref
                               .read(discountProvider.notifier)
                               .sendPromoCode(code: promoCodeController.text,clear : promoCodeClear );
@@ -101,7 +102,7 @@ class _GetDiscountState extends State<GetDiscount> {
                     hintText: codeState is ReferralCodeSuccessState && codeState.referralCodeModel != null ? codeState.referralCodeModel!.coupon.toString():'Referral Code',
 
                     buttonText: referralCodeData?.success == true &&
-                           codeState is ReferralCodeSuccessState
+                            referralCodeController.text.isNotEmpty
                         ? 'Clear'
                         : 'Apply Code',
                     tap: () {
@@ -136,7 +137,7 @@ class _GetDiscountState extends State<GetDiscount> {
               title: 'Gift Voucher',
               hintText: giftVoucherState is VoucherCodeSuccessState && giftVoucherState.voucherCodeModel != null ? giftVoucherState.voucherCodeModel!.coupon.code.toString():'Gift Voucher',
               buttonText: voucherCodeData?.success == true &&
-                      giftVoucherState is VoucherCodeSuccessState
+                     giftCodeController.text.isNotEmpty
                   ? 'Clear'
                   : 'Apply Code',
               tap: () {

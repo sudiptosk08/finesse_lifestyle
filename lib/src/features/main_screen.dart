@@ -10,6 +10,7 @@ import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/src/features/auth/login/view/login_page.dart';
 import 'package:finesse/src/features/cart/controller/cart_controller.dart';
+import 'package:finesse/src/features/cart/controller/discount_controller.dart';
 import 'package:finesse/src/features/cart/controller/zone_controller.dart';
 import 'package:finesse/src/features/cart/view/cart_page.dart';
 import 'package:finesse/src/features/checkout/controller/address_controller.dart';
@@ -99,6 +100,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   setState(() => _currentIndex = index);
                   if (wishlistState is! LoadingState) {
                     if (_currentIndex == 1) {
+                      ref.read(discountProvider.notifier).makeDiscountNull();
                       ref.read(cartProvider.notifier).cartDetails();
                       ref
                           .read(addressProvider.notifier)
