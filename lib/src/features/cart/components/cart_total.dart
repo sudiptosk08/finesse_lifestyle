@@ -38,6 +38,7 @@ class _CardTotalState extends State<CardTotal> {
       final discountState = ref.watch(discountProvider);
       final cartState = ref.watch(cartProvider);
       final zoneState = ref.watch(zoneProvider);
+      final giftVoucherState = ref.watch(giftVoucherProvider);
       return Container(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 18.0),
           decoration: BoxDecoration(
@@ -60,6 +61,10 @@ class _CardTotalState extends State<CardTotal> {
               _getTotal('Discount',
                   ref.read(discountProvider.notifier).discount.toString(),
                   discount: true),
+               const SizedBox(height: 15),
+              _getTotal('Gift Voucher',
+                  ref.read(discountProvider.notifier).voucherAmount.toString(),
+                  ),
               const SizedBox(height: 15),
               _getTotal('Rounding',
                   ref.read(discountProvider.notifier).roundingFee.toString(),
@@ -83,9 +88,9 @@ class _CardTotalState extends State<CardTotal> {
                     cartState is CartSuccessState &&
                             zoneState is! ZoneSuccessState &&
                             discountState is! PromoCodeSuccessState &&
-                            discountState is! ReferralCodeSuccessState && discountState is! VoucherCodeSuccessState
+                            discountState is! ReferralCodeSuccessState && giftVoucherState is! VoucherCodeSuccessState
                         ? "৳ ${ref.read(cartProvider.notifier).totalAmount.toString()}"
-                        :   zoneState is ZoneSuccessState && discountState is! VoucherCodeSuccessState &&
+                        :   zoneState is ZoneSuccessState && giftVoucherState is! VoucherCodeSuccessState &&
                                ( discountState is! PromoCodeSuccessState ||  
                                 discountState is! ReferralCodeSuccessState )
                             ? "৳ ${ref.read(zoneProvider.notifier).countTotalFee.toString()}"
@@ -94,6 +99,21 @@ class _CardTotalState extends State<CardTotal> {
                       color: KColor.blackbg.withOpacity(0.8),
                     ),
                   ),
+                  //     Text(
+                  //   cartState is CartSuccessState &&
+                  //           zoneState is! ZoneSuccessState &&
+                  //           discountState is! PromoCodeSuccessState &&
+                  //           discountState is! ReferralCodeSuccessState && discountState is! VoucherCodeSuccessState
+                  //       ? "৳ ${ref.read(cartProvider.notifier).totalAmount.toString()}"
+                  //       :   zoneState is ZoneSuccessState && discountState is! VoucherCodeSuccessState &&
+                  //              ( discountState is! PromoCodeSuccessState ||  
+                  //               discountState is! ReferralCodeSuccessState )
+                  //           ? "৳ ${ref.read(zoneProvider.notifier).countTotalFee.toString()}"
+                  //           : "৳ ${ref.read(discountProvider.notifier).totalFee.toString()}",
+                  //   style: KTextStyle.sticker.copyWith(
+                  //     color: KColor.blackbg.withOpacity(0.8),
+                  //   ),
+                  // ),
 
                   // Text(
                   //   cartState is CartSuccessState &&

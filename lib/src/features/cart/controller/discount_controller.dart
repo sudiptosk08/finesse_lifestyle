@@ -14,6 +14,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final discountProvider = StateNotifierProvider<DiscountController, BaseState>(
   (ref) => DiscountController(ref: ref),
 );
+final giftVoucherProvider =
+    StateNotifierProvider<GiftVoucherController, BaseState>(
+  (ref) => GiftVoucherController(ref: ref),
+);
 
 /// Controllers
 class DiscountController extends StateNotifier<BaseState> {
@@ -26,6 +30,8 @@ class DiscountController extends StateNotifier<BaseState> {
   int deliveryFee = 0;
   int roundingFee = 0;
   int subtotal = 0;
+  var promoAmount = 0.0;
+  var referralAmount = 0.0;
   int discount = 0;
   int discountAmount = 0;
   int voucherAmount = 0;
@@ -58,7 +64,7 @@ class DiscountController extends StateNotifier<BaseState> {
           discountType = "Promo code";
         }
 
-        totalAmount(state, clear);
+        totalAmount(state, clear, isPromo: true);
         if (clear == true) {
           state = PromoCodeEmptyState();
           promoCodeModel = null;
@@ -98,7 +104,7 @@ class DiscountController extends StateNotifier<BaseState> {
           cuponText = barCode;
           discountType = "Referral code";
         }
-        totalAmount(state, clear);
+        totalAmount(state, clear, isReferral: true);
         if (clear == true) {
           state = ReferralCodeEmptyState();
           referralCodeModel = null;
@@ -115,33 +121,41 @@ class DiscountController extends StateNotifier<BaseState> {
     }
   }
 
-  Future sendGiftVoucher({
-    required String code,
-    required bool voucherClear,
-  }) async {
-    state = const LoadingState();
-    dynamic responseBody;
-    var requestBody = {
-      'code': code,
-    };
-    try {
-      responseBody = await Network.handleResponse(
-        await Network.postRequest(API.getGiftVoucher, requestBody),
-      );
-      print(requestBody);
-      if (responseBody != null) {
-        voucherCodeModel = VoucherCodeModel.fromJson(responseBody);
-        state = VoucherCodeSuccessState(voucherCodeModel);
-        print("Gift voucher code Successful");
-        totalAmountVoucher(state, voucherClear);
-      } else {
-        state = const ErrorState();
-      }
-    } catch (error, stackTrace) {
-      print(error);
-      print(stackTrace);
-      state = const ErrorState();
-    }
+  // Future sendGiftVoucher({
+  //   required String code,
+  //   required bool voucherClear,
+  // }) async {
+  //   state = const LoadingState();
+  //   dynamic responseBody;
+  //   var requestBody = {
+  //     'code': code,
+  //   };
+  //   try {
+  //     responseBody = await Network.handleResponse(
+  //       await Network.postRequest(API.getGiftVoucher, requestBody),
+  //     );
+  //     print(requestBody);
+  //     if (responseBody != null) {
+  //       voucherCodeModel = VoucherCodeModel.fromJson(responseBody);
+  //       state = VoucherCodeSuccessState(voucherCodeModel);
+  //       print("Gift voucher code Successful");
+  //       totalAmountVoucher(state, voucherClear);
+  //     } else {
+  //       state = const ErrorState();
+  //     }
+  //   } catch (error, stackTrace) {
+  //     print(error);
+  //     print(stackTrace);
+  //     state = const ErrorState();
+  //   }
+  // }
+
+  setTotalFee(totalvalue) {
+    totalFee = totalvalue;
+  }
+
+  setGiftVoucherAmount(voucherValue) {
+    voucherAmount = voucherValue;
   }
 
   // void totalAmount(codeState, clear) {
@@ -173,14 +187,17 @@ class DiscountController extends StateNotifier<BaseState> {
   //   print(totalFee);
   // }
 
-  void totalAmount(codeState, clear) {
+  void totalAmount(codeState, clear, {isReferral = false, isPromo = false}) {
     final PromoCodeModel? promoCodeData =
         codeState is PromoCodeSuccessState ? codeState.promoCodeModel : null;
     final ReferralCodeModel? referralCodeData =
         codeState is ReferralCodeSuccessState
             ? codeState.referralCodeModel
             : null;
-
+    final VoucherCodeModel? voucherCodeData =
+        codeState is VoucherCodeSuccessState
+            ? codeState.voucherCodeModel
+            : null;
     deliveryFee = ref?.read(zoneProvider.notifier).deliveryFee as int;
     subtotal = ref?.read(cartProvider.notifier).subtotal as int;
     if (clear == true) {
@@ -189,39 +206,66 @@ class DiscountController extends StateNotifier<BaseState> {
     print("delivery fee is : $deliveryFee");
     print("clear is $clear");
     print("subtotal fee is : $subtotal");
-    // int promoCodeDis = promoCodeData?.coupon.discount as int; // previous code
-    // print("discount of promocode: ${promoCodeDis}");
     print("------start------countTotalFee");
-    //  int referralCodeDis = referralCodeData?.discount as int; // previous code
-    //  int referralCodeDis = referralCodeData!.coupon.discount as int;
-    // int referralCodeDis = 0;
-    // print(referralCodeDis); // prvious code
-    if (promoCodeData != null) {
+    if (promoCodeData != null && isPromo) {
       int promoCodeDis = promoCodeData.coupon.discount as int;
+      promoAmount = ((subtotal * promoCodeDis) / 100);
       countTotalFee = promoCodeData.success == true
           ? '${deliveryFee + (subtotal - (subtotal * promoCodeDis) / 100).round()}' //promoCodeData?.coupon.discount.toString()
           : 0;
+      print("promo amount is");
+      print("${promoAmount}");
       if (clear == false) {
         discountValue = promoCodeData.coupon.discount.toString();
       }
-      discount = clear == false && promoCodeModel != null ? promoCodeDis : 0;
-    } else if (referralCodeData != null) {
+      if (clear == false && promoCodeModel != null) {
+        discount = promoCodeDis;
+      } 
+      if(clear) {
+        discount = 0;
+        promoAmount = 0;
+         state = ReferralCodeEmptyState();
+      }
+      
+      // discount =
+      //     clear == false && promoCodeModel != null ? promoCodeDis : 0;
+    } else if (referralCodeData != null && isReferral) {
       int referralCodeDis = int.parse(referralCodeData.discount.toString());
+      referralAmount = ((subtotal * referralCodeDis) / 100);
+           
       countTotalFee = referralCodeData.success == true
           ? '${deliveryFee + (subtotal - (subtotal * referralCodeDis) / 100).round()}'
           : 0;
-      discount =
-          clear == false && referralCodeModel != null ? referralCodeDis : 0;
+      if (clear == false && referralCodeModel != null) {
+        discount = referralCodeDis;
+      } 
+      if(clear) {
+        discount = 0;
+        referralAmount = 0;
+        state = ReferralCodeEmptyState();
+      }
+      // discount =
+      //     clear == false && referralCodeModel != null ? referralCodeDis : 0;
       if (clear == false) {
         discountValue = referralCodeData.discount.toString();
       }
+      print("referral amount is : ${referralAmount}");
     }
     roundingFee = clear == true ? 0 : int.parse(countTotalFee) % 10;
-    totalFee = clear == true
-        ? (subtotal + deliveryFee)
-        : int.parse(countTotalFee!) - roundingFee;
-    voucherAmount =
-        clear == true ? 0 : (subtotal + deliveryFee) - int.parse(countTotalFee);
+    if (voucherAmount > 0) {
+      totalFee = clear == true
+          ? (subtotal - voucherAmount) + deliveryFee
+          : int.parse(countTotalFee! - voucherAmount) - roundingFee;
+      print("voucher in proo ${totalFee}");
+    } else {
+      totalFee = clear == true
+          ? (subtotal + deliveryFee)
+          : int.parse(countTotalFee!) - roundingFee;
+      print("voucher not in proo ${totalFee}");
+    }
+
+    // voucherAmount =
+    //     clear == true ? 0 : (subtotal + deliveryFee) - int.parse(countTotalFee);
     print(clear);
     print(countTotalFee);
     print("Total fee:$totalFee");
@@ -234,53 +278,163 @@ class DiscountController extends StateNotifier<BaseState> {
     print("-------------------");
   }
 
+  // totalAmountVoucher(codeState, clear) {
+  //   deliveryFee = ref?.read(zoneProvider.notifier).deliveryFee as int;
+  //   subtotal = ref?.read(cartProvider.notifier).subtotal as int;
+  //   if (clear == true) {
+  //     discountValue = null;
+  //   }
+  //   final PromoCodeModel? promoCodeData =
+  //       codeState is PromoCodeSuccessState ? codeState.promoCodeModel : null;
+  //   final ReferralCodeModel? referralCodeData =
+  //       codeState is ReferralCodeSuccessState
+  //           ? codeState.referralCodeModel
+  //           : null;
+  //   final VoucherCodeModel? voucherCodeData =
+  //       codeState is VoucherCodeSuccessState
+  //           ? codeState.voucherCodeModel
+  //           : null;
+  //   if (voucherCodeData != null) {
+  //     voucherAmount = voucherCodeData.amount as int;
+
+  //     clear == false && voucherCodeModel != null ? voucherAmount : 0;
+  //     if (clear == false) {
+  //       discountValue = voucherCodeData.amount.toString();
+  //     }
+  //   }
+  //   // if(promoAmount>0 || referralAmount >0){
+  //   //   if(promoAmount>0){
+  //   //     totalFee = clear = true ? (subtotal -promoAmount) + deliveryFee :
+  //   //   }
+  //   // }
+  //   if (clear == true) {
+  //     voucherAmount = 0;
+  //     promoAmount > 0
+  //         ? (subtotal - promoAmount) + deliveryFee
+  //         : referralAmount > 0
+  //             ? (subtotal - referralAmount) + deliveryFee
+  //             : totalFee = subtotal + deliveryFee;
+  //   } else {
+  //     totalFee = promoAmount > 0
+  //         ? ((subtotal - promoAmount) - voucherAmount) + deliveryFee
+  //         : referralAmount > 0
+  //             ? ((subtotal - referralAmount) - voucherAmount) + deliveryFee
+  //             : (subtotal - voucherAmount) + deliveryFee;
+  //   }
+
+  //   // totalFee = clear == true
+  //   //     ? (subtotal + deliveryFee)
+  //   //     : int.parse(countTotalFee!)-voucherAmount  ;
+  //   print("total fee in voucher code ${totalFee}");
+  //   // discountAmount =
+  //   //     clear == true ? 0 : (subtotal + deliveryFee) - int.parse(countTotalFee);
+  // }
+}
+
+class GiftVoucherController extends StateNotifier<BaseState> {
+  final Ref? ref;
+
+  GiftVoucherController({this.ref}) : super(const InitialState());
+  PromoCodeModel? promoCodeModel;
+  ReferralCodeModel? referralCodeModel;
+  VoucherCodeModel? voucherCodeModel;
+  int deliveryFee = 0;
+  int roundingFee = 0;
+  int subtotal = 0;
+  var promoAmount = 0.0;
+  var referralAmount = 0.0;
+  int discount = 0;
+  int discountAmount = 0;
+  int voucherAmount = 0;
+  var countTotalFee;
+  var totalFee;
+
+  Future sendGiftVoucher({
+    required String code,
+    required bool voucherClear,
+  }) async {
+    state = const LoadingState();
+    dynamic responseBody;
+    var requestBody = {
+      'code': code,
+    };
+    try {
+      responseBody = await Network.handleResponse(
+        await Network.postRequest(API.getGiftVoucher, requestBody),
+      );
+      print(requestBody);
+      if (responseBody != null) {
+        voucherCodeModel = VoucherCodeModel.fromJson(responseBody);
+        state = VoucherCodeSuccessState(voucherCodeModel);
+        print("Gift voucher code Successful");
+        totalAmountVoucher(state, voucherClear);
+      } else {
+        state = const ErrorState();
+      }
+    } catch (error, stackTrace) {
+      print(error);
+      print(stackTrace);
+      state = const ErrorState();
+    }
+  }
+
   totalAmountVoucher(codeState, clear) {
     deliveryFee = ref?.read(zoneProvider.notifier).deliveryFee as int;
     subtotal = ref?.read(cartProvider.notifier).subtotal as int;
+    promoAmount = ref!.read(discountProvider.notifier).promoAmount;
+    referralAmount = ref!.read(discountProvider.notifier).referralAmount;
     if (clear == true) {
       discountValue = null;
     }
-    print("delivery fee is : $deliveryFee");
-    print("clear is $clear");
-    print("subtotal fee is : $subtotal");
+
     final VoucherCodeModel? voucherCodeData =
         codeState is VoucherCodeSuccessState
             ? codeState.voucherCodeModel
             : null;
-    final PromoCodeModel? promoCodeData =
-        codeState is PromoCodeSuccessState ? codeState.promoCodeModel : null;
-    final ReferralCodeModel? referralCodeData =
-        codeState is ReferralCodeSuccessState
-            ? codeState.referralCodeModel
-            : null;
     if (voucherCodeData != null) {
-      int voucherCodeDis = voucherCodeData.amount as int;
-      countTotalFee =
-          voucherCodeData.success == true &&( promoCodeData == null ||
-                  referralCodeData == null)
-              ? '${ (subtotal - voucherCodeDis)}'
-              : '${ (countTotalFee - voucherCodeDis)}';
-      // giftVoucherAmount =
-      clear == false && voucherCodeModel != null ? voucherCodeDis : 0;
+      voucherAmount = voucherCodeData.amount as int;
+
       if (clear == false) {
         discountValue = voucherCodeData.amount.toString();
       }
     }
-    
-    totalFee = clear == true
-        ? (subtotal + deliveryFee)
-        : int.parse(countTotalFee!) + deliveryFee ;
+    // if(promoAmount>0 || referralAmount >0){
+    //   if(promoAmount>0){
+    //     totalFee = clear = true ? (subtotal -promoAmount) + deliveryFee :
+    //   }
+    // }
+    if (clear == true) {
+      voucherAmount = 0;
+      totalFee = promoAmount > 0
+          ? (subtotal - promoAmount) + deliveryFee
+          : referralAmount > 0
+              ? (subtotal - referralAmount) + deliveryFee
+              : subtotal + deliveryFee;
+      ref!.read(discountProvider.notifier).setGiftVoucherAmount(voucherAmount);
+       state = VoucherCodeEmptyState();
+    } else {
+      ref!.read(discountProvider.notifier).setGiftVoucherAmount(voucherAmount);
+      totalFee = promoAmount > 0
+          ? ((subtotal - promoAmount) - voucherAmount) + deliveryFee
+          : referralAmount > 0
+              ? ((subtotal - referralAmount) - voucherAmount) + deliveryFee
+              : (subtotal - voucherAmount) + deliveryFee;
+    }
+    ref!.read(discountProvider.notifier).setTotalFee(totalFee);
+
+    // totalFee = clear == true
+    //     ? (subtotal + deliveryFee)
+    //     : int.parse(countTotalFee!)-voucherAmount  ;
+    print("total fee in voucher code ${totalFee}");
     // discountAmount =
     //     clear == true ? 0 : (subtotal + deliveryFee) - int.parse(countTotalFee);
-    print(clear);
-    print(countTotalFee);
-    print("Total fee:$totalFee");
 
-    print("-----------------");
-    print(discountType);
-    print(discountValue);
-    print(cuponText);
+    print("voucher amout----------------"); 
+    print("totalfee ${totalFee}");
+    print("promoamount  ${promoAmount}");
+    print("referral amoubt ${referralAmount}");
+    print("subtotal ${subtotal}");
+        print("voucher amout- end---------------"); 
 
-    print("-------------------");
   }
 }
