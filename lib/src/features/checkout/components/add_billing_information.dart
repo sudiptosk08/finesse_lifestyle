@@ -51,7 +51,7 @@ class AddBillingInformationState extends State<AddBillingInformation> {
                     controller: name..text = user!.customer.customerName!,
                     hintText: 'Enter your name here...',
                     label: '',
-                    readOnly: false,
+                    readOnly: true,
                   ),
                 ),
                 _editInformation(
@@ -60,7 +60,7 @@ class AddBillingInformationState extends State<AddBillingInformation> {
                     controller: email..text = user.customer.email!,
                     hintText: 'Enter your email here...',
                     label: '',
-                    readOnly: false,
+                    readOnly: true,
                   ),
                 ),
                 _editInformation(
@@ -102,9 +102,9 @@ class AddBillingInformationState extends State<AddBillingInformation> {
                               emailis: email.text,
                               phoneis: phone.text,
                               addressis: address.text,
-
                             );
-                        print("Address Text ===================${address.text}");
+                        print(
+                            "Address Text ===================${address.text}");
                       }
                       // Navigator.pushNamed(context, '/accountDetails');
                     });

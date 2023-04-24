@@ -113,6 +113,7 @@ class _WishlistCardState extends ConsumerState<WishlistCard> {
               children: [
                 SizedBox(
                   height: 123,
+                  width: 120,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(15),
@@ -182,13 +183,13 @@ class _WishlistCardState extends ConsumerState<WishlistCard> {
                                       InkWell(
                                         borderRadius: BorderRadius.circular(10),
                                         onTap: () {
-                                         
                                           setState(() {
                                             widget.quantity =
                                                 (widget.quantity! + 1);
-                                           
                                           });
-                                              ref.read(discountProvider.notifier).makeDiscountNull();
+                                          ref
+                                              .read(discountProvider.notifier)
+                                              .makeDiscountNull();
                                           ref
                                               .read(cartProvider.notifier)
                                               .updateCart(
@@ -231,7 +232,9 @@ class _WishlistCardState extends ConsumerState<WishlistCard> {
                                               widget.quantity =
                                                   (widget.quantity! - 1);
                                             });
-                                               ref.read(discountProvider.notifier).makeDiscountNull();
+                                            ref
+                                                .read(discountProvider.notifier)
+                                                .makeDiscountNull();
                                             ref
                                                 .read(cartProvider.notifier)
                                                 .updateCart(

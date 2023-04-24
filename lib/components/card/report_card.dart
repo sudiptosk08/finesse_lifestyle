@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
@@ -99,8 +101,8 @@ class _ReportCardState extends State<ReportCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image.network(
-                  widget.img.toString(),
+               Image.file(
+                  widget.img as File,
                   height: 49,
                 ),
                 const SizedBox(width: 16),

@@ -124,7 +124,7 @@ class OrderData {
     int refferalDiscount;
     int membershipDiscount;
     int promoDiscount;
-    int refferalDiscountAmount;
+    dynamic refferalDiscountAmount;
     int membershipDiscountAmount;
     int promoDiscountAmount;
     String billingCity;

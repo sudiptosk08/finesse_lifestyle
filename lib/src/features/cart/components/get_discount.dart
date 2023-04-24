@@ -38,7 +38,7 @@ class _GetDiscountState extends State<GetDiscount> {
                 ? codeState.referralCodeModel
                 : null;
 
-          final VoucherCodeModel? voucherCodeData =
+        final VoucherCodeModel? voucherCodeData =
             giftVoucherState is VoucherCodeSuccessState
                 ? giftVoucherState.voucherCodeModel
                 : null;
@@ -62,25 +62,28 @@ class _GetDiscountState extends State<GetDiscount> {
                         : false,
                     title: 'Promo Code',
                     // hintText: 'Promo Code',
-                    hintText: codeState is PromoCodeSuccessState && codeState.promoCodeModel != null ? codeState.promoCodeModel!.coupon.code.toString(): 'Promo Code',
+                    hintText: codeState is PromoCodeSuccessState &&
+                            codeState.promoCodeModel != null
+                        ? codeState.promoCodeModel!.coupon.code.toString()
+                        : 'Promo Code',
 
                     buttonText: promoCodeData?.success == true &&
                             promoCodeController.text.isNotEmpty
                         ? 'Clear'
                         : 'Apply Code',
                     tap: () {
-                     print("promo code auth ${promoCodeClear}");
-                        if (codeState is! LoadingState) {
+                      print("promo code auth ${promoCodeClear}");
+                      if (codeState is! LoadingState) {
                         //     promoCodeClear =   codeState is PromoCodeSuccessState && codeState.promoCodeModel != null && promoCodeData?.success == true ? true: false;
 
-                          ref
-                              .read(discountProvider.notifier)
-                              .sendPromoCode(code: promoCodeController.text,clear : promoCodeClear );
-                          setState(() {
-                            promoCodeClear = !promoCodeClear;
-                          });
-                        }
-                      
+                        ref.read(discountProvider.notifier).sendPromoCode(
+                            code: promoCodeController.text,
+                            clear: promoCodeClear);
+                        setState(() {
+                          promoCodeClear = !promoCodeClear;
+                        });
+                      }
+
                       if (promoCodeClear == false) {
                         promoCodeController.clear();
                       }
@@ -92,14 +95,17 @@ class _GetDiscountState extends State<GetDiscount> {
                 ? Container()
                 : CouponCodeCard(
                     // controller:  referralCodeController..text = codeState is ReferralCodeSuccessState && codeState.referralCodeModel != null ? codeState.referralCodeModel!.coupon.toString():referralCodeController.text,
-                    controller:  referralCodeController,
+                    controller: referralCodeController,
                     readOnly: referralCodeData?.success == true &&
                             referralCodeController.text.isNotEmpty
                         ? true
                         : false,
                     title: 'Referral Code',
                     // hintText: 'Referral Code',
-                    hintText: codeState is ReferralCodeSuccessState && codeState.referralCodeModel != null ? codeState.referralCodeModel!.coupon.toString():'Referral Code',
+                    hintText: codeState is ReferralCodeSuccessState &&
+                            codeState.referralCodeModel != null
+                        ? codeState.referralCodeModel!.coupon.toString()
+                        : 'Referral Code',
 
                     buttonText: referralCodeData?.success == true &&
                             referralCodeController.text.isNotEmpty
@@ -108,7 +114,8 @@ class _GetDiscountState extends State<GetDiscount> {
                     tap: () {
                       if (codeState is! LoadingState) {
                         ref.read(discountProvider.notifier).sendCReferralCode(
-                            barCode: referralCodeController.text,clear : referralCodeClear );
+                            barCode: referralCodeController.text,
+                            clear: referralCodeClear);
                         setState(() {
                           referralCodeClear = !referralCodeClear;
                         });
@@ -126,32 +133,33 @@ class _GetDiscountState extends State<GetDiscount> {
               ),
               const SizedBox(height: 15),
             ],
-
             CouponCodeCard(
               // controller:  giftCodeController..text = giftVoucherState is VoucherCodeSuccessState && giftVoucherState.voucherCodeModel != null ? giftVoucherState.voucherCodeModel!.coupon.code.toString():giftCodeController.text,
-              controller:  giftCodeController,
+              controller: giftCodeController,
               readOnly: voucherCodeData?.success == true &&
                       giftCodeController.text.isNotEmpty
                   ? true
                   : false,
               title: 'Gift Voucher',
-              hintText: giftVoucherState is VoucherCodeSuccessState && giftVoucherState.voucherCodeModel != null ? giftVoucherState.voucherCodeModel!.coupon.code.toString():'Gift Voucher',
+              hintText: giftVoucherState is VoucherCodeSuccessState &&
+                      giftVoucherState.voucherCodeModel != null
+                  ? giftVoucherState.voucherCodeModel!.coupon.code.toString()
+                  : 'Gift Voucher',
               buttonText: voucherCodeData?.success == true &&
-                     giftCodeController.text.isNotEmpty
+                      giftCodeController.text.isNotEmpty
                   ? 'Clear'
                   : 'Apply Code',
               tap: () {
                 if (codeState is! LoadingState) {
-                  ref
-                      .read(giftVoucherProvider.notifier)
-                      .sendGiftVoucher(code: giftCodeController.text, voucherClear : giftCodeClear);
+                  ref.read(giftVoucherProvider.notifier).sendGiftVoucher(
+                      code: giftCodeController.text,
+                      voucherClear: giftCodeClear);
                   setState(() {
                     giftCodeClear = !giftCodeClear;
                   });
                 }
                 if (giftCodeClear == false) {
                   giftCodeController.clear();
-
                 }
               },
             ),

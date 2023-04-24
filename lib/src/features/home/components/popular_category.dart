@@ -20,8 +20,14 @@ class _PopularCategoryState extends State<PopularCategory> {
     return Consumer(
       builder: (context, ref, _) {
         final sliderState = ref.watch(sliderProvider);
-        final List<PopularSubCategory>? popularCategory = sliderState is SliderSuccessState ? sliderState.homeSliderModel?.popularSubCategory : [];
-        final List<MiddleBanner>? middleBanner = sliderState is SliderSuccessState ? sliderState.homeSliderModel?.middleBanner : [];
+        final List<PopularSubCategory>? popularCategory =
+            sliderState is SliderSuccessState
+                ? sliderState.homeSliderModel?.popularSubCategory
+                : [];
+        final List<MiddleBanner>? middleBanner =
+            sliderState is SliderSuccessState
+                ? sliderState.homeSliderModel?.middleBanner
+                : [];
 
         return Column(
           children: [
@@ -37,23 +43,28 @@ class _PopularCategoryState extends State<PopularCategory> {
                     children: [
                       InkWell(
                         onTap: () {
-                          ref.read(shopProvider.notifier).fetchShopProductList(categoryId: popularCategory[index].id,
-                              groupId: "",str:"");
+                          ref.read(shopProvider.notifier).fetchShopProductList(
+                              categoryId: popularCategory[index].id,
+                              groupId: "",
+                              str: "");
 
                           Navigator.pushNamed(context, '/shop');
                         },
                         child: Container(
                           margin: const EdgeInsets.only(right: 12),
-                          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 18, vertical: 10),
                           height: 36,
                           decoration: BoxDecoration(
-                            border: Border.all(color: KColor.blackbg.withOpacity(0.7)),
+                            border: Border.all(
+                                color: KColor.blackbg.withOpacity(0.7)),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Center(
                             child: Text(
                               popularCategory[index].catName.toString(),
-                              style: KTextStyle.bodyText3.copyWith(color: Colors.black.withOpacity(0.7)),
+                              style: KTextStyle.bodyText3.copyWith(
+                                  color: Colors.black.withOpacity(0.7)),
                             ),
                           ),
                         ),
@@ -71,9 +82,18 @@ class _PopularCategoryState extends State<PopularCategory> {
                 itemCount: middleBanner!.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.only(right: 16),
-                    child: Image.network(middleBanner[index].image),
+                  return GestureDetector(
+                    onTap: (){
+                        ref.read(shopProvider.notifier).fetchShopProductList(
+                          groupId: "",
+                          categoryId: "",
+                          str: "");
+                      Navigator.pushNamed(context, '/shop');
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 16),
+                      child: Image.network(middleBanner[index].image),
+                    ),
                   );
                 },
               ),

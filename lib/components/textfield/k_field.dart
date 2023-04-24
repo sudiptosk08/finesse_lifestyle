@@ -5,10 +5,12 @@ import '../../styles/k_text_style.dart';
 // ignore: must_be_immutable
 class KTextField extends StatefulWidget {
   final String hintText;
+  final bool readOnly;
 
   KTextField({
     Key? key,
     required this.controller,
+    required this.readOnly,
     required this.hintText,
   }) : super(key: key);
 
@@ -24,6 +26,7 @@ class _KTextFieldState extends State<KTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: widget.readOnly,
       validator: (value) {
         String pattern = r'(^(?:[+0]9)?[0-9]{11}$)';
         RegExp regExp = RegExp(pattern);

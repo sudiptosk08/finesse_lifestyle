@@ -40,7 +40,7 @@ class _CartPageState extends State<CartPage> {
               return await Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext context) => const MainScreen()));
+                      builder: (BuildContext context) =>  MainScreen()));
             },
             child: Scaffold(
               backgroundColor: KColor.appBackground,
@@ -83,7 +83,7 @@ class _CartPageState extends State<CartPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: ((context) =>
-                                                        const MainScreen())),
+                                                         MainScreen())),
                                               ),
                                             ),
                                           ),

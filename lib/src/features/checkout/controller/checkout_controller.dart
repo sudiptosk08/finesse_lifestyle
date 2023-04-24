@@ -69,8 +69,9 @@ class CheckoutController extends StateNotifier<BaseState> {
                 "discount": discountValue ?? 0, //
                 "discountType": discountType ?? '', // promocode,  referral code
                 "email": user.email,
-                "giftVoucherAmount": 0,
-                "giftVoucherCode": '',
+                "giftVoucherAmount":
+                    ref!.read(giftVoucherProvider.notifier).voucherAmount,
+                "giftVoucherCode": voucherText,
                 "grandTotal": totalFee - ref!.read(zoneProvider.notifier).deliveryFee,
                 "invoiceTotal": ref!.read(cartProvider.notifier).subtotal,
                 "isDGMoney": 0,
@@ -90,9 +91,9 @@ class CheckoutController extends StateNotifier<BaseState> {
                             .discount
                         : 0,
                 "promoDiscountAmount":
-                    ref!.read(discountProvider.notifier).discountAmount == 0
+                   ref!.read(discountProvider.notifier).promoAmount == 0.0
                         ? 0
-                        : ref!.read(discountProvider.notifier).discountAmount,
+                        : ref!.read(discountProvider.notifier).promoAmount,
                 "referralCode": cuponText,
                 "refferalDiscount":
                     ref!.read(discountProvider.notifier).referralCodeModel !=
@@ -102,7 +103,10 @@ class CheckoutController extends StateNotifier<BaseState> {
                             .referralCodeModel!
                             .discount
                         : 0,
-                "refferalDiscountAmount": 0,
+                "refferalDiscountAmount":
+                    ref!.read(discountProvider.notifier).referralAmount == 0.0
+                        ? 0
+                        : ref!.read(discountProvider.notifier).referralAmount,
                 "roundAmount": roundfee == 0 ? 0 : roundfee,
                 "shippingPrice": billingAddressMap['deliveryFee'] ??
                     ref!.read(zoneProvider.notifier).deliveryFee.toString(),
@@ -124,10 +128,10 @@ class CheckoutController extends StateNotifier<BaseState> {
                 "discount": discountValue ?? 0, //
                 "discountType": discountType ?? '', // promocode,  referral code
                 "email": user.email,
-                "giftVoucherAmount": 0,
-                "giftVoucherCode": '',
+                "giftVoucherAmount": ref!.read(giftVoucherProvider.notifier).voucherAmount,
+                "giftVoucherCode":voucherText ,
                 "grandTotal": totalFee -( ref!.read(zoneProvider.notifier).deliveryFee),
-                "invoiceTotal": totalFee,
+                "invoiceTotal": ref!.read(cartProvider.notifier).subtotal,
                 "isDGMoney": 0,
                 "isDifferentShipping":
                     getJSONAsync(shippingAddress).isEmpty ? 0 : 1,
@@ -145,9 +149,9 @@ class CheckoutController extends StateNotifier<BaseState> {
                             .discount
                         : 0,
                 "promoDiscountAmount":
-                    ref!.read(discountProvider.notifier).discountAmount == 0
+                    ref!.read(discountProvider.notifier).promoAmount == 0.0
                         ? 0
-                        : ref!.read(discountProvider.notifier).discountAmount,
+                        : ref!.read(discountProvider.notifier).promoAmount,
                 "referralCode": cuponText,
                 "refferalDiscount":
                     ref!.read(discountProvider.notifier).referralCodeModel !=
@@ -157,7 +161,9 @@ class CheckoutController extends StateNotifier<BaseState> {
                             .referralCodeModel!
                             .discount
                         : 0,
-                "refferalDiscountAmount": 0,
+                "refferalDiscountAmount": ref!.read(discountProvider.notifier).referralAmount == 0.0
+                        ? 0
+                        : ref!.read(discountProvider.notifier).referralAmount,
                 "roundAmount": roundfee == 0 ? 0 : roundfee,
                 "shippingPrice":billingAddressMap['deliveryFee'] ??
                     ref!.read(discountProvider.notifier).deliveryFee,

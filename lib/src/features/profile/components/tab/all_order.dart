@@ -23,74 +23,97 @@ class _AllOrderState extends State<AllOrder> {
   @override
   Widget build(BuildContext context) {
     return Consumer(
-      builder: (context, ref, child){
+      builder: (context, ref, child) {
         final orderState = ref.watch(orderProvider);
-      //  final List<Datum>? wishlistData = wishlistProductsState is WishlistSuccessState ? wishlistProductsState.wishlistModel?.wishlist.data : [];
+        //  final List<Datum>? wishlistData = wishlistProductsState is WishlistSuccessState ? wishlistProductsState.wishlistModel?.wishlist.data : [];
 
-       final List<OrderData>? orderList = orderState is FetchOrderSuccessState ? orderState.orderModel?.order.data : [];
-          return SingleChildScrollView(
-      child:Container(
-        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if(orderState is LoadingState)...[const KLoading(shimmerHeight: 123,)],
-              if(orderState is FetchOrderSuccessState)...[
-              orderList!.isEmpty?  
-              Center(child:Text("no order found"))
-              :
-              
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: orderList.length, 
-                itemBuilder: (context, index){
-                  print(orderList[index]);
-                  return Slidable(
-                key: UniqueKey(),
-                endActionPane: ActionPane(
-                  extentRatio: 0.85,
-                  dismissible: DismissiblePane(
-                    onDismissed: () async {},
-                  ),
-                  motion: const StretchMotion(),
-                  children: [
-                    SlidableAction(
-                      onPressed: (index) {},
-                      backgroundColor: KColor.deleteColor,
-                      foregroundColor: Colors.white,
-                      icon: Icons.delete_outline_outlined,
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(15.0),
-                        bottomRight: Radius.circular(15.0),
-                      ),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children:  [
-                   InkWell(
-                    onTap: (){
-                      // Navigator.of(context).pushNamed('/orderDetails', arguments: orderList[index] );
-                      Navigator.of(context).push( CupertinoPageRoute(builder: (context)=> OrderDetails(orderData: orderList[index])));
-                    },
-                    child: MyOrderCard(isChecked: true, id: orderList[index].id.toString(), date:orderList[index].createdAt.toString() , userName: orderList[index].name.toString(), contract: orderList[index].contact.toString(), grandTotal: orderList[index].grandTotal.toString(), paymentType: orderList[index].paymentType, status: orderList[index].status)),
-                  ],
-                ),
-              );
-                },
-              ),
-              const SizedBox(height: 30),
-              ]
-                
-            ],
+        final List<OrderData>? orderList = orderState is FetchOrderSuccessState
+            ? orderState.orderModel?.order.data
+            : [];
+        return SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (orderState is LoadingState) ...[
+                  const KLoading(
+                    shimmerHeight: 123,
+                  )
+                ],
+                if (orderState is FetchOrderSuccessState) ...[
+                  orderList!.isEmpty
+                      ? Center(child: Text("no order found"))
+                      : ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: orderList.length,
+                          itemBuilder: (context, index) {
+                            print(orderList[index]);
+                            return Slidable(
+                              key: UniqueKey(),
+                              endActionPane: ActionPane(
+                                extentRatio: 0.85,
+                                dismissible: DismissiblePane(
+                                  onDismissed: () async {},
+                                ),
+                                motion: const StretchMotion(),
+                                children: [
+                                  SlidableAction(
+                                    onPressed: (index) {},
+                                    backgroundColor: KColor.deleteColor,
+                                    foregroundColor: Colors.white,
+                                    icon: Icons.delete_outline_outlined,
+                                    borderRadius: const BorderRadius.only(
+                                      topRight: Radius.circular(15.0),
+                                      bottomRight: Radius.circular(15.0),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                  InkWell(
+                                      onTap: () {
+                                        // Navigator.of(context).pushNamed('/orderDetails', arguments: orderList[index] );
+                                        Navigator.of(context).push(
+                                            CupertinoPageRoute(
+                                                builder: (context) =>
+                                                    OrderDetails(
+                                                        orderData:
+                                                            orderList[index])));
+                                      },
+                                      child: MyOrderCard(
+                                          isChecked: true,
+                                          id: orderList[index].id.toString(),
+                                          date: orderList[index]
+                                              .createdAt
+                                              .toString(),
+                                          userName:
+                                              orderList[index].name.toString(),
+                                          contract: orderList[index]
+                                              .contact
+                                              .toString(),
+                                          grandTotal: orderList[index]
+                                              .grandTotal
+                                              .toString(),
+                                          paymentType:
+                                              orderList[index].paymentType,
+                                          status: orderList[index].status)),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                  const SizedBox(height: 30),
+                ]
+              ],
+            ),
           ),
-        ),
-      ),
-    );
- 
+        );
       },
     );
-   }
+  }
 }

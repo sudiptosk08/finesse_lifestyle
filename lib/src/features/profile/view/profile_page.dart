@@ -6,6 +6,7 @@ import 'package:finesse/src/features/auth/login/model/user_model.dart';
 import 'package:finesse/src/features/auth/login/state/login_state.dart';
 import 'package:finesse/src/features/auth/login/view/login_page.dart';
 import 'package:finesse/src/features/main_screen.dart';
+import 'package:finesse/src/features/profile/components/dashboard.dart';
 import 'package:finesse/src/features/profile/controller/profile_controller.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
@@ -13,6 +14,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
+
+import '../../cart/controller/cart_controller.dart';
+import '../../cart/controller/discount_controller.dart';
+import '../../cart/controller/zone_controller.dart';
+import '../../checkout/components/add_billing_information.dart';
+import '../../checkout/components/add_new_address.dart';
+import '../../checkout/controller/address_controller.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -25,15 +33,18 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-         onWillPop: () async {
+      onWillPop: () async {
         print("Back button press");
-        return await Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (BuildContext context) =>const MainScreen()));
+        return await Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) =>  MainScreen()));
       },
       child: Consumer(
         builder: (context, ref, _) {
           final userState = ref.watch(loginProvider);
-          final User? userData = userState is LoginSuccessState ? userState.userModel : null;
+          final User? userData =
+              userState is LoginSuccessState ? userState.userModel : null;
           bool checkLogin = getBoolAsync(isLoggedIn, defaultValue: false);
           print(checkLogin.toString());
           return checkLogin
@@ -115,15 +126,20 @@ class _ProfilePageState extends State<ProfilePage> {
                                 title: 'Dashboard',
                                 image: 'assets/images/dashboard.png',
                                 onPressed: () {
-    
-                                  Navigator.pushNamed(context, '/dashboard');
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              const Dashboard()));
                                 },
                               ),
                               ProfileCard(
                                 title: 'My Order',
                                 image: 'assets/images/my-order.png',
                                 onPressed: () {
-                                  ref.read(orderProvider.notifier).fetchOrders();
+                                  ref
+                                      .read(orderProvider.notifier)
+                                      .fetchOrders();
                                   Navigator.pushNamed(context, '/myOrder');
                                 },
                               ),
@@ -138,31 +154,34 @@ class _ProfilePageState extends State<ProfilePage> {
                                 title: 'Address',
                                 image: 'assets/images/address.png',
                                 onPressed: () {
-                                  Navigator.pushNamed(context, '/addressInfo');
+                                 
+                             
+                                 Navigator.push(context, MaterialPageRoute(builder: ((context) => AddNewAddress())));
                                 },
                               ),
                               ProfileCard(
                                 title: 'Account Details',
                                 image: 'assets/images/account.png',
                                 onPressed: () {
-                                  Navigator.pushNamed(context, '/accountDetails');
+                                  Navigator.pushNamed(
+                                      context, '/accountDetails');
                                 },
                               ),
                               ProfileCard(
                                 title: 'Report Issue',
                                 image: 'assets/images/report.png',
                                 onPressed: () {
-                                   ref
+                                  ref
                                       .read(reportProvider.notifier)
                                       .fetchReports();
                                   Navigator.pushNamed(context, '/reportIssue');
-                                 
                                 },
                               ),
                             ],
                           ),
                           KLogoutButton(
-                            tap: () => ref.read(loginProvider.notifier).logout(),
+                            tap: () =>
+                                ref.read(loginProvider.notifier).logout(),
                           ),
                         ],
                       ),

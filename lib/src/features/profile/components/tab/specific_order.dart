@@ -49,6 +49,7 @@ class _SpecificOrderState extends State<SpecificOrder> {
             :
             
             ListView.builder(
+              physics: BouncingScrollPhysics(),
               shrinkWrap: true,
               itemCount: orderList.length, 
               itemBuilder: (context, index){

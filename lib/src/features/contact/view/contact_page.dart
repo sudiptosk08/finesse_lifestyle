@@ -8,6 +8,7 @@ import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../../../../components/textfield/k_description_field.dart';
 import '../../../../components/textfield/k_phone_field.dart';
@@ -183,10 +184,10 @@ class _ContactPageState extends State<ContactPage> {
                 ),
               ),
               SizedBox(height: context.screenHeight * 0.06),
-             NameTextField(
+              NameTextField(
                 controller: name,
                 readOnly: false,
-                hintText: 'Marwa Saad',
+                hintText: 'Enter your name heres',
                 label: 'Name',
               ),
               const SizedBox(height: 24),
@@ -215,7 +216,11 @@ class _ContactPageState extends State<ContactPage> {
               KButton(
                 title: 'Send Message',
                 onTap: () {
-                  Navigator.pushNamed(context, '/checkout');
+                  toast("SuccessFull", bgColor: KColor.stickerColor);
+                  message.clear();
+                  phone.clear();
+                  email.clear();
+                  name.clear();
                 },
               ),
               const SizedBox(height: 20),

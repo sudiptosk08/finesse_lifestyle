@@ -96,7 +96,7 @@ class ResetPasswordController extends StateNotifier<BaseState> {
       if (responseBody != null) {
         state = const SignupSuccessState();
         print("Password reset Successful");
-        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) => const MainScreen()));
+        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) =>  MainScreen()));
       } else {
         state = const ErrorState();
       }

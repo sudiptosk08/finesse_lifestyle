@@ -4,6 +4,7 @@ import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/button/k_border_btn.dart';
 import 'package:finesse/components/button/k_button.dart';
 import 'package:finesse/components/textfield/k_text_field.dart';
+import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/src/features/auth/login/controller/login_controller.dart';
 import 'package:finesse/src/features/auth/login/model/user_model.dart';
@@ -15,6 +16,7 @@ import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../../../../components/textfield/k_fill_name.dart';
 import '../../../../components/textfield/k_fill_phone.dart';
@@ -31,6 +33,7 @@ class _ReportIssueState extends State<ReportIssue> {
   TextEditingController id = TextEditingController();
   TextEditingController description = TextEditingController();
   File? image;
+  var userID = getIntAsync(userId);
 
   Future pickImage(ImageSource source) async {
     try {
@@ -152,7 +155,7 @@ class _ReportIssueState extends State<ReportIssue> {
                               description: description.text,
                               reason: reason.text,
                               orderId: id.text,
-                              userId: userData!.id.toString(),
+                              userId: userID.toString(),
                               image: image.toString(),
                             );
                       }

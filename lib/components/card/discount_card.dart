@@ -40,6 +40,7 @@ class CouponCodeCard extends StatelessWidget {
             Flexible(
               flex: 2,
               child:  KTextField(
+                readOnly: readOnly!,
                 controller: controller!,
                 hintText: hintText!,
               ),

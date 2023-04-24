@@ -58,7 +58,7 @@ class LoginController extends StateNotifier<BaseState> {
           ref!.read(menuDataProvider.notifier).fetchMenuData();
           NavigationService.navigateToReplacement(
             CupertinoPageRoute(
-              builder: (context) => const MainScreen(),
+              builder: (context) =>  MainScreen(),
             ),
           );
         }

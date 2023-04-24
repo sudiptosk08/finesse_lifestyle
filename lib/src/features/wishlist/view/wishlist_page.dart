@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../product_details/controller/product_details_controller.dart';
+
 class WishlistPage extends StatefulWidget {
   const WishlistPage({Key? key}) : super(key: key);
 
@@ -25,70 +27,134 @@ class _WishlistPageState extends State<WishlistPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () async {
+      onWillPop: () async {
         print("Back button press");
-        return await Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (BuildContext context) =>const MainScreen()));
+        return await Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) =>  MainScreen()));
       },
       child: Consumer(
         builder: (context, ref, _) {
           final wishlistProductsState = ref.watch(wishlistProvider);
           final cartState = ref.watch(cartProvider);
-    
-          final List<Datum>? wishlistData = wishlistProductsState is WishlistSuccessState ? wishlistProductsState.wishlistModel?.wishlist.data : [];
-    
+
+          final List<Datum>? wishlistData =
+              wishlistProductsState is WishlistSuccessState
+                  ? wishlistProductsState.wishlistModel?.wishlist.data
+                  : [];
+
           bool checkLogin = getBoolAsync(isLoggedIn, defaultValue: false);
-    
+
           return checkLogin
               ? Scaffold(
                   backgroundColor: KColor.appBackground,
                   body: SingleChildScrollView(
                     child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 12),
                       child: Column(
                         children: [
-                          if (wishlistProductsState is LoadingState) ...[const KLoading(shimmerHeight: 123)],
-                          if (wishlistProductsState is WishlistSuccessState) ...[
+                          if (wishlistProductsState is LoadingState) ...[
+                            const KLoading(shimmerHeight: 123)
+                          ],
+                          if (wishlistProductsState
+                              is WishlistSuccessState) ...[
                             wishlistData!.isEmpty
                                 ? const EmptyProductPage(
-                                    message: 'Your haven’t added anything to your wishlist yet.Add your favourites here.',
+                                    message:
+                                        'Your haven’t added anything to your wishlist yet.Add your favourites here.',
                                   )
                                 : ListView.builder(
-                                    physics: const NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     itemCount: wishlistData.length,
                                     itemBuilder: (ctx, index) {
-                                      return WishlistCard(
-                                        img: wishlistData[index].product.productImage,
-                                        productId: wishlistData[index].product.id,
-                                        isChecked: true,
-                                        productName: wishlistData[index].product.productName,
-                                        group: wishlistData[index].product.allgroup.groupName,
-                                        price: wishlistData[index].product.sellingPrice,
-                                        cancel: () {
-                                          setState(() {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          ref
+                                              .read(productDetailsProvider
+                                                  .notifier)
+                                              .fetchProductsDetails(
+                                                  wishlistData[index].product.id);
+                                          ref
+                                              .read(cartProvider.notifier)
+                                              .cartDetails();
+                                          Navigator.pushNamed(
+                                            context,
+                                            '/productDetails',
+                                            arguments: {
+                                              'productName': wishlistData[index]
+                                                  .product
+                                                  .productName,
+                                              'productGroup':
+                                                  wishlistData[index]
+                                                      .product
+                                                      .allgroup
+                                                      .groupName,
+                                              'price': wishlistData[index]
+                                                  .product
+                                                  .sellingPrice
+                                                  .toString(),
+                                              'description': wishlistData[index]
+                                                  .product
+                                                  .briefDescription,
+                                              'id': wishlistData[index]
+                                                  .product
+                                                  .id,
+                                            },
+                                          );
+                                        },
+                                        child: WishlistCard(
+                                          img: wishlistData[index]
+                                              .product
+                                              .productImage,
+                                          productId:
+                                              wishlistData[index].product.id,
+                                          isChecked: true,
+                                          productName: wishlistData[index]
+                                              .product
+                                              .productName,
+                                          group: wishlistData[index]
+                                              .product
+                                              .allgroup
+                                              .groupName,
+                                          price: wishlistData[index]
+                                              .product
+                                              .sellingPrice,
+                                          cancel: () {
+                                            setState(() {
+                                              Navigator.pop(context);
+                                            });
+                                          },
+                                          delete: () {
+                                            if (wishlistProductsState
+                                                is! LoadingState) {
+                                              ref
+                                                  .read(
+                                                      wishlistProvider.notifier)
+                                                  .deleteWishlist(
+                                                    id: wishlistData[index]
+                                                        .id
+                                                        .toString(),
+                                                  );
+                                            }
                                             Navigator.pop(context);
-                                          });
-                                        },
-                                        delete: () {
-                                          if (wishlistProductsState is! LoadingState) {
-                                            ref.read(wishlistProvider.notifier).deleteWishlist(
-                                                  id: wishlistData[index].id.toString(),
-                                                );
-                                          }
-                                          Navigator.pop(context);
-                                          ref.read(wishlistProvider.notifier).fetchWishlistProducts();
-                                        },
-                                        add: () {
-                                          if (cartState is! LoadingState) {
-                                            // ref.read(cartProvider.notifier).addCart(
-                                            //       product: wishlistData[index].product,
-                                            //       barCode: "3211",
-                                            //       quantity: 1,
-                                            //     );
-                                          }
-                                          ref.read(cartProvider.notifier).cartDetails();
-                                        },
+                                            ref
+                                                .read(wishlistProvider.notifier)
+                                                .fetchWishlistProducts();
+                                          },
+                                          add: () {
+                                            // if (cartState is! LoadingState) {
+                                            //   ref.read(cartProvider.notifier).addCart(
+
+                                            //         quantity: 1,
+                                            //       );
+                                            // }
+                                            // ref.read(cartProvider.notifier).cartDetails();
+                                          },
+                                        ),
                                       );
                                     },
                                   ),

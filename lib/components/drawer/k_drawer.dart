@@ -65,7 +65,7 @@ class KDrawer extends ConsumerWidget {
                         InkWell(
                           onTap: () {
                             if (menuData.user.isActive == 1) {
-                              if (menuData.menus[index].name == "men") {
+                              if (menuData.menus[index].name == "Men") {
                                 ref
                                     .read(shopProvider.notifier)
                                     .fetchShopProductList(groupId: "", str: "");

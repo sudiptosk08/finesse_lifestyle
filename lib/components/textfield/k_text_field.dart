@@ -9,8 +9,13 @@ class NameTextField extends StatefulWidget {
   final String hintText;
   final bool readOnly;
 
-
-  NameTextField({Key? key, required this.label, required this.controller, required this.hintText, required this.readOnly}) : super(key: key);
+  NameTextField(
+      {Key? key,
+      required this.label,
+      required this.controller,
+      required this.hintText,
+      required this.readOnly})
+      : super(key: key);
   TextEditingController controller = TextEditingController();
 
   @override
@@ -36,6 +41,7 @@ class _NameTextFieldState extends State<NameTextField> {
       readOnly: widget.readOnly,
       controller: widget.controller,
       decoration: InputDecoration(
+        prefixIcon: Icon(Icons.person_3_outlined),
         hintText: widget.hintText,
         hintStyle: _focusNode.hasFocus
             ? KTextStyle.bodyText1.copyWith(color: KColor.blackbg)

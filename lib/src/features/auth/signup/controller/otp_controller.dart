@@ -36,7 +36,7 @@ class OtpController extends StateNotifier<BaseState> {
       if (responseBody != null) {
         state = const OtpSuccessState();
         print("Otp send Successful");
-        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) => const MainScreen()));
+        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) =>  MainScreen()));
       } else {
         state = const ErrorState();
       }
@@ -63,7 +63,7 @@ class OtpController extends StateNotifier<BaseState> {
       if (responseBody != null) {
         state = const OtpSuccessState();
         print("Otp send again Successful");
-        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) => const MainScreen()));
+        NavigationService.navigateToReplacement(CupertinoPageRoute(builder: (context) =>  MainScreen()));
       } else {
         state = const ErrorState();
       }

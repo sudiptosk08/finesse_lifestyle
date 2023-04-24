@@ -22,7 +22,6 @@ import 'package:finesse/src/features/main_screen.dart';
 import 'package:finesse/src/features/notification/view/notification_page.dart';
 import 'package:finesse/src/features/product_details/view/product_details.dart';
 import 'package:finesse/src/features/profile/components/account_details.dart';
-import 'package:finesse/src/features/profile/components/address.dart';
 import 'package:finesse/src/features/profile/components/change_password.dart';
 import 'package:finesse/src/features/profile/components/dashboard.dart';
 import 'package:finesse/src/features/profile/components/edit_profile.dart';
@@ -70,7 +69,7 @@ class RouteGenerator {
         );
       case '/mainScreen':
         return CupertinoPageRoute(
-          builder: (_) => const MainScreen(),
+          builder: (_) =>  MainScreen(),
         );
       case '/resetPassword':
         return CupertinoPageRoute(
@@ -160,10 +159,10 @@ class RouteGenerator {
         return CupertinoPageRoute(
           builder: (_) => const Notifications(),
         );
-      case '/addressInfo':
-        return CupertinoPageRoute(
-          builder: (_) => const AddressInfo(),
-        );
+      // case '/addressInfo':
+      //   return CupertinoPageRoute(
+      //     builder: (_) => const AddressInfo(),
+      //   );
       case '/accountDetails':
         return CupertinoPageRoute(
           builder: (_) => const AccountDetails(),

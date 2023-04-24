@@ -67,7 +67,7 @@ class _ProductDetailsState extends ConsumerState<ProductDetails> {
         actions: [
           InkWell(
             onTap: () {
-               Navigator.push(context, MaterialPageRoute(builder: (context) =>const MainScreen()));
+               Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(pageIndex: 1,)));
             },
             child: SizedBox(
               width: context.screenWidth * 0.2,

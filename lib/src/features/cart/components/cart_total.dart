@@ -3,7 +3,9 @@ import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nb_utils/nb_utils.dart';
 
+import '../../../../constants/shared_preference_constant.dart';
 import '../controller/cart_controller.dart';
 import '../controller/discount_controller.dart';
 import '../controller/zone_controller.dart';
@@ -39,6 +41,7 @@ class _CardTotalState extends State<CardTotal> {
       final cartState = ref.watch(cartProvider);
       final zoneState = ref.watch(zoneProvider);
       final giftVoucherState = ref.watch(giftVoucherProvider);
+
       return Container(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 18.0),
           decoration: BoxDecoration(
@@ -58,13 +61,14 @@ class _CardTotalState extends State<CardTotal> {
                 ref.read(zoneProvider.notifier).deliveryFee.toString(),
               ),
               const SizedBox(height: 15),
-              _getTotal('Discount',
+              _getTotal(discountType == null ? "Discount" : discountType,
                   ref.read(discountProvider.notifier).discount.toString(),
                   discount: true),
-               const SizedBox(height: 15),
-              _getTotal('Gift Voucher',
-                  ref.read(discountProvider.notifier).voucherAmount.toString(),
-                  ),
+              const SizedBox(height: 15),
+              _getTotal(
+                'Gift Voucher',
+                ref.read(discountProvider.notifier).voucherAmount.toString(),
+              ),
               const SizedBox(height: 15),
               _getTotal('Rounding',
                   ref.read(discountProvider.notifier).roundingFee.toString(),
@@ -88,11 +92,13 @@ class _CardTotalState extends State<CardTotal> {
                     cartState is CartSuccessState &&
                             zoneState is! ZoneSuccessState &&
                             discountState is! PromoCodeSuccessState &&
-                            discountState is! ReferralCodeSuccessState && giftVoucherState is! VoucherCodeSuccessState
+                            discountState is! ReferralCodeSuccessState &&
+                            giftVoucherState is! VoucherCodeSuccessState
                         ? "৳ ${ref.read(cartProvider.notifier).totalAmount.toString()}"
-                        :   zoneState is ZoneSuccessState && giftVoucherState is! VoucherCodeSuccessState &&
-                               ( discountState is! PromoCodeSuccessState ||  
-                                discountState is! ReferralCodeSuccessState )
+                        : zoneState is ZoneSuccessState &&
+                                giftVoucherState is! VoucherCodeSuccessState &&
+                                (discountState is! PromoCodeSuccessState ||
+                                    discountState is! ReferralCodeSuccessState)
                             ? "৳ ${ref.read(zoneProvider.notifier).countTotalFee.toString()}"
                             : "৳ ${ref.read(discountProvider.notifier).totalFee.toString()}",
                     style: KTextStyle.sticker.copyWith(
@@ -106,7 +112,7 @@ class _CardTotalState extends State<CardTotal> {
                   //           discountState is! ReferralCodeSuccessState && discountState is! VoucherCodeSuccessState
                   //       ? "৳ ${ref.read(cartProvider.notifier).totalAmount.toString()}"
                   //       :   zoneState is ZoneSuccessState && discountState is! VoucherCodeSuccessState &&
-                  //              ( discountState is! PromoCodeSuccessState ||  
+                  //              ( discountState is! PromoCodeSuccessState ||
                   //               discountState is! ReferralCodeSuccessState )
                   //           ? "৳ ${ref.read(zoneProvider.notifier).countTotalFee.toString()}"
                   //           : "৳ ${ref.read(discountProvider.notifier).totalFee.toString()}",
@@ -175,5 +181,5 @@ class _CardTotalState extends State<CardTotal> {
 //                             discountState is! ReferralCodeSuccessState
 //                         ?
 //               ref.read(zoneProvider.notifier).countTotalFee.toString():
-              
+
 //               ref.read(discountProvider.notifier).totalFee.toString()
