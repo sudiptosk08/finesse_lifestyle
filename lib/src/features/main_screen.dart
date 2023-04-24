@@ -51,13 +51,7 @@ class _MainScreenState extends ConsumerState<MainScreen>
   initData()  {
     if (widget.pageIndex == 1) {
       _currentIndex = widget.pageIndex == 1 ? 1 : 0;
-      // final menuData = ref.watch(menuDataProvider);
-      // User? user =
-      //     menuData is MenuDataSuccessState ? menuData.menuList!.user : null;
-      // ref.read(discountProvider.notifier).makeDiscountNull();
-      // ref.read(cartProvider.notifier).cartDetails();
-      // ref.read(addressProvider.notifier).setLocationNameOnce(user);
-      // ref.read(cityProvider.notifier).allCity();
+     
     }
   }
 

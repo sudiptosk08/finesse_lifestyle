@@ -16,6 +16,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../auth/login/model/user_model.dart';
+import '../../cart/controller/discount_controller.dart';
+import '../../cart/controller/zone_controller.dart';
+import '../../checkout/controller/address_controller.dart';
+import '../../home/controllers/menu_data_controller.dart';
+import '../../home/state/menu_data_state.dart';
+
 class ProductDetails extends ConsumerStatefulWidget {
   final String? productName;
   final String? productGroup;
@@ -52,7 +59,9 @@ class _ProductDetailsState extends ConsumerState<ProductDetails> {
     final cartState = ref.watch(cartProvider);
     final cartItemsLength =
         cartState is CartSuccessState ? cartState.cartList.length : 0;
-
+    final menuData = ref.watch(menuDataProvider);
+    User? user =
+        menuData is MenuDataSuccessState ? menuData.menuList!.user : null;
     return Scaffold(
       backgroundColor: KColor.whiteBackground,
       appBar: AppBar(
@@ -67,6 +76,10 @@ class _ProductDetailsState extends ConsumerState<ProductDetails> {
         actions: [
           InkWell(
             onTap: () {
+              ref.read(discountProvider.notifier).makeDiscountNull();
+              ref.read(cartProvider.notifier).cartDetails();
+              ref.read(addressProvider.notifier).setLocationNameOnce(user);
+              ref.read(cityProvider.notifier).allCity();
                Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(pageIndex: 1,)));
             },
             child: SizedBox(
