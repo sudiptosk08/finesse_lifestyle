@@ -30,10 +30,9 @@ class _AllOrderState extends State<AllOrder> {
         final List<OrderData>? orderList = orderState is FetchOrderSuccessState
             ? orderState.orderModel?.order.data
             : [];
-        return SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,

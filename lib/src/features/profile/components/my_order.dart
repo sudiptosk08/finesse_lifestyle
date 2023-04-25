@@ -16,15 +16,15 @@ class MyOrder extends StatefulWidget {
 class _MyOrderState extends State<MyOrder> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 5,
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: KColor.appBackground,
         appBar: const PreferredSize(
           preferredSize: Size.fromHeight(56),
           child: KAppBar(checkTitle: true, title: 'My Orders'),
         ),
-        body: Column(
+        body:  DefaultTabController(
+        length: 5,
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
@@ -71,7 +71,7 @@ class _MyOrderState extends State<MyOrder> with SingleTickerProviderStateMixin {
                 ],
               ),
             ),
-            SizedBox(height: context.screenHeight * 0.01),
+            // SizedBox(height: context.screenHeight * 0.01),
             const Expanded(
               child: TabBarView(
                 children: [
