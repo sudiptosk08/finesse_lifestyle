@@ -8,6 +8,8 @@ import 'package:finesse/styles/k_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../constants/asset_path.dart';
+
 class ReportList extends StatefulWidget {
   const ReportList({Key? key}) : super(key: key);
 
@@ -45,7 +47,7 @@ class _ReportListState extends State<ReportList> {
                           id: reportState.reportModel?.data.data[index].id.toString(),
                           date: createDate(reportState.reportModel?.data.data[index].createdAt.toString(), 0),
                           reason: reportState.reportModel?.data.data[index].reason,
-                          img: reportState.reportModel?.data.data[index].image,
+                          img: AssetPath.boxIcon,
                         );
                       },
                     )

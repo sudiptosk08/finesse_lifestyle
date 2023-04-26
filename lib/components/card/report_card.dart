@@ -11,7 +11,8 @@ class ReportCard extends StatefulWidget {
   final String? reason;
   final String? img;
 
-  const ReportCard({this.id, this.date, this.reason, this.img, Key? key}) : super(key: key);
+  const ReportCard({this.id, this.date, this.reason, this.img, Key? key})
+      : super(key: key);
 
   @override
   State<ReportCard> createState() => _ReportCardState();
@@ -101,8 +102,8 @@ class _ReportCardState extends State<ReportCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-               Image.file(
-                  widget.img as File,
+                Image.asset(
+                  " ${widget.img}",
                   height: 49,
                 ),
                 const SizedBox(width: 16),

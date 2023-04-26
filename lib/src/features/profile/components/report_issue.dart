@@ -32,6 +32,22 @@ class _ReportIssueState extends State<ReportIssue> {
   TextEditingController reason = TextEditingController();
   TextEditingController id = TextEditingController();
   TextEditingController description = TextEditingController();
+  String? valueChoose;
+  List<String> listItem = [
+    "Delivery agent took Extra/Less money",
+    "Issue with delivery agent",
+    "I want to cancel my order",
+    "I want to change the delivery information",
+    "I want to change my registered mobile number",
+    "Mistakenly place a double order",
+    "Order status wrong",
+    "Payment status wrong",
+    "Put the delivery on hold",
+    "Request to Exchange my order",
+    "Requesting deliver on a fixed time and date",
+    "The product was damage",
+    "The product has not been delivered yet"
+  ];
   File? image;
   var userID = getIntAsync(userId);
 
@@ -54,7 +70,8 @@ class _ReportIssueState extends State<ReportIssue> {
       builder: (context, ref, _) {
         final reportState = ref.watch(reportProvider);
         final userState = ref.watch(loginProvider);
-        final User? userData = userState is LoginSuccessState ? userState.userModel : null;
+        final User? userData =
+            userState is LoginSuccessState ? userState.userModel : null;
 
         return Scaffold(
           backgroundColor: KColor.appBackground,
@@ -76,12 +93,52 @@ class _ReportIssueState extends State<ReportIssue> {
                   ),
                   const SizedBox(height: 16),
                   //const KDropdown(hint: 'Select a reason'),
-                  KFillNormal(
-                    controller: reason,
-                    readOnly: false,
-                    label: '',
-                    hintText: 'Reason',
+
+                  Padding(
+                    padding: EdgeInsets.only(left: 3.1, right: 3.1),
+                    child: Container(
+                      padding: EdgeInsets.only(left: 3.1, right: 3.1),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(7),
+                        color: KColor.grey.withOpacity(0.1),
+                      ),
+                      child: DropdownButton(
+                        hint: Text(
+                          "Select",
+                          style: KTextStyle.bodyText1.copyWith(
+                            color: Colors.grey,
+                          ),
+                        ),
+                        dropdownColor: Colors.grey[250],
+                        icon: Icon(Icons.arrow_drop_down),
+                        iconSize: 30,
+                        isExpanded: true,
+                        underline: SizedBox(),
+                        style: TextStyle(
+                          color: Colors.grey[700],
+                          fontSize: 18,
+                        ),
+                        value: valueChoose,
+                        onChanged: (newValue) {
+                          setState(() {
+                            valueChoose = newValue.toString();
+                          });
+                        },
+                        items: listItem.map((value) {
+                          return DropdownMenuItem(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: KTextStyle.bodyText1.copyWith(
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
                   ),
+
                   const SizedBox(height: 24),
                   Text(
                     'Order ID*',
@@ -148,12 +205,14 @@ class _ReportIssueState extends State<ReportIssue> {
                   ),
                   SizedBox(height: context.screenHeight * 0.05),
                   KButton(
-                    title: reportState is LoadingState ? 'Please wait...' : 'Save Changes',
+                    title: reportState is LoadingState
+                        ? 'Please wait...'
+                        : 'Save Changes',
                     onTap: () {
                       if (reportState is! LoadingState) {
                         ref.read(reportProvider.notifier).report(
                               description: description.text,
-                              reason: reason.text,
+                              reason: valueChoose.toString(),
                               orderId: id.text,
                               userId: userID.toString(),
                               image: image.toString(),
