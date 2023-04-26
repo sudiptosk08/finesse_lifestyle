@@ -8,7 +8,7 @@ class API {
   static const live =
       'http://mobileapi.scorebee.com/api/'; // Live Production API URL
   static const test =
-      'https://cameraworldapi.dreamsgallerybd.com/'; // Live Staging API URL
+      'https://finesseapi.dreamsgallerybd.com/'; // Live Staging API URL
   static const base = AppMode.PRODUCTION_MODE ? live : test;
   static const baseImage = AppMode.PRODUCTION_MODE ? liveImage : testImage;
 
