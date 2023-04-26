@@ -41,8 +41,8 @@ class _SpecificOrderState extends State<SpecificOrder> {
               .length);
         }
         print("using index where");
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+        return Padding(
+          padding: const EdgeInsets.all(15.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
