@@ -41,17 +41,20 @@ class _SpecificOrderState extends State<SpecificOrder> {
               .length);
         }
         print("using index where");
-        return Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: SingleChildScrollView(
+        return SingleChildScrollView(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (orderState is LoadingState) ...[
-                  const KLoading(
-                    shimmerHeight: 123,
-                  )
+                  const Center(
+                    child: CircularProgressIndicator(
+                      color: KColor.black,
+                      strokeWidth: 1,
+                    ),
+                  ),
                 ],
                 if (orderState is FetchOrderSuccessState) ...[
                   orderList.isEmpty

@@ -65,6 +65,7 @@ dependencies:
   pin_code_fields: ^7.4.0
   flutter_html:
   cached_network_image: ^3.2.1
+  banner_carousel: ^1.2.1
 
 dev_dependencies:
   flutter_test:

@@ -12,8 +12,8 @@ import '../../../../components/textfield/k_search_field.dart';
 import '../../../../components/textfield/k_text_field.dart';
 
 class TrackOrder extends StatefulWidget {
-   final OrderData orderData ; 
-   TrackOrder({Key? key , required this.orderData}) : super(key: key);
+  final OrderData orderData;
+  TrackOrder({Key? key, required this.orderData}) : super(key: key);
 
   @override
   State<TrackOrder> createState() => _TrackOrderState();
@@ -24,14 +24,13 @@ class _TrackOrderState extends State<TrackOrder> {
   @override
   void initState() {
     super.initState();
-      print("in track");
-   print(widget.orderData);
-   print("after track");
+    print("in track");
+    print(widget.orderData);
+    print("after track");
   }
+
   @override
   Widget build(BuildContext context) {
- 
-
     // aftear track
     return Scaffold(
       backgroundColor: KColor.appBackground,
@@ -45,38 +44,10 @@ class _TrackOrderState extends State<TrackOrder> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                   Expanded(
-                    flex: 8,
-                    child: SearchTextField(
-                      callbackFunction: (e) {},
-                      controller: controller,
-                      readOnly: false,
-                      hintText: 'Search...',
-                    ),
-                  ),
-                  const SizedBox(width: 14),
-                  Container(
-                    height: 48,
-                    width: 48,
-                    decoration: BoxDecoration(
-                      color: KColor.blackbg,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Center(
-                      child: SvgPicture.asset(
-                        AssetPath.arrowIcon,
-                        height: 24,
-                      ),
-                    ),
-                  )
-                ],
-              ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Text(
-                 "ID: #${widget.orderData.id.toString()} ",
+                  "ID: #${widget.orderData.id.toString()} ",
                   style: KTextStyle.headline4.copyWith(
                     color: KColor.blackbg,
                   ),
@@ -96,8 +67,8 @@ class _TrackOrderState extends State<TrackOrder> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        // "6 May", 
-                        "${widget.orderData.createdAt.toString()}", 
+                        // "6 May",
+                        "${widget.orderData.createdAt.toString()}",
                         style: KTextStyle.bodyText1.copyWith(
                           color: KColor.blackbg.withOpacity(0.4),
                         ),
@@ -126,7 +97,7 @@ class _TrackOrderState extends State<TrackOrder> {
               ),
               const SizedBox(height: 30),
               Text(
-                "Tracking Details"  ,
+                "Tracking Details",
                 style: KTextStyle.subtitle1.copyWith(
                   color: KColor.blackbg,
                 ),
@@ -146,7 +117,8 @@ class _TrackOrderState extends State<TrackOrder> {
                   ),
                   const SizedBox(height: 16),
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 16),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: KColor.appBackground,
@@ -155,13 +127,15 @@ class _TrackOrderState extends State<TrackOrder> {
                           color: KColor.shadowColor.withOpacity(0.2),
                           spreadRadius: 0,
                           blurRadius: 12,
-                          offset: const Offset(4, 4), // changes position of shadow
+                          offset:
+                              const Offset(4, 4), // changes position of shadow
                         ),
                         BoxShadow(
                           color: KColor.shadowColor.withOpacity(0.2),
                           spreadRadius: 0,
                           blurRadius: 12,
-                          offset: const Offset(-4, -4), // changes position of shadow
+                          offset: const Offset(
+                              -4, -4), // changes position of shadow
                         ),
                       ],
                     ),
