@@ -12,7 +12,7 @@ import '../../../../components/textfield/k_search_field.dart';
 import '../../../../components/textfield/k_text_field.dart';
 
 class TrackOrder extends StatefulWidget {
-  final OrderData orderData;
+  final Datum orderData;
   TrackOrder({Key? key, required this.orderData}) : super(key: key);
 
   @override

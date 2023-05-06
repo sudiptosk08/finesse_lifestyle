@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class OrderDetails extends StatefulWidget {
-  final OrderData orderData;
+  final Datum orderData;
   const OrderDetails({Key? key, required this.orderData}) : super(key: key);
 
   @override

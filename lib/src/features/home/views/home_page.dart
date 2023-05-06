@@ -6,15 +6,18 @@ import 'package:finesse/src/features/home/components/popular_category.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomePage extends StatefulWidget {
+import '../controllers/shop_controller.dart';
+
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,11 +41,19 @@ class _HomePageState extends State<HomePage> {
               const PopularCategory(),
               const SizedBox(height: 23),
               _categoryHeader('New Arrivals', () {
+                ref.read(shopProvider.notifier).fetchShopProductList(groupId: "",
+                      categoryId: "",
+                      str: "");
                 Navigator.pushNamed(context, '/shop');
               }, showViewAll: true),
               const NewArrivals(),
               const SizedBox(height: 32),
-              _categoryHeader('Featured Products', () {}),
+              _categoryHeader('Featured Products', () {
+                  ref
+                    .read(shopProvider.notifier)
+                    .fetchShopProductList(groupId: "", categoryId: "", str: "");
+                Navigator.pushNamed(context, '/shop');
+              }, showViewAll: true),
               const FeaturedProducts(),
               const SizedBox(height: 30),
             ],

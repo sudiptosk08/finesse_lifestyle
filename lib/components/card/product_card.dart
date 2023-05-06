@@ -63,18 +63,24 @@ class ProductCard extends StatelessWidget {
                   height: 168,
                   width: context.screenWidth,
                   child: ClipRRect(
-                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15)),
                     child: CachedNetworkImage(
                       imageUrl: '$img',
                       fit: BoxFit.fill,
-                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                   ),
                 ),
                 const SizedBox(height: 6),
                 Flexible(
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 12.0, left: 12.0, bottom: 4.0),
+                    padding: const EdgeInsets.only(
+                      right: 12.0,
+                      left: 12.0,
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,14 +88,17 @@ class ProductCard extends StatelessWidget {
                         Flexible(
                           child: Text(
                             '$name',
-                            style: KTextStyle.caption1.copyWith(color: KColor.blackbg),
+                            style: KTextStyle.caption1
+                                .copyWith(color: KColor.blackbg),
                             overflow: TextOverflow.ellipsis,
+                            maxLines: 3,
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           '$genre',
-                          style: KTextStyle.caption2.copyWith(color: KColor.blackbg.withOpacity(0.3)),
+                          style: KTextStyle.caption2
+                              .copyWith(color: KColor.blackbg.withOpacity(0.3)),
                         ),
                         const SizedBox(height: 6),
                         Row(
@@ -103,19 +112,23 @@ class ProductCard extends StatelessWidget {
                                 children: [
                                   Text(
                                     "৳ $offerPrice",
-                                    style: KTextStyle.subtitle7.copyWith(color: KColor.blackbg),
+                                    style: KTextStyle.subtitle7
+                                        .copyWith(color: KColor.blackbg),
                                   ),
                                   const SizedBox(height: 2),
                                   Stack(
                                     children: [
                                       Text(
                                         '$regularPrice',
-                                        style: KTextStyle.caption2.copyWith(color: KColor.blackbg.withOpacity(0.3)),
+                                        style: KTextStyle.caption2.copyWith(
+                                            color: KColor.blackbg
+                                                .withOpacity(0.3)),
                                       ),
                                       Positioned(
                                         left: 8,
                                         bottom: 1,
-                                        child: SvgPicture.asset('assets/images/line.svg'),
+                                        child: SvgPicture.asset(
+                                            'assets/images/line.svg'),
                                       )
                                     ],
                                   ),
@@ -128,13 +141,15 @@ class ProductCard extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   boxShadow: [
                                     BoxShadow(
-                                      color: KColor.btnShadowColor.withOpacity(0.06),
+                                      color: KColor.btnShadowColor
+                                          .withOpacity(0.06),
                                       spreadRadius: 0,
                                       blurRadius: 12,
                                       offset: const Offset(4, 4),
                                     ),
                                     BoxShadow(
-                                      color: KColor.btnShadowColor.withOpacity(0.06),
+                                      color: KColor.btnShadowColor
+                                          .withOpacity(0.06),
                                       spreadRadius: 0,
                                       blurRadius: 12,
                                       offset: const Offset(-4, -4),
@@ -144,7 +159,8 @@ class ProductCard extends StatelessWidget {
                                 child: const CircleAvatar(
                                   radius: 13,
                                   backgroundColor: KColor.appBackground,
-                                  child: Icon(Icons.favorite_outlined, color: Colors.black, size: 13),
+                                  child: Icon(Icons.favorite_outlined,
+                                      color: Colors.black, size: 13),
                                 ),
                               ),
                             ),
@@ -166,11 +182,14 @@ class ProductCard extends StatelessWidget {
                 child: Container(
                   width: 51,
                   height: 24,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: KColor.black),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: KColor.black),
                   child: Center(
                     child: Text(
                       '$discount',
-                      style: KTextStyle.sticker.copyWith(color: KColor.whiteBackground),
+                      style: KTextStyle.sticker
+                          .copyWith(color: KColor.whiteBackground),
                     ),
                   ),
                 ),

@@ -14,13 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-
-import '../../cart/controller/cart_controller.dart';
-import '../../cart/controller/discount_controller.dart';
-import '../../cart/controller/zone_controller.dart';
-import '../../checkout/components/add_billing_information.dart';
 import '../../checkout/components/add_new_address.dart';
-import '../../checkout/controller/address_controller.dart';
+import '../components/my_order.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -35,10 +30,8 @@ class _ProfilePageState extends State<ProfilePage> {
     return WillPopScope(
       onWillPop: () async {
         print("Back button press");
-        return await Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) =>  MainScreen()));
+        return await Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (BuildContext context) => MainScreen()));
       },
       child: Consumer(
         builder: (context, ref, _) {
@@ -140,7 +133,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ref
                                       .read(orderProvider.notifier)
                                       .fetchOrders();
-                                  Navigator.pushNamed(context, '/myOrder');
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: ((context) => const MyOrder())));
                                 },
                               ),
                               ProfileCard(
@@ -154,9 +150,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                 title: 'Address',
                                 image: 'assets/images/address.png',
                                 onPressed: () {
-                                 
-                             
-                                 Navigator.push(context, MaterialPageRoute(builder: ((context) => AddNewAddress())));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: ((context) =>
+                                              AddNewAddress())));
                                 },
                               ),
                               ProfileCard(
