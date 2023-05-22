@@ -6,7 +6,6 @@ import 'package:finesse/core/network/network_utils.dart';
 import 'package:finesse/service/navigation_service.dart';
 import 'package:finesse/src/features/auth/login/model/user_model.dart';
 import 'package:finesse/src/features/auth/login/state/login_state.dart';
-import 'package:finesse/src/features/auth/login/view/login_page.dart';
 import 'package:finesse/src/features/main_screen.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -76,18 +75,21 @@ class LoginController extends StateNotifier<BaseState> {
     state = const LoadingState();
     dynamic responseBody;
     try {
-      responseBody = await Network.handleResponse(
-        await Network.getRequest(API.logout),
-      );
+      responseBody = 
+        await Network.getRequest(API.logout)
+      ;
       if (responseBody != null) {
         setValue(isLoggedIn, false);
-        // var userData;
-        state = LoginSuccessState(userModel);
+        setValue(token, "");
+        setValue(rememberToken,"");
+       
+        var userData;
+        state = LoginSuccessState(userData);
         toast("Logout", bgColor: KColor.selectColor);
-        NavigationService.popNavigate();
+        
         NavigationService.navigateToReplacement(
           CupertinoPageRoute(
-            builder: (_) => const LoginPage(),
+            builder: (_) =>  MainScreen(),
           ),
         );
       } else {

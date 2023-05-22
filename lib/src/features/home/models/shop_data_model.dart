@@ -3,7 +3,7 @@ class ShopDataModel {
     required this.products,
   });
 
-  List<Product> products;
+  List<Product>? products;
 
   factory ShopDataModel.fromJson(Map<String, dynamic> json) => ShopDataModel(
         products: List<Product>.from(
@@ -11,7 +11,7 @@ class ShopDataModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "products": List<dynamic>.from(products.map((x) => x.toJson())),
+        "products": List<dynamic>.from(products??[].map((x) => x.toJson())),
       };
 }
 

@@ -34,9 +34,9 @@ class _ProductPreviewState extends State<ProductPreview> {
         return Column(
           children: [
             Container(
-              height: context.screenHeight * 0.25,
+              height: context.screenHeight * 0.32,
               color: KColor.cirColor,
-              padding: const EdgeInsets.only(left: 12, right: 12, bottom: 15),
+              padding: const EdgeInsets.only(left: 12, right: 12, bottom: 4),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -64,7 +64,7 @@ class _ProductPreviewState extends State<ProductPreview> {
                               padding: const EdgeInsets.symmetric(
                                   vertical: 3, horizontal: 2),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(0),
                                 border: Border.all(
                                   color: index == selectIndex
                                       ? KColor.borderColor
@@ -94,7 +94,7 @@ class _ProductPreviewState extends State<ProductPreview> {
                             alignment: Alignment.centerRight,
                             width: context.screenWidth * 0.78,
                             height: 247,
-                            padding: const EdgeInsets.only(bottom: 15),
+                            padding: const EdgeInsets.only(bottom: 8),
                             child: PageView.builder(
                                 itemCount: productImageList.length,
                                 controller: _controller,

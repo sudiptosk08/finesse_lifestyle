@@ -23,7 +23,6 @@ class ProductInfo extends ConsumerStatefulWidget {
   final String? description;
   final String? id;
   final String? userId;
-  
 
   const ProductInfo({
     this.productName,
@@ -42,7 +41,7 @@ class ProductInfo extends ConsumerStatefulWidget {
 class _ProductInfoState extends ConsumerState<ProductInfo> {
   List<String> items = ["Variations", "Descriptions", "Reviews"];
   int currentIndex = 0;
-  
+
   @override
   Widget build(BuildContext context) {
     final wishlistState = ref.watch(wishlistProvider);
@@ -55,7 +54,7 @@ class _ProductInfoState extends ConsumerState<ProductInfo> {
       child: productDetailsState is ProductDetailsSuccessState
           ? SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.only(top: 24, left: 12, right: 12),
+                padding: const EdgeInsets.only(top: 10, left: 12, right: 12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -65,11 +64,11 @@ class _ProductInfoState extends ConsumerState<ProductInfo> {
                         Expanded(
                           child: Text(
                             widget.productName.toString(),
-                            style: KTextStyle.headline2
+                            style: KTextStyle.headline4
                                 .copyWith(color: KColor.blackbg),
                           ),
                         ),
-                        const SizedBox(width: 5),
+                        const SizedBox(width: 6),
                         Text(
                           '৳ ${widget.price}',
                           style: KTextStyle.headline2
@@ -77,7 +76,6 @@ class _ProductInfoState extends ConsumerState<ProductInfo> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -126,7 +124,7 @@ class _ProductInfoState extends ConsumerState<ProductInfo> {
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 19.0, bottom: 19),
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 12),
                       child: IgnorePointer(
                         child: Rating(
                           initialRating: productDetails.product?.rating ?? 0.0,

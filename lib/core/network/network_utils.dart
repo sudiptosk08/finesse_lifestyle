@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:finesse/constants/shared_preference_constant.dart';
-import 'package:finesse/service/navigation_service.dart';
-import 'package:finesse/src/features/auth/login/view/login_page.dart';
 import 'package:finesse/styles/k_colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'api.dart';
