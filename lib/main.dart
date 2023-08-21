@@ -6,6 +6,7 @@ import 'package:finesse/core/network/network_utils.dart';
 import 'package:finesse/route/route_generator.dart';
 import 'package:finesse/service/navigation_service.dart';
 import 'package:finesse/src/features/auth/login/controller/login_controller.dart';
+import 'package:finesse/src/features/cart/controller/cart_controller.dart';
 import 'package:finesse/src/features/home/controllers/category_controller.dart';
 import 'package:finesse/src/features/home/controllers/menu_data_controller.dart';
 import 'package:finesse/src/features/home/controllers/product_category_controller.dart';
@@ -50,6 +51,7 @@ class _MyAppState extends ConsumerState<MyApp> {
     ref.read(categoryProvider.notifier).fetchCategoryDetails();
     ref.read(allBrandsProvider.notifier).fetchAllBrands();
     ref.read(menuDataProvider.notifier).fetchMenuData();
+     ref.read(cartProvider.notifier).cartDetails();
   }
 
   @override

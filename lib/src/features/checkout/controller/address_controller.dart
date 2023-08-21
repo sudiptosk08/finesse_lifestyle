@@ -216,7 +216,6 @@ class AddAddressController extends StateNotifier<BaseState> {
         state = AddressErrorState();
       } else {
         User user = ref!.read(menuDataProvider.notifier).menuList!.user;
-        dynamic responseBody;
         var requestBody = {
           "id": user.id,
           "name": nameis,

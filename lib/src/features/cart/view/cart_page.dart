@@ -100,6 +100,7 @@ class _CartPageState extends State<CartPage> {
                                                         .isLocationSet(user!
                                                             .customer
                                                             .address)) {
+                                                      // ignore: use_build_context_synchronously
                                                       Navigator.pushNamed(
                                                           context,
                                                           '/addressPage');

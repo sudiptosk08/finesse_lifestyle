@@ -40,5 +40,6 @@ class AssetPath {
   static const profileBottomIcon = 'assets/images/profile.svg';
   static const notiDeleteIcon = 'assets/images/Delete.png';
   static const NoticheckIcon = 'assets/images/check.png';
+  static const placeholder = 'assets/images/placeholder-image.png';
 
 }

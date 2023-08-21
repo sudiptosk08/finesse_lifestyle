@@ -65,11 +65,11 @@ class _SelectedItemsState extends State<SelectedItems> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: context.screenWidth * .50,
                                     child: Text(
                                       overflow: TextOverflow.ellipsis,
-                                      '${cartData[index].vproduct!.productName!}',
+                                      cartData[index].vproduct!.productName!,
                                       style: KTextStyle.bodyText1.copyWith(
                                           color:
                                               KColor.blackbg.withOpacity(0.6)),
@@ -82,7 +82,7 @@ class _SelectedItemsState extends State<SelectedItems> {
                                         color: KColor.blackbg.withOpacity(0.6)),
                                   ),
                                   Text(
-                                    '\৳${cartData[index].vproduct?.sellingPrice}',
+                                    '৳${cartData[index].vproduct?.sellingPrice}',
                                     style: KTextStyle.bodyText1.copyWith(
                                         color: KColor.blackbg.withOpacity(0.6)),
                                   ),

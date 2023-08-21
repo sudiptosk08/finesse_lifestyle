@@ -16,7 +16,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:text_divider/text_divider.dart';
 
 import '../../../../components/textfield/k_description_field.dart';
-import '../../../../components/textfield/k_text_field.dart';
 
 class WriteReview extends StatefulWidget {
   const WriteReview({Key? key}) : super(key: key);

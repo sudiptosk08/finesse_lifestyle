@@ -3,12 +3,8 @@ import 'dart:io';
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/button/k_border_btn.dart';
 import 'package:finesse/components/button/k_button.dart';
-import 'package:finesse/components/textfield/k_text_field.dart';
 import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:finesse/core/base/base_state.dart';
-import 'package:finesse/src/features/auth/login/controller/login_controller.dart';
-import 'package:finesse/src/features/auth/login/model/user_model.dart';
-import 'package:finesse/src/features/auth/login/state/login_state.dart';
 import 'package:finesse/src/features/profile/controller/profile_controller.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
@@ -69,9 +65,6 @@ class _ReportIssueState extends State<ReportIssue> {
     return Consumer(
       builder: (context, ref, _) {
         final reportState = ref.watch(reportProvider);
-        final userState = ref.watch(loginProvider);
-        final User? userData =
-            userState is LoginSuccessState ? userState.userModel : null;
 
         return Scaffold(
           backgroundColor: KColor.appBackground,
@@ -95,9 +88,9 @@ class _ReportIssueState extends State<ReportIssue> {
                   //const KDropdown(hint: 'Select a reason'),
 
                   Padding(
-                    padding: EdgeInsets.only(left: 3.1, right: 3.1),
+                    padding: const EdgeInsets.only(left: 3.1, right: 3.1),
                     child: Container(
-                      padding: EdgeInsets.only(left: 3.1, right: 3.1),
+                      padding: const EdgeInsets.only(left: 3.1, right: 3.1),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(7),
                         color: KColor.grey.withOpacity(0.1),
@@ -110,10 +103,10 @@ class _ReportIssueState extends State<ReportIssue> {
                           ),
                         ),
                         dropdownColor: Colors.grey[250],
-                        icon: Icon(Icons.arrow_drop_down),
+                        icon: const Icon(Icons.arrow_drop_down),
                         iconSize: 30,
                         isExpanded: true,
-                        underline: SizedBox(),
+                        underline: const SizedBox(),
                         style: TextStyle(
                           color: Colors.grey[700],
                           fontSize: 18,

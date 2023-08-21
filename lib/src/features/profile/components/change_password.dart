@@ -8,7 +8,6 @@ import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../components/textfield/k_fill_password_field.dart';
-import '../../../../components/textfield/k_text_field.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({Key? key}) : super(key: key);

@@ -1,4 +1,3 @@
-import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/src/features/checkout/controller/address_controller.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
@@ -27,7 +26,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
         leading:Consumer(  
           builder: (context,ref,child){
             return IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
               ref.read(addressProvider.notifier).makeAddressNull();
               Navigator.of(context).pop();
@@ -42,7 +41,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-          child: AddBillingInformation(),
+          child: const AddBillingInformation(),
         ),
       ),
     );

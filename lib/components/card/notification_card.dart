@@ -9,13 +9,13 @@ import '../../styles/k_text_style.dart';
 class NotificationCard extends StatefulWidget {
   final String? msg;
   final String? date;
-  String? seen;
+  final String? seen;
   final VoidCallback? cancel;
   final VoidCallback? delete;
   NotificationCard({
     this.cancel,
     this.delete,
-    this.seen ,
+    this.seen,
     Key? key,
     this.msg,
     this.date,
@@ -26,7 +26,7 @@ class NotificationCard extends StatefulWidget {
 }
 
 class _NotificationCardState extends State<NotificationCard> {
-  bool isSwapToLeft = false; 
+  bool isSwapToLeft = false;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -66,12 +66,12 @@ class _NotificationCardState extends State<NotificationCard> {
         child: Container(
           margin: const EdgeInsets.only(top: 10, bottom: 8, left: 2, right: 2),
           padding: const EdgeInsets.only(left: 20),
-          height: 114,
+          height: 80,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             // borderRadius: BorderRadius.only(
-            //   topLeft:isSwapToLeft Radius.circular(0.0), 
-            //   bottomLeft : 0 , 
+            //   topLeft:isSwapToLeft Radius.circular(0.0),
+            //   bottomLeft : 0 ,
             // ),
             color: KColor.appBackground,
             boxShadow: [

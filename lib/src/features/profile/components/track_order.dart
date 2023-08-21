@@ -8,9 +8,6 @@ import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../components/textfield/k_search_field.dart';
-import '../../../../components/textfield/k_text_field.dart';
-
 class TrackOrder extends StatefulWidget {
   final Datum orderData;
   TrackOrder({Key? key, required this.orderData}) : super(key: key);
@@ -105,119 +102,119 @@ class _TrackOrderState extends State<TrackOrder> {
               const SizedBox(height: 16),
               const KStepper(checkStepper: false),
               SizedBox(height: context.screenHeight * 0.04),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Product Info",
-                    style: KTextStyle.subtitle1.copyWith(
-                      color: KColor.blackbg,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: KColor.appBackground,
-                      boxShadow: [
-                        BoxShadow(
-                          color: KColor.shadowColor.withOpacity(0.2),
-                          spreadRadius: 0,
-                          blurRadius: 12,
-                          offset:
-                              const Offset(4, 4), // changes position of shadow
-                        ),
-                        BoxShadow(
-                          color: KColor.shadowColor.withOpacity(0.2),
-                          spreadRadius: 0,
-                          blurRadius: 12,
-                          offset: const Offset(
-                              -4, -4), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          'assets/images/watch-two.png',
-                          height: 49,
-                        ),
-                        const SizedBox(width: 16),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Hanging Clock',
-                              style: KTextStyle.bodyText2.copyWith(
-                                color: KColor.blackbg,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "\$44.90",
-                                  style: KTextStyle.subtitle1.copyWith(
-                                    color: KColor.blackbg,
-                                  ),
-                                ),
-                                SizedBox(width: context.screenWidth * 0.35),
-                                Text(
-                                  "(x2)",
-                                  style: KTextStyle.description.copyWith(
-                                    color: KColor.baseBlack,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: context.screenHeight * 0.04),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Reciept",
-                    style: KTextStyle.subtitle1.copyWith(
-                      color: KColor.blackbg,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            AssetPath.confirmIcon,
-                            height: 18,
-                          ),
-                          const SizedBox(width: 3),
-                          Text(
-                            "Payment made via Paypal",
-                            style: KTextStyle.bodyText1.copyWith(
-                              color: KColor.blackbg.withOpacity(0.6),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Image.asset(AssetPath.paypalLogo, height: 24)
-                    ],
-                  ),
-                ],
-              ),
+              // Column(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Text(
+              //       "Product Info",
+              //       style: KTextStyle.subtitle1.copyWith(
+              //         color: KColor.blackbg,
+              //       ),
+              //     ),
+              //     const SizedBox(height: 16),
+              //     Container(
+              //       padding: const EdgeInsets.symmetric(
+              //           vertical: 20, horizontal: 16),
+              //       decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(15),
+              //         color: KColor.appBackground,
+              //         boxShadow: [
+              //           BoxShadow(
+              //             color: KColor.shadowColor.withOpacity(0.2),
+              //             spreadRadius: 0,
+              //             blurRadius: 12,
+              //             offset:
+              //                 const Offset(4, 4), // changes position of shadow
+              //           ),
+              //           BoxShadow(
+              //             color: KColor.shadowColor.withOpacity(0.2),
+              //             spreadRadius: 0,
+              //             blurRadius: 12,
+              //             offset: const Offset(
+              //                 -4, -4), // changes position of shadow
+              //           ),
+              //         ],
+              //       ),
+              //       child: Row(
+              //         mainAxisAlignment: MainAxisAlignment.start,
+              //         children: [
+              //           Image.asset(
+              //             'assets/images/watch-two.png',
+              //             height: 49,
+              //           ),
+              //           const SizedBox(width: 16),
+              //           Column(
+              //             mainAxisAlignment: MainAxisAlignment.center,
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: [
+              //               Text(
+              //                 'Hanging Clock',
+              //                 style: KTextStyle.bodyText2.copyWith(
+              //                   color: KColor.blackbg,
+              //                 ),
+              //               ),
+              //               const SizedBox(height: 8),
+              //               Row(
+              //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //                 crossAxisAlignment: CrossAxisAlignment.center,
+              //                 children: [
+              //                   Text(
+              //                     "\$44.90",
+              //                     style: KTextStyle.subtitle1.copyWith(
+              //                       color: KColor.blackbg,
+              //                     ),
+              //                   ),
+              //                   SizedBox(width: context.screenWidth * 0.35),
+              //                   Text(
+              //                     "(x2)",
+              //                     style: KTextStyle.description.copyWith(
+              //                       color: KColor.baseBlack,
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //             ],
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // SizedBox(height: context.screenHeight * 0.04),
+              // Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Text(
+              //       "Reciept",
+              //       style: KTextStyle.subtitle1.copyWith(
+              //         color: KColor.blackbg,
+              //       ),
+              //     ),
+              //     const SizedBox(height: 16),
+              //     Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //       children: [
+              //         Row(
+              //           children: [
+              //             SvgPicture.asset(
+              //               AssetPath.confirmIcon,
+              //               height: 18,
+              //             ),
+              //             const SizedBox(width: 3),
+              //             Text(
+              //               "Payment made via Paypal",
+              //               style: KTextStyle.bodyText1.copyWith(
+              //                 color: KColor.blackbg.withOpacity(0.6),
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //         Image.asset(AssetPath.paypalLogo, height: 24)
+              //       ],
+              //     ),
+              //   ],
+              // ),
               const SizedBox(height: 30),
             ],
           ),

@@ -8,8 +8,6 @@ import 'package:finesse/styles/k_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../constants/asset_path.dart';
-
 class ReportList extends StatefulWidget {
   const ReportList({Key? key}) : super(key: key);
 
@@ -36,7 +34,9 @@ class _ReportListState extends State<ReportList> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (reportState is LoadingState) ...[const KLoading(shimmerHeight: 123)],
+                  if (reportState is LoadingState) ...[
+                    const KLoading(shimmerHeight: 123)
+                  ],
                   if (reportState is FetchReportSuccessState) ...[
                     ListView.builder(
                       shrinkWrap: true,
@@ -44,10 +44,19 @@ class _ReportListState extends State<ReportList> {
                       itemCount: reportState.reportModel?.data.data.length,
                       itemBuilder: (ctx, index) {
                         return ReportCard(
-                          id: reportState.reportModel?.data.data[index].id.toString(),
-                          date: createDate(reportState.reportModel?.data.data[index].createdAt.toString(), 0),
-                          reason: reportState.reportModel?.data.data[index].reason,
-                          img: AssetPath.boxIcon,
+                          id: reportState.reportModel?.data.data[index].id
+                              .toString(),
+                          date: createDate(
+                              reportState
+                                  .reportModel?.data.data[index].createdAt
+                                  .toString(),
+                              0),
+                          reason:
+                              reportState.reportModel?.data.data[index].reason,
+                          img: reportState.reportModel?.data.data[index].image
+                              .toString(),
+                          description: reportState
+                              .reportModel?.data.data[index].description,
                         );
                       },
                     )
@@ -68,7 +77,10 @@ class _ReportListState extends State<ReportList> {
 
   String imageData(String? image, int? index) {
     index = image?.indexOf(":");
-    List data = [image?.substring(0, index).trim(), image?.substring(index! + 1).trim()];
+    List data = [
+      image?.substring(0, index).trim(),
+      image?.substring(index! + 1).trim()
+    ];
     print(data[0]);
     print(data[1]);
     return data[index!];

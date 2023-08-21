@@ -27,6 +27,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'auth/login/model/user_model.dart';
 import 'home/state/menu_data_state.dart';
 
+// ignore: must_be_immutable
 class MainScreen extends ConsumerStatefulWidget {
   int? pageIndex;
   MainScreen({Key? key, this.pageIndex}) : super(key: key);
@@ -143,10 +144,10 @@ class _MainScreenState extends ConsumerState<MainScreen>
               children: [
                 widget.pageIndex == 1 ? const CartPage() : const HomePage(),
                 widget.pageIndex == 1
-                    ? WishlistPage()
-                    : CartPage(isFromBottomNav: true),
-                widget.pageIndex == 1 ? ProfilePage() : const WishlistPage(),
-                widget.pageIndex == 1 ? HomePage() : ProfilePage(),
+                    ? const WishlistPage()
+                    : const CartPage(isFromBottomNav: true),
+                widget.pageIndex == 1 ? const ProfilePage() : const WishlistPage(),
+                widget.pageIndex == 1 ? const HomePage() : const ProfilePage(),
               ],
             ),
           ),

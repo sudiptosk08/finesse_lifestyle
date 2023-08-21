@@ -18,6 +18,7 @@ import 'package:intl/intl.dart';
 import '../../../../constants/asset_path.dart';
 import '../../../../core/base/base_state.dart';
 
+// ignore: must_be_immutable
 class ProductReview extends StatefulWidget {
   String productId;
   String userId;

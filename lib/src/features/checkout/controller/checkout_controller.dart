@@ -21,12 +21,7 @@ class CheckoutController extends StateNotifier<BaseState> {
   CheckoutController({this.ref}) : super(const InitialState());
   Future<void> placeOrder(int totalFee, context) async {
     User? user = ref?.read(menuDataProvider.notifier).menuList!.user;
-    final discountState = ref!.watch(discountProvider);
-    final cartState = ref!.watch(cartProvider);
-    final zoneState = ref!.watch(zoneProvider);
-    var subtotal = ref!.read(discountProvider.notifier).subtotal;
     var roundfee = ref!.read(discountProvider.notifier).roundingFee;
-    var discount = ref!.read(discountProvider.notifier).discount;
 
     state = const LoadingState();
     try {

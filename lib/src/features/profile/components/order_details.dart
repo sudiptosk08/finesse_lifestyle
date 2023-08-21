@@ -1,7 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/button/k_border_btn.dart';
-import 'package:finesse/components/button/k_button.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/src/features/profile/components/track_order.dart';
 import 'package:finesse/src/features/profile/model/order_model.dart';

@@ -1,18 +1,14 @@
-import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/constants/shared_preference_constant.dart';
-import 'package:finesse/src/features/checkout/controller/address_controller.dart';
-import 'package:finesse/src/features/checkout/state/add_address.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
-import '../../../../components/button/k_button.dart';
 import '../../../../components/textfield/k_fill_name.dart';
 import '../../../../components/textfield/k_fill_phone.dart';
 import '../../../../styles/k_colors.dart';
 import '../../../../styles/k_text_style.dart';
 import '../../cart/components/get_location.dart';
 
+// ignore: must_be_immutable
 class AddShippingAddress extends StatefulWidget {
   TextEditingController nameCon;
   TextEditingController emailCon;

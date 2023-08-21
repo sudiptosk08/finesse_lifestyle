@@ -3,7 +3,6 @@ import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nb_utils/nb_utils.dart';
 
 import '../../../../constants/shared_preference_constant.dart';
 import '../controller/cart_controller.dart';

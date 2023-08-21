@@ -1,6 +1,6 @@
-import 'dart:io';
-
+import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/styles/k_colors.dart';
+import 'package:finesse/styles/k_size.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +10,10 @@ class ReportCard extends StatefulWidget {
   final String? date;
   final String? reason;
   final String? img;
+  final String? description;
 
-  const ReportCard({this.id, this.date, this.reason, this.img, Key? key})
+  const ReportCard(
+      {this.id, this.date, this.reason, this.img, this.description, Key? key})
       : super(key: key);
 
   @override
@@ -102,42 +104,29 @@ class _ReportCardState extends State<ReportCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image.asset(
-                  " ${widget.img}",
-                  height: 49,
-                ),
-                const SizedBox(width: 16),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Hanging Clock',
-                      style: KTextStyle.bodyText2.copyWith(
-                        color: KColor.blackbg,
+                widget.img!.startsWith('https:')
+                    ? Image.network(
+                        "${widget.img}",
+                        fit: BoxFit.fill,
+                        height: 70,
+                        width: 70,
+                      )
+                    : Image.asset(
+                        AssetPath.placeholder,
+                        fit: BoxFit.fill,
+                        height: 70,
+                        width: 70,
                       ),
+                const SizedBox(width: 16),
+                SizedBox(
+                  width: KSize.getWidth(context, 230),
+                  child: Text(
+                    "${widget.description}",
+                    maxLines: 3,
+                    style: KTextStyle.bodyText2.copyWith(
+                      color: KColor.blackbg,
                     ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "\$44.90",
-                          style: KTextStyle.subtitle1.copyWith(
-                            color: KColor.blackbg,
-                          ),
-                        ),
-                        SizedBox(width: context.screenWidth * 0.35),
-                        Text(
-                          "(x2)",
-                          style: KTextStyle.description.copyWith(
-                            color: KColor.baseBlack,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),

@@ -65,7 +65,6 @@ class _AddressPageState extends State<AddressPage> {
     return Consumer(
       builder: (context, ref, _) {
         final userState = ref.watch(menuDataProvider);
-        final adressState = ref.watch(addressProvider);
         final User? userData =
             userState is MenuDataSuccessState ? userState.menuList!.user : null;
         final addressState = ref.watch(addressProvider);

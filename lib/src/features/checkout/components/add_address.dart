@@ -11,7 +11,7 @@ import '../../../../styles/k_text_style.dart';
 import '../../cart/components/get_location.dart';
 
 class AddAddress extends StatefulWidget {
-  String addressLabel;
+  final String addressLabel;
   AddAddress({Key? key, required this.addressLabel}) : super(key: key);
 
   @override
@@ -23,8 +23,7 @@ class _AddAddressState extends State<AddAddress> {
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
   TextEditingController address = TextEditingController();
-  String? _cities;
-  String? _zones;
+
   var username = getStringAsync(userName);
   var useremail = getStringAsync(userEmail);
   var contact = getStringAsync(userContact);

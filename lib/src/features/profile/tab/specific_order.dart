@@ -32,7 +32,6 @@ class _SpecificOrderState extends State<SpecificOrder> {
                 .toList()
             : [];
         print("using -----index where");
-        List<Datum>? specificOrderList;
         if (orderList!.isNotEmpty) {
           print(orderList
               .where((element) => element.status == "Canceled")

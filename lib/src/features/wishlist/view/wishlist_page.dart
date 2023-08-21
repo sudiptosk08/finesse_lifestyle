@@ -37,7 +37,6 @@ class _WishlistPageState extends State<WishlistPage> {
       child: Consumer(
         builder: (context, ref, _) {
           final wishlistProductsState = ref.watch(wishlistProvider);
-          final cartState = ref.watch(cartProvider);
 
           final List<Datum>? wishlistData =
               wishlistProductsState is WishlistSuccessState

@@ -208,7 +208,7 @@ class _PreviewPageState extends State<PreviewPage> {
                   onTap: () {
                     // Navigator.pushNamed(context, '/confirmOrder'); 
 
-                    if(user!= null && billingAddressMap.isNotEmpty  && checkoutProviderState is! LoadingState){
+                    if(billingAddressMap.isNotEmpty  && checkoutProviderState is! LoadingState){
                          
                         ref.read(checkoutProvider.notifier).placeOrder(totalFee,context);
                     }

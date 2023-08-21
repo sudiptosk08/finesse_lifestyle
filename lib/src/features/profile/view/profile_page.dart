@@ -64,26 +64,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                     shape: BoxShape.circle,
                                   ),
                                 ),
-                                CircleAvatar(
-                                  radius: 49,
-                                  child: Image.asset(
-                                    'assets/images/profile-picture.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Positioned(
-                                  right: 10,
-                                  top: 80,
-                                  child: CircleAvatar(
-                                    radius: 15,
-                                    backgroundColor: KColor.blackbg,
-                                    child: SvgPicture.asset(
-                                      'assets/images/edit.svg',
-                                      color: KColor.white,
-                                      height: 16,
-                                    ),
-                                  ),
-                                ),
+                                const CircleAvatar(
+                                    backgroundColor: KColor.borderColor,
+                                    radius: 49,
+                                    child: Icon(
+                                      Icons.person,
+                                      size: 80,
+                                      color: KColor.primary,
+                                    )),
                               ],
                             ),
                           ),
@@ -136,16 +124,17 @@ class _ProfilePageState extends State<ProfilePage> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: ((context) => const MyOrder())));
+                                          builder: ((context) =>
+                                              const MyOrder())));
                                 },
                               ),
-                              ProfileCard(
-                                title: 'Notification',
-                                image: 'assets/images/notification.png',
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/notification');
-                                },
-                              ),
+                              // ProfileCard(
+                              //   title: 'Notification',
+                              //   image: 'assets/images/notification.png',
+                              //   onPressed: () {
+                              //     Navigator.pushNamed(context, '/notification');
+                              //   },
+                              // ),
                               ProfileCard(
                                 title: 'Address',
                                 image: 'assets/images/address.png',

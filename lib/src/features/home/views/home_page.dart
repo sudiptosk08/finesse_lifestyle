@@ -29,27 +29,27 @@ class _HomePageState extends ConsumerState<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const KSlider(selectSliders: 1),
-              const SizedBox(height: 31),
+              const SizedBox(height: 15),
               _categoryHeader(
                 'Categories',
                 () => Navigator.pushNamed(context, '/category'),
               ),
               const CategorySection(),
-              const SizedBox(height: 31),
+              const SizedBox(height: 12),
               _categoryHeader('Popular Right Now', () {}),
               const SizedBox(height: 8),
               const PopularCategory(),
-              const SizedBox(height: 23),
+              const SizedBox(height: 15),
               _categoryHeader('New Arrivals', () {
-                ref.read(shopProvider.notifier).fetchShopProductList(groupId: "",
-                      categoryId: "",
-                      str: "");
+                ref
+                    .read(shopProvider.notifier)
+                    .fetchShopProductList(groupId: "", categoryId: "", str: "");
                 Navigator.pushNamed(context, '/shop');
               }, showViewAll: true),
               const NewArrivals(),
-              const SizedBox(height: 32),
+              const SizedBox(height: 15),
               _categoryHeader('Featured Products', () {
-                  ref
+                ref
                     .read(shopProvider.notifier)
                     .fetchShopProductList(groupId: "", categoryId: "", str: "");
                 Navigator.pushNamed(context, '/shop');

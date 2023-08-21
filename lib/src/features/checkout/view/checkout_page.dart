@@ -23,8 +23,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 16),
-          child: Column(
-            children: const [Steppers()],
+          child: const Column(
+            children: [Steppers()],
           ),
         ),
       ),

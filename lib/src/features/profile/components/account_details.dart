@@ -1,5 +1,4 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
-import 'package:finesse/components/button/k_border_btn.dart';
 import 'package:finesse/components/button/k_button.dart';
 import 'package:finesse/src/features/home/models/menu_data_model.dart';
 import 'package:finesse/src/features/home/state/menu_data_state.dart';

@@ -207,10 +207,6 @@ class DiscountController extends StateNotifier<BaseState> {
         codeState is ReferralCodeSuccessState
             ? codeState.referralCodeModel
             : null;
-    final VoucherCodeModel? voucherCodeData =
-        codeState is VoucherCodeSuccessState
-            ? codeState.voucherCodeModel
-            : null;
     deliveryFee = ref?.read(zoneProvider.notifier).deliveryFee as int;
     subtotal = ref?.read(cartProvider.notifier).subtotal as int;
     if (clear == true) {
@@ -227,7 +223,7 @@ class DiscountController extends StateNotifier<BaseState> {
           ? '${deliveryFee + (subtotal - (subtotal * promoCodeDis) / 100).round()}' //promoCodeData?.coupon.discount.toString()
           : 0;
       print("promo amount is");
-      print("${promoAmount}");
+      print("$promoAmount");
       if (clear == false) {
         discountValue = promoCodeData.coupon.discount.toString();
       }
@@ -262,19 +258,19 @@ class DiscountController extends StateNotifier<BaseState> {
       if (clear == false) {
         discountValue = referralCodeData.discount.toString();
       }
-      print("referral amount is : ${referralAmount}");
+      print("referral amount is : $referralAmount");
     }
     roundingFee = clear == true ? 0 : int.parse(countTotalFee) % 10;
     if (voucherAmount > 0) {
       totalFee = clear == true
           ? (subtotal - voucherAmount) + deliveryFee
           : int.parse(countTotalFee! - voucherAmount) - roundingFee;
-      print("voucher in proo ${totalFee}");
+      print("voucher in proo $totalFee");
     } else {
       totalFee = clear == true
           ? (subtotal + deliveryFee)
           : int.parse(countTotalFee!) - roundingFee;
-      print("voucher not in proo ${totalFee}");
+      print("voucher not in proo $totalFee");
     }
 
     // voucherAmount =
@@ -473,15 +469,15 @@ class GiftVoucherController extends StateNotifier<BaseState> {
     // totalFee = clear == true
     //     ? (subtotal + deliveryFee)
     //     : int.parse(countTotalFee!)-voucherAmount  ;
-    print("total fee in voucher code ${totalFee}");
+    print("total fee in voucher code $totalFee");
     // discountAmount =
     //     clear == true ? 0 : (subtotal + deliveryFee) - int.parse(countTotalFee);
 
     print("voucher amout----------------");
-    print("totalfee ${totalFee}");
-    print("promoamount  ${promoAmount}");
-    print("referral amoubt ${referralAmount}");
-    print("subtotal ${subtotal}");
+    print("totalfee $totalFee");
+    print("promoamount  $promoAmount");
+    print("referral amoubt $referralAmount");
+    print("subtotal $subtotal");
     print("voucher amout- end---------------");
   }
 }

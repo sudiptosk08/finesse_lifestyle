@@ -23,18 +23,14 @@ filterPage(context) {
   String? categoryId = '';
   String? subCatId = '';
   var _chosenColorValue; // colorvalue
-  var _locationChosenValue3;
   var dollarChosenValue;
   var _chosenSizeValue; // size
-  String? chosenPrice = '';
   String? priceString;
-  var brandName;
   String? brandId = '';
   List<Group> subCategoryData = [];
   List<String> brandIdList = [];
   String? selectSubCat = null; // subcategory
 
-  bool isBrandSelected = false;
   return showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context,
@@ -48,7 +44,6 @@ filterPage(context) {
               List<Brand> allBrandData = brandState is AllBrandsSuccessState
                   ? brandState.brandModel!.brands
                   : [];
-              final shopProviderState = ref.watch(shopProvider);
               // final categoryState = ref.watch(categoryProvider);
               // final List<Group>? categoryData =
               //     categoryState is CategorySuccessState

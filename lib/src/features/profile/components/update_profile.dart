@@ -1,5 +1,4 @@
 import 'package:finesse/components/button/k_button.dart';
-import 'package:finesse/components/textfield/k_text_field.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/src/features/auth/login/controller/login_controller.dart';
 import 'package:finesse/src/features/auth/login/model/user_model.dart';
@@ -28,8 +27,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
   TextEditingController address = TextEditingController();
-  String? _cities;
-  String? _zones;
+
 
   @override
   Widget build(BuildContext context) {
