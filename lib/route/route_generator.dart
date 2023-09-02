@@ -47,7 +47,6 @@ class RouteGenerator {
         return CupertinoPageRoute(
           builder: (_) => OtpPage(
             phoneNumber: arguments!['phoneNumber'],
-          
           ),
         );
       case '/signup':
@@ -68,7 +67,7 @@ class RouteGenerator {
         );
       case '/mainScreen':
         return CupertinoPageRoute(
-          builder: (_) =>  MainScreen(),
+          builder: (_) => MainScreen(),
         );
       case '/resetPassword':
         return CupertinoPageRoute(
@@ -99,15 +98,9 @@ class RouteGenerator {
         return CupertinoPageRoute(
           builder: (_) => const MenSection(),
         );
-     case '/productDetails':
+      case '/productDetails':
         return CupertinoPageRoute(
-          builder: (_) => ProductDetails(
-            productName: arguments!['productName'],
-            productGroup: arguments['productGroup'],
-            price: arguments['price'],
-            description: arguments['description'],
-            id: arguments['id'],
-          ),
+          builder: (_) =>const ProductDetails(),
         );
       // case '/productInfo':
       //   return CupertinoPageRoute(
@@ -140,7 +133,7 @@ class RouteGenerator {
           builder: (_) => const MyOrder(),
         );
 
-        // there is an error to send data
+      // there is an error to send data
       // case '/orderDetails':
       //   print(arguments);
       //   return CupertinoPageRoute(
@@ -152,7 +145,9 @@ class RouteGenerator {
         );
       case '/trackOrder':
         return CupertinoPageRoute(
-          builder: (_) =>  TrackOrder( orderData: arguments!['orderData'],),
+          builder: (_) => TrackOrder(
+            orderData: arguments!['orderData'],
+          ),
         );
       case '/notifications':
         return CupertinoPageRoute(
@@ -208,7 +203,7 @@ class RouteGenerator {
         );
       case '/addressPage':
         return CupertinoPageRoute(
-          builder: (_) =>  AddressPage(),
+          builder: (_) => AddressPage(),
         );
       //  case '/checkoutShippingAddress':
       //   return CupertinoPageRoute(
@@ -226,7 +221,7 @@ class RouteGenerator {
         return CupertinoPageRoute(
           builder: (_) => const SettingPage(),
         );
-      
+
       default:
         return CupertinoPageRoute(
           builder: (_) => const HomePage(),

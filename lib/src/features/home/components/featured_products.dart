@@ -5,6 +5,7 @@ import 'package:finesse/src/features/home/controllers/product_category_controlle
 import 'package:finesse/src/features/home/models/products_category_model.dart';
 import 'package:finesse/src/features/home/state/product_category_state.dart';
 import 'package:finesse/src/features/product_details/controller/product_details_controller.dart';
+import 'package:finesse/src/features/product_details/view/product_details.dart';
 import 'package:finesse/src/features/wishlist/controller/wishlist_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -51,19 +52,10 @@ class _FeaturedProductsState extends State<FeaturedProducts> {
                           .read(productDetailsProvider.notifier)
                           .fetchProductsDetails(featureCategory[index].id);
                       ref.read(cartProvider.notifier).cartDetails();
-                      Navigator.pushNamed(
+                      Navigator.push(
                         context,
-                        '/productDetails',
-                        arguments: {
-                          'productName': featureCategory[index].productName,
-                          'productGroup':
-                              featureCategory[index].allgroup.groupName,
-                          'price':
-                              featureCategory[index].sellingPrice.toString(),
-                          'description':
-                              featureCategory[index].briefDescription,
-                          'id': featureCategory[index].id,
-                        },
+                        MaterialPageRoute(builder: (context) =>const ProductDetails(),)
+
                       );
                     },
                     pressed: () {

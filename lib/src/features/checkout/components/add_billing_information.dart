@@ -27,6 +27,7 @@ class AddBillingInformationState extends State<AddBillingInformation> {
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
   TextEditingController address = TextEditingController();
+   TextEditingController postCode = TextEditingController();
   var username = getStringAsync(userName);
   var useremail = getStringAsync(userEmail);
   var contact = getStringAsync(userContact);
@@ -75,8 +76,23 @@ class AddBillingInformationState extends State<AddBillingInformation> {
                 _editInformation(
                   'Address',
                   KFillNormal(
-                    controller: address..text = user.customer.address!,
+                    controller: address
+                      ..text = user.customer.address != null
+                          ? user.customer.address
+                          : billingAddressMap['address'],
                     hintText: 'Enter your address here...',
+                    label: '',
+                    readOnly: false,
+                  ),
+                ),
+                _editInformation(
+                  'Post Code',
+                  KFillNormal(
+                    controller: postCode
+                      ..text = user.customer.postCode != null
+                          ? user.customer.postCode
+                          : billingAddressMap['postCode'],
+                    hintText: 'Enter your post Code here...',
                     label: '',
                     readOnly: false,
                   ),
@@ -102,6 +118,7 @@ class AddBillingInformationState extends State<AddBillingInformation> {
                               emailis: email.text,
                               phoneis: phone.text,
                               addressis: address.text,
+                              postCodeis: postCode.text
                             );
                         print(
                             "Address Text ===================${address.text}");

@@ -40,7 +40,7 @@ class _CartPageState extends State<CartPage> {
               return await Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext context) =>  MainScreen()));
+                      builder: (BuildContext context) => MainScreen()));
             },
             child: Scaffold(
               backgroundColor: KColor.appBackground,
@@ -83,7 +83,7 @@ class _CartPageState extends State<CartPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: ((context) =>
-                                                         MainScreen())),
+                                                        MainScreen())),
                                               ),
                                             ),
                                           ),
@@ -92,21 +92,34 @@ class _CartPageState extends State<CartPage> {
                                             child: Consumer(
                                               builder: ((context, ref, child) {
                                                 return KButton(
-                                                  title: 'Checkout',
-                                                  onTap: () async {
-                                                    if (await ref
-                                                        .read(addressProvider
-                                                            .notifier)
-                                                        .isLocationSet(user!
-                                                            .customer
-                                                            .address)) {
+                                                    title: 'Checkout',
+                                                    onTap: () async {
+                                                      ref
+                                                          .read(addressProvider
+                                                              .notifier)
+                                                          .isLocationSet(
+                                                              context,
+                                                              user!.customer
+                                                                      .address ??
+                                                                  "",
+                                                              user.customer.city ??
+                                                                  "",
+                                                              user.customer
+                                                                  .cityId
+                                                                  .toString(),
+                                                              user.customer.zone ??
+                                                                  "",
+                                                              user.customer.zoneId
+                                                                  .toString(),
+                                                              user.customer.area ??
+                                                                  "",
+                                                              user.customer
+                                                                  .areaId
+                                                                  .toString(),
+                                                              user.customer
+                                                                  .postCode ?? "");
                                                       // ignore: use_build_context_synchronously
-                                                      Navigator.pushNamed(
-                                                          context,
-                                                          '/addressPage');
-                                                    }
-                                                  },
-                                                );
+                                                    });
                                               }),
                                             ),
                                           ),

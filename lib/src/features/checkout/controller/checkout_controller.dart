@@ -6,6 +6,7 @@ import "package:finesse/src/features/auth/login/model/user_model.dart";
 import "package:finesse/src/features/cart/controller/cart_controller.dart";
 import "package:finesse/src/features/cart/controller/discount_controller.dart";
 import "package:finesse/src/features/cart/controller/zone_controller.dart";
+import "package:finesse/src/features/checkout/state/add_address.dart";
 import "package:finesse/src/features/home/controllers/menu_data_controller.dart";
 import "package:finesse/src/features/profile/state/profile_state.dart";
 import "package:finesse/styles/k_colors.dart";
@@ -30,9 +31,12 @@ class CheckoutController extends StateNotifier<BaseState> {
         toast('Set Billing Address.');
         state = ErrorState();
       }
-      // else if () {
-      //   toast('Email not Set!');
-      // } else if (phoneis.isEmpty) {
+      else if (billingAddressMap['postCode'] == null && user!.customer.postCode == null) {
+        
+         toast('Set Billing postal Code.');
+        state = ErrorState();
+      }
+      //  else if (phoneis.isEmpty) {
       //   state = AddressErrorState();
       //   toast('phone not Set!');
       // } else if (cityis == null) {
@@ -48,6 +52,7 @@ class CheckoutController extends StateNotifier<BaseState> {
       //   toast('Address not Set!');
       //   state = AddressErrorState();
       // }
+      
       else {
         var requestBody;
         getJSONAsync(shippingAddress).isEmpty
@@ -77,7 +82,7 @@ class CheckoutController extends StateNotifier<BaseState> {
                 "name": user.name,
                 "notes": '',
                 "paymentType": paymentOption,
-                "postCode": user.customer.postCode,
+                "postCode":  billingAddressMap['postCode'] ?? user.customer.postCode ,
                 "promoDiscount":
                     ref!.read(discountProvider.notifier).promoCodeModel != null
                         ? ref!
@@ -104,8 +109,7 @@ class CheckoutController extends StateNotifier<BaseState> {
                         : ref!.read(discountProvider.notifier).referralAmount,
                 "roundAmount": roundfee == 0 ? 0 : roundfee,
                 "shippingPrice": billingAddressMap['deliveryFee'] ??
-                    ref!.read(zoneProvider.notifier).deliveryFee.toString(),
-
+                    ref!.read(zoneProvider.notifier).deliveryFee.toString(), 
                 "subTotal": ref!.read(cartProvider.notifier).subtotal,
                 
               }
@@ -135,7 +139,7 @@ class CheckoutController extends StateNotifier<BaseState> {
                 "name": user.name,
                 "notes": '',
                 "paymentType": paymentOption,
-                "postCode": user.customer.postCode,
+                "postCode": user.customer.postCode ?? billingAddressMap['postCode'],
                 "promoDiscount":
                     ref!.read(discountProvider.notifier).promoCodeModel != null
                         ? ref!
@@ -169,7 +173,7 @@ class CheckoutController extends StateNotifier<BaseState> {
                   'shippingCity': getJSONAsync(shippingAddress)['city'],
                   'shippingZone': getJSONAsync(shippingAddress)['zone'],
                   'shippingArea': getJSONAsync(shippingAddress)['area'],
-                  'postCode': 'null',
+                  'postCode': getJSONAsync(shippingAddress)['postCode'],
                   'address': getJSONAsync(shippingAddress)['address']
                 },
                 "subTotal": ref!.read(cartProvider.notifier).subtotal,

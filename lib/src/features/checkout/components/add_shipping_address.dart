@@ -104,6 +104,18 @@ class _AddShippingAddressState extends State<AddShippingAddress> {
                     readOnly: getJSONAsync(shippingAddress).isEmpty? false:true,
                   ),
                 ),
+                  _editInformation(
+                  'Postal Code',
+                  KFillNormal(
+                    controller: widget.addressCon
+                      ..text = getJSONAsync(shippingAddress)['postCode'] ??
+                          widget.addressCon.text,
+                    hintText: 'Enter your address here...',
+                    label: '',
+                    readOnly:
+                        getJSONAsync(shippingAddress).isEmpty ? false : true,
+                  ),
+                ),
                 DeliveryAddress(isShippingAddressPage: true),
               ],
             ),

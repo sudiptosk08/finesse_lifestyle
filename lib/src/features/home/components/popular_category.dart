@@ -1,7 +1,10 @@
+import 'package:finesse/src/features/cart/controller/cart_controller.dart';
 import 'package:finesse/src/features/home/controllers/shop_controller.dart';
 import 'package:finesse/src/features/home/controllers/slider_controller.dart';
 import 'package:finesse/src/features/home/models/slider_model.dart';
 import 'package:finesse/src/features/home/state/slider_state.dart';
+import 'package:finesse/src/features/product_details/controller/product_details_controller.dart';
+import 'package:finesse/src/features/product_details/view/product_details.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
@@ -83,12 +86,22 @@ class _PopularCategoryState extends State<PopularCategory> {
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: (){
-                        ref.read(shopProvider.notifier).fetchShopProductList(
-                          groupId: "",
-                          categoryId: "",
-                          str: "");
-                      Navigator.pushNamed(context, '/shop');
+                    onTap: () {
+                      //   ref.read(shopProvider.notifier).fetchShopProductList(
+                      //     groupId: "",
+                      //     categoryId: "",
+                      //     str: "");
+                      // Navigator.pushNamed(context, '/shop');
+                       ref
+                          .read(productDetailsProvider.notifier)
+                          .fetchProductsDetails(middleBanner[index].appLink);
+                      ref.read(cartProvider.notifier).cartDetails();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>const ProductDetails(
+                            ),
+                          ));
                     },
                     child: Container(
                       margin: const EdgeInsets.only(right: 16),

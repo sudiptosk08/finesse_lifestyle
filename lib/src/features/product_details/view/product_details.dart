@@ -7,6 +7,8 @@ import 'package:finesse/src/features/main_screen.dart';
 import 'package:finesse/src/features/product_details/components/add_to_cart.dart';
 import 'package:finesse/src/features/product_details/components/product_info.dart';
 import 'package:finesse/src/features/product_details/components/product_preview.dart';
+import 'package:finesse/src/features/product_details/controller/product_details_controller.dart';
+import 'package:finesse/src/features/product_details/state/product_details_state.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
@@ -24,18 +26,7 @@ import '../../home/controllers/menu_data_controller.dart';
 import '../../home/state/menu_data_state.dart';
 
 class ProductDetails extends ConsumerStatefulWidget {
-  final String? productName;
-  final String? productGroup;
-  final String? price;
-  final String? description;
-  final int? id;
-
   const ProductDetails({
-    this.productName,
-    this.productGroup,
-    this.price,
-    this.description,
-    this.id,
     Key? key,
   }) : super(key: key);
 
@@ -62,6 +53,10 @@ class _ProductDetailsState extends ConsumerState<ProductDetails> {
     final menuData = ref.watch(menuDataProvider);
     User? user =
         menuData is MenuDataSuccessState ? menuData.menuList!.user : null;
+    final productDetailsState = ref.watch(productDetailsProvider);
+    final productDetails = productDetailsState is ProductDetailsSuccessState
+        ? productDetailsState.productDetailsModel!.product
+        : null;
     return Scaffold(
       backgroundColor: KColor.whiteBackground,
       appBar: AppBar(
@@ -80,7 +75,12 @@ class _ProductDetailsState extends ConsumerState<ProductDetails> {
               ref.read(cartProvider.notifier).cartDetails();
               ref.read(addressProvider.notifier).setLocationNameOnce(user);
               ref.read(cityProvider.notifier).allCity();
-               Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(pageIndex: 1,)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MainScreen(
+                            pageIndex: 1,
+                          )));
             },
             child: SizedBox(
               width: context.screenWidth * 0.2,
@@ -120,13 +120,19 @@ class _ProductDetailsState extends ConsumerState<ProductDetails> {
       ),
       body: Column(
         children: [
-          ProductPreview(id: widget.id.toString()),
+          ProductPreview(
+              id: productDetails != null ? productDetails.id.toString() : "0"),
           ProductInfo(
-              productName: widget.productName,
-              productGroup: widget.productGroup,
-              price: widget.price,
-              description: widget.description,
-              id: widget.id.toString(),
+              productName:
+                  productDetails != null ? productDetails.productName : "",
+              productGroup:
+                  productDetails != null ? productDetails.subcategory : "",
+              price: productDetails != null
+                  ? productDetails.sellingPrice.toString()
+                  : "",
+              description:
+                  productDetails != null ? productDetails.briefDescription : "",
+              id:productDetails != null ? productDetails.id.toString() : "",
               userId: userId),
           AddToCart(
             quantity: quantity,

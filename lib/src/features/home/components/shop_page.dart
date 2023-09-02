@@ -7,6 +7,7 @@ import 'package:finesse/src/features/home/controllers/shop_controller.dart';
 import 'package:finesse/src/features/home/models/shop_data_model.dart';
 import 'package:finesse/src/features/home/state/shop_state.dart';
 import 'package:finesse/src/features/product_details/controller/product_details_controller.dart';
+import 'package:finesse/src/features/product_details/view/product_details.dart';
 import 'package:finesse/src/features/wishlist/controller/wishlist_controller.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
@@ -76,7 +77,6 @@ class _ShopPageState extends State<ShopPage> {
                     const SizedBox(width: 14),
                     GestureDetector(
                       onTap: () {
-                      
                         ref
                             .read(categoryProvider.notifier)
                             .fetchCategoryDetails();
@@ -123,91 +123,76 @@ class _ShopPageState extends State<ShopPage> {
                       ),
                     ],
                     if (shopState is ShopSuccessState) ...[
-                       Expanded(
+                      Expanded(
                         child: shopData!.isEmpty
                             ? const Center(child: Text('No products found!'))
                             : GridView.builder(
-                              physics: BouncingScrollPhysics(),
-                              controller: ref
-                                  .read(shopListScrollProvider.notifier)
-                                  .controller,
-                              shrinkWrap: true,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 3.0,
-                                mainAxisSpacing: 6.0,
-                                childAspectRatio: 7 / 10,
-                              ),
-                              itemCount: shopData.length,
-                              scrollDirection: Axis.vertical,
-                              itemBuilder: (context, index) {
-                                return ProductCard(
-                                    img: shopData[index].productImage,
-                                    name: shopData[index].productName,
-                                    genre: shopData[index]
-                                        .allgroup
-                                        .groupName
-                                        .toString()
-                                        .split('.')
-                                        .last,
-                                    offerPrice: shopData[index]
-                                        .sellingPrice
-                                        .toString(),
-                                    regularPrice: "",
-                                    discount:
-                                        shopData[index].discount.toString(),
-                                    check: false,
-                                    tap: () {
-                                      ref
-                                          .read(productDetailsProvider
-                                              .notifier)
-                                          .fetchProductsDetails(
-                                              shopData[index].id);
+                                physics: BouncingScrollPhysics(),
+                                controller: ref
+                                    .read(shopListScrollProvider.notifier)
+                                    .controller,
+                                shrinkWrap: true,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 3.0,
+                                  mainAxisSpacing: 6.0,
+                                  childAspectRatio: 7 / 10,
+                                ),
+                                itemCount: shopData.length,
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (context, index) {
+                                  return ProductCard(
+                                      img: shopData[index].productImage,
+                                      name: shopData[index].productName,
+                                      genre: shopData[index]
+                                          .allgroup
+                                          .groupName
+                                          .toString()
+                                          .split('.')
+                                          .last,
+                                      offerPrice: shopData[index]
+                                          .sellingPrice
+                                          .toString(),
+                                      regularPrice: "",
+                                      discount:
+                                          shopData[index].discount.toString(),
+                                      check: false,
+                                      tap: () {
+                                        ref
+                                            .read(
+                                                productDetailsProvider.notifier)
+                                            .fetchProductsDetails(
+                                                shopData[index].id);
 
-                                      Navigator.pushNamed(
-                                        context,
-                                        '/productDetails',
-                                        arguments: {
-                                          'productName':
-                                              shopData[index].productName,
-                                          'productGroup': shopData[index]
-                                              .allgroup
-                                              .groupName
-                                              .toString()
-                                              .split('.')
-                                              .last,
-                                          'price': shopData[index]
-                                              .sellingPrice
-                                              .toString(),
-                                          'description': shopData[index]
-                                              .briefDescription,
-                                          'id': shopData[index].id,
-                                        },
-                                      );
-                                      ref
-                                          .read(productDetailsProvider
-                                              .notifier)
-                                          .fetchProductsDetails(
-                                              shopData[index].id);
-                                    },
-                                    pressed: () {
-                                      if (wishlistState is! LoadingState) {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const ProductDetails(),
+                                            ));
+                                        ref
+                                            .read(
+                                                productDetailsProvider.notifier)
+                                            .fetchProductsDetails(
+                                                shopData[index].id);
+                                      },
+                                      pressed: () {
+                                        if (wishlistState is! LoadingState) {
+                                          ref
+                                              .read(wishlistProvider.notifier)
+                                              .addWishlist(
+                                                  id: shopData[index]
+                                                      .id
+                                                      .toString());
+                                        }
                                         ref
                                             .read(wishlistProvider.notifier)
-                                            .addWishlist(
-                                                id: shopData[index]
-                                                    .id
-                                                    .toString());
-                                      }
-                                      ref
-                                          .read(wishlistProvider.notifier)
-                                          .fetchWishlistProducts();
-                                    });
-                              },
-                            ),
+                                            .fetchWishlistProducts();
+                                      });
+                                },
+                              ),
                       ),
-
                       if (shopScrollState is ScrollReachedBottomState)
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,

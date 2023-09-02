@@ -4,6 +4,7 @@ import 'package:finesse/src/features/home/controllers/product_category_controlle
 import 'package:finesse/src/features/home/models/products_category_model.dart';
 import 'package:finesse/src/features/home/state/product_category_state.dart';
 import 'package:finesse/src/features/product_details/controller/product_details_controller.dart';
+import 'package:finesse/src/features/product_details/view/product_details.dart';
 import 'package:finesse/src/features/wishlist/controller/wishlist_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -53,17 +54,11 @@ class _NewArrivalsState extends State<NewArrivals> {
                         .read(productDetailsProvider.notifier)
                         .fetchProductsDetails(newCategory[index].id);
                     ref.read(cartProvider.notifier).cartDetails();
-                    Navigator.pushNamed(
-                      context,
-                      '/productDetails',
-                      arguments: {
-                        'productName': newCategory[index].productName,
-                        'productGroup': newCategory[index].allgroup.groupName,
-                        'price': newCategory[index].sellingPrice.toString(),
-                        'description': newCategory[index].briefDescription,
-                        'id': newCategory[index].id,
-                      },
-                    );
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ProductDetails(),
+                        ));
                   },
                   pressed: () {
                     if (wishlistState is! LoadingState) {

@@ -31,7 +31,7 @@ class Dashboard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    "Hello, ${userData!.user.customer.customerName.toString()}",
+                    "Hello, ${userData!.user.customer.customerName == null ? "" : userData.user.customer.customerName.toString()}",
                     style: KTextStyle.description.copyWith(
                         color: KColor.blackbg, fontWeight: FontWeight.bold),
                   ),

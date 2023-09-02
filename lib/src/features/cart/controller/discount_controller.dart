@@ -264,7 +264,7 @@ class DiscountController extends StateNotifier<BaseState> {
     if (voucherAmount > 0) {
       totalFee = clear == true
           ? (subtotal - voucherAmount) + deliveryFee
-          : int.parse(countTotalFee! - voucherAmount) - roundingFee;
+          : int.parse(countTotalFee! - voucherAmount) - roundingFee + deliveryFee ;
       print("voucher in proo $totalFee");
     } else {
       totalFee = clear == true

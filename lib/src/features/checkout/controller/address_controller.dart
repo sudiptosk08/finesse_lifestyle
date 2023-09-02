@@ -71,7 +71,7 @@ class AddAddressController extends StateNotifier<BaseState> {
         await setValue(shippingAddress, address);
         ref?.read(addressProvider.notifier).makeAddressNull();
         state = AddressSuccessState();
-         Navigator.pushNamed(context, '/payment');
+        Navigator.pushNamed(context, '/payment');
         toast('Shipping Address added');
         print("inside add shipping method : ${getJSONAsync(shippingAddress)}");
       }
@@ -99,6 +99,7 @@ class AddAddressController extends StateNotifier<BaseState> {
           areaN: userData.customer.area,
           areaId: userData.customer.areaId.toString(),
           address: userData.customer.address.toString(),
+          postCode: userData.customer.postCode.toString()
         );
 
         ref!.read(zoneProvider.notifier).updateTotalDelivery(
@@ -119,36 +120,56 @@ class AddAddressController extends StateNotifier<BaseState> {
     }
   }
 
-  Future<bool> isLocationSet(String address) async {
-    String? zoneN = billingAddressMap['zone'];
-    String? zoneId = billingAddressMap['zoneId'];
-    String? cityN = billingAddressMap['city'];
-    String? cityId = billingAddressMap['cityId'];
-    String? areaN = billingAddressMap['area'];
-    String? areaId = billingAddressMap['areaId'];
+  Future<bool> isLocationSet(
+      context,
+      String addresses,
+      String city,
+      String cityID,
+      String zone,
+      String zoneID,
+      String area,
+      String areaID,
+      String postalCode) async {
+    String? zoneN = billingAddressMap['zone'] ?? zone;
+    String? zoneId = billingAddressMap['zoneId'] ?? zoneID;
+    String? cityN = billingAddressMap['city'] ?? city;
+    String? cityId = billingAddressMap['cityId'] ?? cityID;
+    String? areaN = billingAddressMap['area'] ?? area;
+    String? areaId = billingAddressMap['areaId'] ?? areaID;
+    String? address = billingAddressMap['address'] ?? addresses;
+    String? postCode = billingAddressMap['postCode'] ?? postalCode;
 
-
-    if (cityN == null) {
+    if (cityN == "") {
       toast("City not set!", textColor: KColor.red12);
       return false;
     }
-    if (zoneN == null) {
+    if (zoneN == "") {
       toast("Zone not set!", textColor: KColor.red12);
       return false;
     }
-    if (areaN == null) {
+    if (areaN == "") {
       toast("Area not set!", textColor: KColor.red12);
       return false;
     }
+    if (address == "") {
+      toast("Required address field!", textColor: KColor.red12);
+      return false;
+    }
+    if (postCode == "") {
+      toast("Required postCode field!", textColor: KColor.red12);
+      return false;
+    }
+    Navigator.pushNamed(context, '/addressPage');
     setTempAddress(
-      cityN: cityN,
-      cityId: cityId!,
-      zoneN: zoneN,
-      zoneId: zoneId!,
-      areaN: areaN,
-      areaId: areaId!,
-      address: address
-    );
+        cityN: cityN,
+        cityId: cityId,
+        zoneN: zoneN,
+        zoneId: zoneId,
+        areaN: areaN,
+        areaId: areaId,
+        address: address,
+        postCode: postCode
+        );
 
     return true;
   }
@@ -161,6 +182,7 @@ class AddAddressController extends StateNotifier<BaseState> {
     required String areaN,
     required String areaId,
     required String address,
+    required String postCode,
   }) {
     billingAddressMap.clear();
     billingAddressMap['city'] = cityN;
@@ -170,6 +192,7 @@ class AddAddressController extends StateNotifier<BaseState> {
     billingAddressMap['area'] = areaN;
     billingAddressMap['areaId'] = areaId;
     billingAddressMap['address'] = address;
+    billingAddressMap['postCode'] = postCode;
   }
 
   Future addBillingINfo(
@@ -177,6 +200,7 @@ class AddAddressController extends StateNotifier<BaseState> {
       required String nameis,
       required String emailis,
       required String phoneis,
+      required String postCodeis,
       required String addressis}) async {
     state = const LoadingState();
     String? cityis =
@@ -214,6 +238,9 @@ class AddAddressController extends StateNotifier<BaseState> {
       } else if (addressis.isEmpty) {
         toast('Address not Set!');
         state = AddressErrorState();
+      } else if (postCodeis.isEmpty) {
+        toast('PostCode not Set!');
+        state = AddressErrorState();
       } else {
         User user = ref!.read(menuDataProvider.notifier).menuList!.user;
         var requestBody = {
@@ -233,7 +260,7 @@ class AddAddressController extends StateNotifier<BaseState> {
             "cityId": cityId,
             "areaId": areaId,
             "zoneId": zoneId,
-            "postCode": user.customer.postCode,
+            "postCode": postCodeis,
           }
         };
         User? userModel;
@@ -243,13 +270,15 @@ class AddAddressController extends StateNotifier<BaseState> {
               await Network.postRequest(API.updateUser, requestBody));
           if (responseBody != null) {
             setTempAddress(
-                cityN: cityis,
-                cityId: cityId.toString(),
-                zoneN: zoneis,
-                zoneId: zoneId.toString(),
-                areaN: areais,
-                areaId: areaId.toString(),
-                address: addressis);
+              cityN: cityis,
+              cityId: cityId.toString(),
+              zoneN: zoneis,
+              zoneId: zoneId.toString(),
+              areaN: areais,
+              areaId: areaId.toString(),
+              address: addressis,
+              postCode:  postCodeis
+            );
             ref!.read(zoneProvider.notifier).updateTotalDelivery();
             toast("Billing Information Updated");
             ref?.read(addressProvider.notifier).makeAddressNull();

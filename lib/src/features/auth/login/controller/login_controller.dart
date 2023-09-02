@@ -1,4 +1,3 @@
-
 import 'package:finesse/constants/shared_preference_constant.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/core/network/api.dart';
@@ -53,11 +52,11 @@ class LoginController extends StateNotifier<BaseState> {
           setValue(userName, userModel!.name);
           setValue(userEmail, userModel!.email);
           setValue(userContact, userModel!.contact);
-          toast("Login Successful", bgColor: KColor.selectColor );
+          toast("Login Successful", bgColor: KColor.selectColor);
           ref!.read(menuDataProvider.notifier).fetchMenuData();
           NavigationService.navigateToReplacement(
             CupertinoPageRoute(
-              builder: (context) =>  MainScreen(),
+              builder: (context) => MainScreen(),
             ),
           );
         }
@@ -75,21 +74,21 @@ class LoginController extends StateNotifier<BaseState> {
     state = const LoadingState();
     dynamic responseBody;
     try {
-      responseBody = 
-        await Network.getRequest(API.logout)
-      ;
+      responseBody = await Network.getRequest(API.logout);
       if (responseBody != null) {
         setValue(isLoggedIn, false);
         setValue(token, "");
-        setValue(rememberToken,"");
-       
+        setValue(rememberToken, "");
+        setValue(shippingAddress, null);
+        billingAddressMap = {};
+
         var userData;
         state = LoginSuccessState(userData);
         toast("Logout", bgColor: KColor.selectColor);
-        
+
         NavigationService.navigateToReplacement(
           CupertinoPageRoute(
-            builder: (_) =>  MainScreen(),
+            builder: (_) => MainScreen(),
           ),
         );
       } else {
