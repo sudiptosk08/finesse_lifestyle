@@ -28,11 +28,11 @@ class _FilterChipWidgetState extends State<FilterChipWidget> {
       disabledColor: Colors.white,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.0),
-          side: BorderSide(
+          side:const BorderSide(
             color: KColor.grey,
             width: 1.2,
           )),
-      padding: EdgeInsets.only(left: 2.5, right: 2.5),
+      padding:const EdgeInsets.only(left: 2.5, right: 2.5),
       backgroundColor: KColor.white,
       onSelected: (isSelected) {
         setState(() {
@@ -40,7 +40,7 @@ class _FilterChipWidgetState extends State<FilterChipWidget> {
           // store.dispatch(FilterTagAction(widget.chipId));
         });
       },
-      labelPadding: EdgeInsets.symmetric(horizontal: 7),
+      labelPadding:const EdgeInsets.symmetric(horizontal: 7),
       visualDensity: VisualDensity.adaptivePlatformDensity,
       selectedColor: Colors.black,
     );

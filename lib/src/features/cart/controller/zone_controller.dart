@@ -95,7 +95,7 @@ class ZoneController extends StateNotifier<BaseState> {
       } else {
         for (int i = 0; i < zoneModel!.zones.length; i++) {
           deliveryFee = zoneModel!.zones[i].delivery!;
-          print("the kking deliverfee:  ${deliveryFee}");
+          print("the kking deliverfee:  $deliveryFee");
         }
       }
     }
@@ -112,7 +112,7 @@ class ZoneController extends StateNotifier<BaseState> {
     } else {
       for (int i = 0; i < zoneModel!.zones.length; i++) {
         deliveryFee = zoneModel!.zones[i].delivery!;
-        print("the kking deliverfee:  ${deliveryFee}");
+        print("the kking deliverfee:  $deliveryFee");
       }
     }
 

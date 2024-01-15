@@ -419,32 +419,7 @@ filterPage(context) {
                                               },
                                             ),
                                           ))
-                                          // DropdownButtonHideUnderline(
-                                          //   child: DropdownButton<String>(  isExpanded: true,
-                                          //     icon: Icon(Icons.keyboard_arrow_down),
-                                          //     value: _chosenColorValue,
-                                          //     style: TextStyle(color: KColor.primary),
-                                          //     items: colorData!.isEmpty
-                                          //         ? []
-                                          //         : colorData
-                                          //             .map<DropdownMenuItem<String>>(
-                                          //                 (e) {
-                                          //             return DropdownMenuItem<String>(alignment: Alignment.center,
-                                          //               value: e.value,
-                                          //               child: Text(e.value!,
-                                          //                   style: KTextStyle.bodyText1
-                                          //                       .copyWith(
-                                          //                           color: KColor
-                                          //                               .grey350)),
-                                          //             );
-                                          //           }).toList(),
-                                          //     onChanged: (String? value) {
-                                          //       setState(() {
-                                          //         _chosenColorValue = value;
-                                          //       });
-                                          //     },
-                                          //   ),
-                                          // ),
+                                         
                                         }
                                       ],
                                     ),

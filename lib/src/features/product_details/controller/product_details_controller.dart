@@ -101,7 +101,7 @@ class ColorAndSizeController extends StateNotifier<BaseState>{
     }catch(error, stack){
       print(error); 
       print(stack) ; 
-      state = ErrorState();
+      state = const ErrorState();
     }
   }
 }

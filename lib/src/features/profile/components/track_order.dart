@@ -1,12 +1,10 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/stepper/k_stepper.dart';
-import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/src/features/profile/model/order_model.dart';
 import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class TrackOrder extends StatefulWidget {
   final Datum orderData;
@@ -65,7 +63,7 @@ class _TrackOrderState extends State<TrackOrder> {
                       const SizedBox(height: 8),
                       Text(
                         // "6 May",
-                        "${widget.orderData.createdAt.toString()}",
+                        widget.orderData.createdAt.toString(),
                         style: KTextStyle.bodyText1.copyWith(
                           color: KColor.blackbg.withOpacity(0.4),
                         ),

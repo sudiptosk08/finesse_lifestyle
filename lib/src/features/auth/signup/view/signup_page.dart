@@ -69,7 +69,21 @@ class _SignupPageState extends State<SignupPage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(AssetPath.logo),
+                        Container(
+                          width: 115,
+                          height: 111,
+                          decoration: const BoxDecoration(
+                              color: KColor.black,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: SvgPicture.asset(
+                              AssetPath.logo,
+                              color: KColor.white,
+                            ),
+                          ),
+                        ),
                         SizedBox(height: context.screenHeight * 0.065),
                         Text(
                           'Create Your Account',
@@ -78,7 +92,7 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                         ),
                         SizedBox(height: context.screenHeight * 0.04),
-                         Row(
+                        Row(
                           children: [
                             Expanded(
                               flex: 2,
@@ -127,15 +141,14 @@ class _SignupPageState extends State<SignupPage> {
                           hintText: 'Re-enter your password here...',
                           label: 'Confirm Password',
                         ),
-                        
                         const SizedBox(height: 24),
                         Consumer(
                           builder: (context, ref, _) {
                             final authState = ref.watch(signupProvider);
                             return KButton(
                                 title: authState is! LoadingState
-                                    ?'Create Account' : 'Please wait...'
-                                    ,
+                                    ? 'Create Account'
+                                    : 'Please wait...',
                                 onTap: () {
                                   if (password.text == confirmPassword.text) {
                                     if (authState is! LoadingState) {
@@ -253,7 +266,6 @@ class _SignupPageState extends State<SignupPage> {
                       _verticalGroupValue = value!;
                       isSelected = !isSelected;
                     }),
-                   
                     activeColor: isSelected ? Colors.lightBlue : Colors.orange,
                     items: _status,
                     textStyle: KTextStyle.dialog.copyWith(

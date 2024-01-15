@@ -6,7 +6,6 @@ import "package:finesse/src/features/auth/login/model/user_model.dart";
 import "package:finesse/src/features/cart/controller/cart_controller.dart";
 import "package:finesse/src/features/cart/controller/discount_controller.dart";
 import "package:finesse/src/features/cart/controller/zone_controller.dart";
-import "package:finesse/src/features/checkout/state/add_address.dart";
 import "package:finesse/src/features/home/controllers/menu_data_controller.dart";
 import "package:finesse/src/features/profile/state/profile_state.dart";
 import "package:finesse/styles/k_colors.dart";
@@ -29,12 +28,12 @@ class CheckoutController extends StateNotifier<BaseState> {
       if (billingAddressMap['address'] == null &&
           user!.customer.address == null) {
         toast('Set Billing Address.');
-        state = ErrorState();
+        state = const ErrorState();
       }
       else if (billingAddressMap['postCode'] == null && user!.customer.postCode == null) {
         
          toast('Set Billing postal Code.');
-        state = ErrorState();
+        state = const ErrorState();
       }
       //  else if (phoneis.isEmpty) {
       //   state = AddressErrorState();
@@ -192,7 +191,7 @@ class CheckoutController extends StateNotifier<BaseState> {
           );
           if (responseBody != null) {
             print("-----------");
-            print("success is : ${responseBody}");
+            print("success is : $responseBody");
             removeKey(shippingAddress);
 
             paymentOption = null;
@@ -200,8 +199,8 @@ class CheckoutController extends StateNotifier<BaseState> {
             state = const OrderSuccessState();
             Navigator.pushReplacementNamed(context, '/confirmOrder');
           } else {
-            print("print response is in null :${responseBody}");
-            state = ErrorState();
+            print("print response is in null :$responseBody");
+            state = const ErrorState();
           }
         } catch (error, stackTrace) {
           print("error state");
@@ -212,7 +211,7 @@ class CheckoutController extends StateNotifier<BaseState> {
         }
       }
     } catch (e) {
-      state = ErrorState();
+      state = const ErrorState();
     }
   }
 }

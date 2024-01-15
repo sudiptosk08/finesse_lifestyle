@@ -37,7 +37,6 @@ class _HomePageState extends ConsumerState<HomePage> {
               const CategorySection(),
               const SizedBox(height: 12),
               _categoryHeader('Popular Right Now', () {}),
-              const SizedBox(height: 8),
               const PopularCategory(),
               const SizedBox(height: 15),
               _categoryHeader('New Arrivals', () {
@@ -55,7 +54,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                 Navigator.pushNamed(context, '/shop');
               }, showViewAll: true),
               const FeaturedProducts(),
-              const SizedBox(height: 30),
             ],
           ),
         ),
@@ -71,7 +69,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           children: [
             Text(
               title,
-              style: KTextStyle.headline2.copyWith(color: KColor.blackbg),
+              style: KTextStyle.subtitle1.copyWith(color: KColor.blackbg),
             ),
             if (showViewAll)
               InkWell(
@@ -85,7 +83,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               ),
           ],
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 14),
       ],
     );
   }

@@ -12,7 +12,6 @@ import 'package:finesse/styles/k_colors.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../../checkout/components/add_new_address.dart';
 import '../components/my_order.dart';
@@ -143,7 +142,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: ((context) =>
-                                              AddNewAddress())));
+                                              const AddNewAddress())));
                                 },
                               ),
                               ProfileCard(

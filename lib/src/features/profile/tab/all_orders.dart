@@ -30,9 +30,9 @@ class _AllOrdersState extends State<AllOrders> {
             ? orderState.orderModel?.order.data
             : [];
         return Container(
-          margin: EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+          margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
           child: ListView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             children: [
               if (orderState is LoadingState) ...[
                 const Center(
@@ -44,7 +44,7 @@ class _AllOrdersState extends State<AllOrders> {
               ],
               if (orderState is FetchOrderSuccessState) ...[
                 orderList!.isEmpty
-                    ? Center(child: Text("no order found"))
+                    ? const Center(child: Text("no order found"))
                     : Column(
                         children: List.generate(
                           (orderList.length),

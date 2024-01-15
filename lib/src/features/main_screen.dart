@@ -32,7 +32,6 @@ class MainScreen extends ConsumerStatefulWidget {
   int? pageIndex;
   MainScreen({Key? key, this.pageIndex}) : super(key: key);
 
-
   @override
   ConsumerState<MainScreen> createState() => _MainScreenState();
 }
@@ -49,10 +48,9 @@ class _MainScreenState extends ConsumerState<MainScreen>
     initData();
   }
 
-  initData()  {
+  initData() {
     if (widget.pageIndex == 1) {
       _currentIndex = widget.pageIndex == 1 ? 1 : 0;
-     
     }
   }
 
@@ -125,7 +123,6 @@ class _MainScreenState extends ConsumerState<MainScreen>
                         .read(addressProvider.notifier)
                         .setLocationNameOnce(user);
                     ref.read(cityProvider.notifier).allCity();
-                   
                   }
                   if (_currentIndex == 2) {
                     ref.read(wishlistProvider.notifier).fetchWishlistProducts();
@@ -133,7 +130,7 @@ class _MainScreenState extends ConsumerState<MainScreen>
                   if (_currentIndex == 3) {
                     ref.read(menuDataProvider.notifier).fetchMenuData();
                     ref.read(discountProvider.notifier).makeDiscountNull();
-                 
+
                     ref
                         .read(addressProvider.notifier)
                         .setLocationNameOnce(user);
@@ -143,10 +140,10 @@ class _MainScreenState extends ConsumerState<MainScreen>
               },
               children: [
                 widget.pageIndex == 1 ? const CartPage() : const HomePage(),
+                widget.pageIndex == 1 ? const WishlistPage() : const CartPage(),
                 widget.pageIndex == 1
-                    ? const WishlistPage()
-                    : const CartPage(isFromBottomNav: true),
-                widget.pageIndex == 1 ? const ProfilePage() : const WishlistPage(),
+                    ? const ProfilePage()
+                    : const WishlistPage(),
                 widget.pageIndex == 1 ? const HomePage() : const ProfilePage(),
               ],
             ),
@@ -188,5 +185,4 @@ class _MainScreenState extends ConsumerState<MainScreen>
       },
     );
   }
-
 }

@@ -72,7 +72,7 @@ class _GetDiscountState extends State<GetDiscount> {
                         ? 'Clear'
                         : 'Apply Code',
                     tap: () {
-                      print("promo code auth ${promoCodeClear}");
+                      print("promo code auth $promoCodeClear");
                       if (codeState is! LoadingState) {
                         //     promoCodeClear =   codeState is PromoCodeSuccessState && codeState.promoCodeModel != null && promoCodeData?.success == true ? true: false;
 

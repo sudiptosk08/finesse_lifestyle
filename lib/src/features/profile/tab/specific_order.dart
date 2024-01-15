@@ -1,4 +1,6 @@
 
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:finesse/components/card/my_order_card.dart';
 import 'package:finesse/core/base/base_state.dart';
 import 'package:finesse/src/features/profile/components/order_details.dart';
@@ -12,7 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 class SpecificOrder extends StatefulWidget {
   final String OrderStatus;
-  const SpecificOrder({super.key, required this.OrderStatus});
+  const SpecificOrder({super.key,required this.OrderStatus });
 
   @override
   State<SpecificOrder> createState() => _SpecificOrderState();
@@ -39,9 +41,9 @@ class _SpecificOrderState extends State<SpecificOrder> {
         }
         print("using index where");
         return Container(
-          margin: EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+          margin:const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
           child: ListView(
-            physics: BouncingScrollPhysics(),
+            physics:const BouncingScrollPhysics(),
             children: [
               if (orderState is LoadingState) ...[
                 const Center(
@@ -53,7 +55,7 @@ class _SpecificOrderState extends State<SpecificOrder> {
               ],
               if (orderState is FetchOrderSuccessState) ...[
                 orderList.isEmpty
-                    ? Center(child: Text("no order found"))
+                    ? const Center(child: Text("no order found"))
                     : Column(
                         children: List.generate(
                           (orderList.length),

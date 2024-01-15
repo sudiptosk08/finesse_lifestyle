@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:finesse/styles/k_colors.dart';
+import 'package:finesse/styles/k_size.dart';
 import 'package:finesse/styles/k_text_style.dart';
 import 'package:finesse/utils/extension.dart';
 import 'package:flutter/material.dart';
@@ -36,9 +37,9 @@ class ProductCard extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            width: MediaQuery.of(context).size.width * 0.5,
-            height: 275,
-            margin: const EdgeInsets.only(top: 12, right: 12, left: 6),
+            width: MediaQuery.of(context).size.width * 0.42,
+            height: KSize.getHeight(context, 225),
+            margin: const EdgeInsets.only(top: 8, right: 12, left: 6),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: KColor.appBackground,
@@ -60,7 +61,7 @@ class ProductCard extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: 168,
+                  height: KSize.getHeight(context, 140),
                   width: context.screenWidth,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.only(
@@ -91,7 +92,7 @@ class ProductCard extends StatelessWidget {
                             style: KTextStyle.caption1
                                 .copyWith(color: KColor.blackbg),
                             overflow: TextOverflow.ellipsis,
-                            maxLines: 3,
+                            maxLines: 2,
                           ),
                         ),
                         const SizedBox(height: 4),
@@ -100,22 +101,20 @@ class ProductCard extends StatelessWidget {
                           style: KTextStyle.caption2
                               .copyWith(color: KColor.blackbg.withOpacity(0.3)),
                         ),
-                        const SizedBox(height: 6),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
                                     "৳ $offerPrice",
                                     style: KTextStyle.subtitle7
                                         .copyWith(color: KColor.blackbg),
                                   ),
-                                  const SizedBox(height: 2),
                                   Stack(
                                     children: [
                                       Text(
@@ -166,6 +165,9 @@ class ProductCard extends StatelessWidget {
                             ),
                           ],
                         ),
+                        const SizedBox(
+                          height: 5,
+                        )
                       ],
                     ),
                   ),

@@ -41,7 +41,7 @@ class _NameTextFieldState extends State<NameTextField> {
       readOnly: widget.readOnly,
       controller: widget.controller,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.person_3_outlined),
+        prefixIcon:const Icon(Icons.person_3_outlined),
         hintText: widget.hintText,
         hintStyle: _focusNode.hasFocus
             ? KTextStyle.bodyText1.copyWith(color: KColor.blackbg)

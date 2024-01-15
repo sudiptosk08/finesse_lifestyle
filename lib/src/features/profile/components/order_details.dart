@@ -1,5 +1,6 @@
 import 'package:finesse/components/appbar/k_app_bar.dart';
 import 'package:finesse/components/button/k_border_btn.dart';
+import 'package:finesse/components/button/k_button.dart';
 import 'package:finesse/constants/asset_path.dart';
 import 'package:finesse/src/features/profile/components/track_order.dart';
 import 'package:finesse/src/features/profile/model/order_model.dart';
@@ -242,7 +243,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                       // widget.orderData.orderdetails[index].product.productImage.toString(),
                                       height: 49,
                                     )
-                                  : Icon(Icons.error),
+                                  : const Icon(Icons.error),
                             ),
                             // Text(widget.orderData.orderdetails[index].product.productImage.toString()),
 
@@ -251,7 +252,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
+                                SizedBox(
                                   width: context.screenWidth * .60,
                                   child: Text(
                                     overflow: TextOverflow.ellipsis,
@@ -353,12 +354,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                 ],
               ),
               SizedBox(height: context.screenHeight * 0.05),
-              // KButton(
-              //   title: 'Write a Review',
-              //   onTap: () {
-              //     Navigator.pushNamed(context, '/writeReview');
-              //   },
-              // ),
+              KButton(
+                title: 'Write a Review',
+                onTap: () {
+                  Navigator.pushNamed(context, '/writeReview');
+                },
+              ),
               const SizedBox(height: 16),
               if (widget.orderData.shippingDetails != null) ...[
                 KBorderButton(

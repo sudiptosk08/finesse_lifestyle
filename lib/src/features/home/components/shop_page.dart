@@ -127,7 +127,7 @@ class _ShopPageState extends State<ShopPage> {
                         child: shopData!.isEmpty
                             ? const Center(child: Text('No products found!'))
                             : GridView.builder(
-                                physics: BouncingScrollPhysics(),
+                                physics:const BouncingScrollPhysics(),
                                 controller: ref
                                     .read(shopListScrollProvider.notifier)
                                     .controller,

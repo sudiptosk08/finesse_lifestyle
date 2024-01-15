@@ -210,6 +210,7 @@ class _WriteReviewState extends State<WriteReview> {
                         message: 'Review Submitted!',
                         checkTitle: true,
                         subMessage: 'Thank you for your review.',
+                        
                       );
                     },
                   );

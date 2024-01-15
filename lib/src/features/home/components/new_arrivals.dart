@@ -36,7 +36,7 @@ class _NewArrivalsState extends State<NewArrivals> {
       return Column(
         children: [
           SizedBox(
-            height: 300,
+            height: 240,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: newCategory!.length,
@@ -72,7 +72,6 @@ class _NewArrivalsState extends State<NewArrivals> {
               },
             ),
           ),
-          const SizedBox(height: 18),
           Column(
             children: [
               SizedBox(

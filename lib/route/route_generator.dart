@@ -100,7 +100,7 @@ class RouteGenerator {
         );
       case '/productDetails':
         return CupertinoPageRoute(
-          builder: (_) =>const ProductDetails(),
+          builder: (_) => const ProductDetails(),
         );
       // case '/productInfo':
       //   return CupertinoPageRoute(

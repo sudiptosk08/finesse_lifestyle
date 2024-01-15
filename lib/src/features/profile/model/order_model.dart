@@ -177,7 +177,7 @@ class Datum {
         promoDiscountAmount: json["promoDiscountAmount"],
         billingCity: json["billingCity"],
         billingZone: json["billingZone"],
-        billingArea: json["billingArea"],
+        billingArea: json["billingArea"] ?? "",
         postCode: json["postCode"],
         billingAddress: json["billingAddress"],
         isDifferentShipping: json["isDifferentShipping"],

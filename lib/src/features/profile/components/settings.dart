@@ -20,8 +20,8 @@ class _SettingsState extends State<Settings> {
       ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-        child: Column(
-          children: const [],
+        child:const Column(
+          children:  [],
         ),
       ),
     );

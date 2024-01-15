@@ -14,7 +14,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../components/textfield/k_phone_field.dart';
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -50,7 +49,21 @@ class _LoginPageState extends State<LoginPage> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SvgPicture.asset(AssetPath.logo),
+                      Container(
+                        width: 115,
+                        height: 111,
+                        decoration: const BoxDecoration(
+                            color: KColor.black,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: SvgPicture.asset(
+                            AssetPath.logo,
+                            color: KColor.white,
+                          ),
+                        ),
+                      ),
                       SizedBox(height: context.screenHeight * 0.05),
                       Text(
                         'Sign In',
